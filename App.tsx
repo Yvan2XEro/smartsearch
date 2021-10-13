@@ -77,27 +77,61 @@ const SearchScreen = ({
     'http://ieeexploreapi.ieee.org/api/v1/search/articles?format=json&max_records=25&start_record=1&sort_order=asc&sort_field=article_number&apikey=' +
     ieee_api;
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(Array());
   const [data2, setData2] = useState([]);
+  const [data3, setData3] = useState([]);
+  const [data4, setData4] = useState([]);
 
   const [isLoading, setLoading] = useState(false);
   const [isLoading2, setLoading2] = useState(true);
 
   const [total, setTotal] = useState(0);
 
-  const aggregateSearch = (query: string) => {
-    console.log('Mince......: ');
-    Promise.all([
-      fetch(springer_url + `&q=${query}`),
-      fetch(elsevier_url + `&query=${query}`),
-      fetch(ieee_url + `&querytext=${query}`),
-    ])
-      .then(([firstData, secondData, thirdData]) => {
-        console.log('data.third.....', JSON.stringify(firstData));
-      })
-      .catch(err => {
-        console.log('error..EHEHEHEHE....: ', err);
-      });
+  const aggregateSearch = async (query: string) => {
+    setLoading(true);
+    try {
+      const response1 = await fetch(springer_url + `&q=${query}`);
+      const response2 = await fetch(elsevier_url + `&query=${query}`);
+      //const response3 = await fetch(ieee_url + `&querytext=${query}`);
+      const response4 = await fetch(google_scholar_url + `&q=${query}`);
+
+      const json1 = await response1.json();
+      const json2 = await response2.json();
+      //const json3 = await response3.json();
+      const json4 = await response4.json();
+      //setTotal(json1?.result[0]?.total ?? 0);
+      //onDataChange(total);
+      //setData(json1.records);
+      const dat =
+        json2['search-results'] && json2['search-results']['entry']
+          ? json2['search-results']['entry'].map((item: any) => {
+              return {
+                title: item['dc:title'],
+                publicationDate: item['prism:coverDate'],
+              };
+            })
+          : [];
+      setData2(dat);
+      const dat1 = json4.organic_results
+        ? json4.organic_results.map((item: any) => {
+            return {
+              title: item.title,
+              publicationDate: '',
+            };
+          })
+        : [];
+      setData4(dat1);
+      const values: any[] = [...json1.records, ...data2, ...data4];
+      //setTotal(json1?.result[0]?.total ?? 0);
+      //onDataChange(total);
+      onDataChange(values.length);
+      setData(values);
+    } catch (error) {
+      //console.log('error ....: ', error);
+      Alert.alert(error + '');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const makeSearch = async (query: string, doi?: string) => {
@@ -142,7 +176,10 @@ const SearchScreen = ({
       <Searchbar
         placeholder="Type Here..."
         onChangeText={onChangeQuery}
-        onSubmitEditing={() => makeSearch(query)}
+        onSubmitEditing={() => {
+          //makeSearch(query);
+          aggregateSearch(query);
+        }}
         value={query}
       />
       {isLoading ? (
