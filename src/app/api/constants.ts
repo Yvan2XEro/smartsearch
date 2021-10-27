@@ -2,6 +2,8 @@ export const springer_api_key: string = '9020e0837c3c3dc0836fa0963c857265';
 export const springer_url: string =
   'https://api.springernature.com/meta/v2/json?api_key=' + springer_api_key;
 
+//https://dev.springernature.com/adding-constraints to see constraints
+
 export const elsevier_api_key: string = 'dc396ed2b0108f4a9f52abd986db3d82';
 
 export const elsevier_url: string =

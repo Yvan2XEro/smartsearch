@@ -13,6 +13,7 @@ import {
 } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Octicons';
 import SearchScreen from './src/app/containers/SearchScreen';
+import DetailScreen from './src/app/containers/DetailScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -30,6 +31,7 @@ const MenuIcon = ({navigate}: {navigate: any}) => (
     onPress={() => navigate('DrawerOpen')}
   />
 );
+
 function Root() {
   return (
     <Drawer.Navigator
@@ -65,9 +67,11 @@ function Root() {
       }}>
       <Drawer.Screen name="Search" component={SearchScreen} />
       <Drawer.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen name="Details" component={DetailScreen} />
     </Drawer.Navigator>
   );
 }
+
 function MyTabs() {
   const [total, setTotal] = useState(0);
   const handleDataChange = (total: number) => {
