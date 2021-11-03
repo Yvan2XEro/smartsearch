@@ -6,15 +6,24 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {Searchbar} from 'react-native-paper';
 import * as base from '../api/constants';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {Button} from 'react-native-elements';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Foundation from 'react-native-vector-icons/Foundation';
 import {Document} from '../models/Document';
 import {useNavigation} from '@react-navigation/native';
+import {
+  MenuContext,
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
 
 const SearchScreen = ({
   onDataChange,
@@ -38,7 +47,7 @@ const SearchScreen = ({
     setLoading(true);
     try {
       const response1 = await fetch(
-        base.springer_url + `&q=${query}` + ' &s=' + currentPage + ' &p=' + 100,
+        base.springer_url + `&q=${query}` + ' &s=' + currentPage + ' &p=' + 10,
       );
       const response2 = await fetch(base.elsevier_url + `&query=${query}`);
       //const response3 = await fetch(base.ieee_url + `&querytext=${query}`);
@@ -149,77 +158,90 @@ const SearchScreen = ({
         }}
         value={query}
       />
-      {isLoading ? (
-        <ActivityIndicator />
-      ) : (
-        data && (
-          <FlatList
-            data={data}
-            keyExtractor={({title}, index) => title + index}
-            renderItem={({item}) => (
-              <View style={styles.item}>
-                <Text>
-                  {(item as any).title}, {(item as any).publicationDate}
-                </Text>
-                <MaterialIcons
-                  name="read-more"
-                  color="black"
-                  size={20}
+      {data && (
+        <FlatList
+          data={data}
+          keyExtractor={({title}, index) => title + index}
+          renderItem={({item}) => (
+            <View style={styles.item}>
+              {(item as any).contentType !== 'Article' ? (
+                <Icon
+                  name="book"
+                  size={30}
                   style={{
-                    alignSelf: 'flex-end',
-                    position: 'absolute',
-                    top: '50%',
-                    marginLeft: 5,
-                    right: 0,
-                  }}
-                  onPress={() => {
-                    /* 1. Navigate to the Details route with params, passing the params as an object in the method navigate */
-                    navigation.navigate(
-                      'Details' as never,
-                      {
-                        document: {
-                          title: (item as any).title,
-                          publicationDate: (item as any).publicationDate,
-                          contentType: (item as any).contentType,
-                          publisher: (item as any).publisher,
-                          abstract: (item as any).abstract,
-                          doi: (item as any).doi,
-                          openaccess: (item as any).openaccess,
-                          authors: (item as any).creators,
-                        } as Document,
-                      } as never,
-                    );
+                    marginRight: 10,
+                    marginLeft: 0,
+                    color: 'purple',
                   }}
                 />
-              </View>
-            )}
-            initialNumToRender={10} // how many item to display first
-            onEndReachedThreshold={5} // so when you are at 5 pixel from the bottom react run onEndReached function
-            onEndReached={() => {
-              aggregateSearch(query);
-            }}
-          />
-        )
-      )}
-      {/* {isLoading2 ? (
-        <ActivityIndicator />
-      ) : (
-        data2 && (
-          <FlatList
-            data={data2}
-            renderItem={({item}) => (
-              <Text style={styles.item2}>
-                {item['dc:title']} {item['dc:creator']}
-                {item['prism:coverDate']}
+              ) : (
+                <MaterialIcons
+                  name="article"
+                  size={30}
+                  style={{
+                    marginRight: 10,
+                    marginLeft: 0,
+                    color: 'lightred',
+                  }}
+                />
+              )}
+              <Text
+                onPress={() => {
+                  /* 1. Navigate to the Details route with params, passing the params as an object in the method navigate */
+                  navigation.navigate(
+                    'Details' as never,
+                    {
+                      document: {
+                        title: (item as any).title,
+                        publicationDate: (item as any).publicationDate,
+                        contentType: (item as any).contentType,
+                        publisher: (item as any).publisher,
+                        abstract: (item as any).abstract,
+                        doi: (item as any).doi,
+                        openaccess: (item as any).openaccess,
+                        authors: (item as any).creators,
+                      } as Document,
+                    } as never,
+                  );
+                }}
+                style={{flex: 1, flexWrap: 'wrap'}}>
+                {(item as any).title}, {(item as any).publicationDate}
               </Text>
-            )}
-            keyExtractor={(item: any, index) => item['dc:title'] + index}
-            ListFooterComponent={<Text>{'TOTAL SEARCH: ' + total}</Text>}
-            ListEmptyComponent={<Text>OOps!!!!</Text>}
-            ListFooterComponentStyle={styles.footer}
-          />
-        )
-      )} */}
+              <View
+                style={{
+                  alignSelf: 'flex-start',
+                  position: 'absolute',
+                  paddingLeft: 15,
+                  right: 0,
+                }}>
+                <Menu>
+                  <MenuTrigger>
+                    <Icon name="dots-vertical" color="gray" size={20} />
+                  </MenuTrigger>
+
+                  <MenuOptions>
+                    <MenuOption onSelect={() => {}} text="Cite" />
+                    <MenuOption onSelect={() => {}}>
+                      <Text style={{color: 'red'}}>Save</Text>
+                    </MenuOption>
+                    <MenuOption
+                      onSelect={() => {}}
+                      disabled={true}
+                      text="Recommand"
+                    />
+                  </MenuOptions>
+                </Menu>
+              </View>
+            </View>
+          )}
+          initialNumToRender={10} // how many item to display first
+          onEndReachedThreshold={2} // so when you are at 5 pixel from the bottom react run onEndReached function
+          onEndReached={() => {
+            aggregateSearch(query);
+          }}
+        />
+      )}
+      {isLoading && <ActivityIndicator />}
     </SafeAreaView>
   );
 };
@@ -267,6 +289,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#black',
     color: '#white',
     margin: 12,
+  },
+  containerPopup: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 50,
+    backgroundColor: '#ecf0f1',
   },
 });
 

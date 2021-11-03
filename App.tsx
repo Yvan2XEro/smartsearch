@@ -12,8 +12,10 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Octicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SearchScreen from './src/app/containers/SearchScreen';
 import DetailScreen from './src/app/containers/DetailScreen';
+import {MenuProvider} from 'react-native-popup-menu';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -100,7 +102,11 @@ function MyTabs() {
           tabBarLabel: 'Search',
           headerShown: false,
           tabBarIcon: ({color, size}) => (
-            <MaterialIcons name="search" color={color} size={size} />
+            <MaterialCommunityIcons
+              name="book-search-outline"
+              color={color}
+              size={size}
+            />
           ),
           tabBarBadge: total,
         }}
@@ -121,9 +127,11 @@ function MyTabs() {
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <MyTabs />
-    </NavigationContainer>
+    <MenuProvider>
+      <NavigationContainer>
+        <MyTabs />
+      </NavigationContainer>
+    </MenuProvider>
   );
 };
 

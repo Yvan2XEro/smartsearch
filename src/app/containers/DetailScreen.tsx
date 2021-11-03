@@ -4,9 +4,15 @@ import {Document} from '../models/Document';
 const DetailScreen = ({route, navigation}: {route: any; navigation: any}) => {
   /* 2. Get the param */
   const document: Document = route.params.document;
-  console.log('abstarct ', document.abstract);
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View
+      style={{
+        flex: 1,
+        flexDirection: 'column',
+        margin: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
       <ScrollView>
         <Text>Doi: {document.doi}</Text>
         <Text>Title: {document.title}</Text>
@@ -20,6 +26,7 @@ const DetailScreen = ({route, navigation}: {route: any; navigation: any}) => {
             '',
           )}
         </Text>
+        <Text>Type: {document.contentType}</Text>
         <Text>Abstract: {document.abstract}</Text>
       </ScrollView>
     </View>
