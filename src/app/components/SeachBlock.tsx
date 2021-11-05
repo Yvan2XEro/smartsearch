@@ -39,7 +39,7 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
     }
     const buildQueryWithInputFilters = () => {
         let q = ""
-        if (fastInputQuery != '') {
+        if (fastInputQuery == '') {
             const entriesLength = Object.entries(params).length
             Object.entries(params).forEach(([key, value], i) => {
                 if (key != 'keyWords' && value != '' && value != 0)

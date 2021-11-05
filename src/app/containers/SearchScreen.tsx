@@ -50,6 +50,7 @@ const SearchScreen = ({
       const response1 = await fetch(
         base.springer_url + `&q=${query}` + ' &s=' + currentPage + ' &p=' + 10,
       );
+      console.log("QUERY: " + query)
       const response2 = await fetch(base.elsevier_url + `&query=${query}`);
       const json1 = await response1.json();
       const json2 = await response2.json();
