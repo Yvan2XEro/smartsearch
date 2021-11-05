@@ -54,7 +54,7 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
         <View>
             <Searchbar
                 placeholder="Fast Search Here..."
-                onPressIn={() => setShowFiltersBlock(true)}
+                onPressIn={() => setShowFiltersBlock(!showFiltersBlock)}
                 onFocus={() => setShowFiltersBlock(true)}
                 onChangeText={text => setFastInputQuery(text)}
                 value={fastInputQuery}
