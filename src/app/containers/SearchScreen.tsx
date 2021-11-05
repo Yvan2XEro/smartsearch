@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -9,14 +9,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Searchbar} from 'react-native-paper';
+import { Searchbar } from 'react-native-paper';
 import * as base from '../api/constants';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Foundation from 'react-native-vector-icons/Foundation';
-import {Document} from '../models/Document';
-import {useNavigation} from '@react-navigation/native';
+import { Document } from '../models/Document';
+import { useNavigation } from '@react-navigation/native';
 import {
   MenuContext,
   Menu,
@@ -24,6 +24,7 @@ import {
   MenuOption,
   MenuTrigger,
 } from 'react-native-popup-menu';
+import SearchBlock from '../components/SeachBlock';
 
 const SearchScreen = ({
   onDataChange,
@@ -50,60 +51,23 @@ const SearchScreen = ({
         base.springer_url + `&q=${query}` + ' &s=' + currentPage + ' &p=' + 10,
       );
       const response2 = await fetch(base.elsevier_url + `&query=${query}`);
-      //const response3 = await fetch(base.ieee_url + `&querytext=${query}`);
-      // const response4 = await fetch(base.google_scholar_url + `&q=${query}`);
-
       const json1 = await response1.json();
       const json2 = await response2.json();
-      // const json3 = await response3.json();
-      // const json4 = await response4.json();
-      //setTotal(json1?.result[0]?.total ?? 0);
-      //onDataChange(total);
-      //setData(json1.records);
       const dat =
         json2['search-results'] && json2['search-results']['entry']
           ? json2['search-results']['entry'].map((item: any) => {
-              return {
-                title: item['dc:title'],
-                publicationDate: item['prism:coverDate'],
-              };
-            })
-          : [];
-      setData2(dat);
-      /*
-      const dat3 =
-        json3.articles && json2.articles
-          ? json3.articles.map((item: any) => {
-              return {
-                title: item.publication_title,
-                publicationDate: item.publication_date,
-              };
-            })
-          : [];
-
-
-      const dat1 = json4.organic_results
-        ? json4.organic_results.map((item: any) => {
             return {
-              title: item.title,
-              publicationDate: '',
+              title: item['dc:title'],
+              publicationDate: item['prism:coverDate'],
             };
           })
-        : [];
-        
-        setData4(dat1);
-      */
-      //console.log('data....: ', json1.records);
-      //setData(json1.records);
-      //onDataChange(json1.records.length);
+          : [];
+      setData2(dat);
       const values: any[] = [...data, ...json1.records, ...data2];
-      //setTotal(json1?.result[0]?.total ?? 0);
-      //onDataChange(total);
       onDataChange(values.length);
       setData(values);
       setCurrentPage(currentPage + 1);
     } catch (error) {
-      //console.log('data....: ', data);
       Alert.alert(error + '');
     } finally {
       setLoading(false);
@@ -141,28 +105,19 @@ const SearchScreen = ({
   const [year, onChangeYear] = React.useState('2015');
   const [query, onChangeQuery] = React.useState('year:2015');
 
-  /*useEffect(() => {
-    makeSearch(query);
-    //aggregateSearch(query);
-    //makeSearch2(query);
-  }, [query]);
-  */
   return (
     <SafeAreaView style={styles.container}>
-      <Searchbar
-        placeholder="Type Here..."
-        onChangeText={onChangeQuery}
-        onSubmitEditing={() => {
-          //makeSearch(query);
-          aggregateSearch(query);
-        }}
+      <SearchBlock
         value={query}
-      />
+        onChangeInputQuery={onChangeQuery}
+        onSubmitInputQuery={() => {
+          aggregateSearch(query);
+        }} />
       {data && (
         <FlatList
           data={data}
-          keyExtractor={({title}, index) => title + index}
-          renderItem={({item}) => (
+          keyExtractor={({ title }, index) => title + index}
+          renderItem={({ item }) => (
             <View style={styles.item}>
               {(item as any).contentType !== 'Article' ? (
                 <Icon
@@ -204,7 +159,7 @@ const SearchScreen = ({
                     } as never,
                   );
                 }}
-                style={{flex: 1, flexWrap: 'wrap'}}>
+                style={{ flex: 1, flexWrap: 'wrap' }}>
                 {(item as any).title}, {(item as any).publicationDate}
               </Text>
               <View
@@ -220,12 +175,12 @@ const SearchScreen = ({
                   </MenuTrigger>
 
                   <MenuOptions>
-                    <MenuOption onSelect={() => {}} text="Cite" />
-                    <MenuOption onSelect={() => {}}>
-                      <Text style={{color: 'red'}}>Save</Text>
+                    <MenuOption onSelect={() => { }} text="Cite" />
+                    <MenuOption onSelect={() => { }}>
+                      <Text style={{ color: 'red' }}>Save</Text>
                     </MenuOption>
                     <MenuOption
-                      onSelect={() => {}}
+                      onSelect={() => { }}
                       disabled={true}
                       text="Recommand"
                     />
