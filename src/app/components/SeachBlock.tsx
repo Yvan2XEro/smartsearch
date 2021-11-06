@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Dimensions, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button, Searchbar, Text, TextInput } from 'react-native-paper';
@@ -50,7 +50,10 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
             return fastInputQuery
         return q
     }
-
+    useEffect(() => {
+        if (showToggleFiltersBtn)
+            setshowToggleFiltersBtn(false)
+    }, [])
     return (
         <View style={styles.component}>
             <View style={styles.rowContent}>
