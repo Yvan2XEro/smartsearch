@@ -60,7 +60,7 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
             <View style={styles.rowContent}>
                 <Searchbar
                     placeholder="Fast Search Here..."
-                    onFocus={() => setshowToggleFiltersBtn(true)}
+                    onPressIn={() => setshowToggleFiltersBtn(!showToggleFiltersBtn)}
                     onChangeText={text => setFastInputQuery(text)}
                     value={fastInputQuery}
                     onTouchCancel={() => setShowFiltersBlock(false)}
@@ -72,7 +72,7 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
                 </Button>}
             </View>
             <ScrollView style={styles.inputs}>
-                {showFiltersBlock &&
+                {showToggleFiltersBtn && showFiltersBlock &&
                     <KeyboardAvoidingView style={{ marginBottom: 60 }} behavior={undefined} keyboardVerticalOffset={keyboardVerticalOffset} >
                         <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, title: text })} mode='flat' label="Title" />
                         <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, publicationName: text })} mode='flat' label="Publication name" />
