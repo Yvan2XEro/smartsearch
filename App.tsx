@@ -1,9 +1,9 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { StyleSheet, Text } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {
   createDrawerNavigator,
@@ -15,17 +15,17 @@ import Icon from 'react-native-vector-icons/Octicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SearchScreen from './src/app/containers/SearchScreen';
 import DetailScreen from './src/app/containers/DetailScreen';
-import {MenuProvider} from 'react-native-popup-menu';
+import { MenuProvider } from 'react-native-popup-menu';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
-const SettingsScreen = ({navigation, route}: {navigation: any; route: any}) => {
+const SettingsScreen = ({ navigation, route }: { navigation: any; route: any }) => {
   return <Text>This is Settings page using search ontology</Text>;
 };
 
-const MenuIcon = ({navigate}: {navigate: any}) => (
+const MenuIcon = ({ navigate }: { navigate: any }) => (
   <Icon
     name="three-bars"
     size={30}
@@ -41,16 +41,16 @@ function Root() {
       drawerType="front"
       drawerContentOptions={{
         activeTintColor: '#e91e63',
-        itemStyle: {marginVertical: 10},
+        itemStyle: { marginVertical: 10 },
       }}
-      navigationOptions={({navigation}: {navigation: any}) => {
+      navigationOptions={({ navigation }: { navigation: any }) => {
         return {
           headerLeft: () => (
             <Icon
               name="md-menu"
               size={38}
               color="black"
-              style={{paddingLeft: 20}}
+              style={{ paddingLeft: 20 }}
               onPress={() => navigation('DrawerOpen')}
             />
           ),
@@ -90,7 +90,7 @@ function MyTabs() {
         component={Root}
         options={{
           tabBarLabel: 'Home',
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="home" color={color} size={size} />
           ),
         }}
@@ -101,7 +101,7 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Search',
           headerShown: false,
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="book-search-outline"
               color={color}
@@ -116,7 +116,7 @@ function MyTabs() {
         component={SettingsScreen}
         options={{
           tabBarLabel: 'Settings',
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="settings-display" color={color} size={size} />
           ),
         }}
@@ -171,5 +171,9 @@ const styles = StyleSheet.create({
     margin: 12,
   },
 });
+
+export const colors = {
+  violet: '#e91e63'
+}
 
 export default App;

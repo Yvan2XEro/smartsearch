@@ -104,7 +104,7 @@ const SearchScreen = ({
   };
 
   const [year, onChangeYear] = React.useState('2015');
-  const [query, onChangeQuery] = React.useState('year:2015');
+  const [query, onChangeQuery] = React.useState('');
 
   return (
     <SafeAreaView style={styles.container}>
@@ -143,6 +143,7 @@ const SearchScreen = ({
               )}
               <Text
                 onPress={() => {
+                  year
                   /* 1. Navigate to the Details route with params, passing the params as an object in the method navigate */
                   navigation.navigate(
                     'Details' as never,

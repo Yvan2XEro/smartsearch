@@ -1,21 +1,22 @@
-import React, { useRef, useState } from 'react'
-import { Dimensions, Keyboard, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react'
+import { Dimensions, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Button, List, Searchbar, TextInput } from 'react-native-paper';
+import { Button, Searchbar, Text, TextInput } from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface IProps {
     onChangeInputQuery: (query: string) => void,
     onSubmitInputQuery: () => void,
     value: string
 }
-
+const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0
 const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery, value }) => {
 
     const [showFiltersBlock, setShowFiltersBlock] = useState(false)
 
     const [fastInputQuery, setFastInputQuery] = useState('')
-
+    const [showToggleFiltersBtn, setshowToggleFiltersBtn] = useState(false)
     const [params, setParams] = useState({
         title: '',
         publicationName: '',
@@ -51,85 +52,83 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
     }
 
     return (
-        <View>
-            <Searchbar
-                placeholder="Fast Search Here..."
-                onPressIn={() => setShowFiltersBlock(!showFiltersBlock)}
-                onFocus={() => setShowFiltersBlock(true)}
-                onChangeText={text => setFastInputQuery(text)}
-                value={fastInputQuery}
-                onTouchCancel={() => setShowFiltersBlock(false)}
-                onSubmitEditing={handleSumitQuery}
-            />
-
-            <View >
-                <Button onPress={() => setShowFiltersBlock(!showFiltersBlock)}>
-                    {showFiltersBlock && <MaterialIcons name="close" />}
-                    <Text >Advenced Search</Text>
-                </Button>
+        <View style={styles.component}>
+            <View style={styles.rowContent}>
+                <Searchbar
+                    placeholder="Fast Search Here..."
+                    onFocus={() => setshowToggleFiltersBtn(true)}
+                    onChangeText={text => setFastInputQuery(text)}
+                    value={fastInputQuery}
+                    onTouchCancel={() => setShowFiltersBlock(false)}
+                    onSubmitEditing={handleSumitQuery}
+                    style={styles.searchBar}
+                />
+                {showToggleFiltersBtn && <Button mode="outlined" style={styles.btnToggleFilters} onPress={() => setShowFiltersBlock(!showFiltersBlock)}>
+                    {showFiltersBlock ? <MaterialIcons color="gray" size={20} name="cancel" /> : <MaterialCommunityIcons color="gray" size={20} name="text-box-search-outline" />}
+                </Button>}
+            </View>
+            <ScrollView style={styles.inputs}>
                 {showFiltersBlock &&
-                    <ScrollView>
-                        <View style={styles.filtersRow}>
-                            <View style={[styles.filterBlockInput]}>
-                                <TextInput onChangeText={text => setParams({ ...params, title: text })} mode='flat' label="Title" />
-                            </View>
-                            <View style={[styles.filterBlockInput]}>
-                                <TextInput onChangeText={text => setParams({ ...params, publicationName: text })} mode='flat' label="Publication name" />
-                            </View>
-                        </View>
-                        <View style={styles.filtersRow}>
-                            <View style={[styles.filterBlockInput]}>
-                                <TextInput onChangeText={text => setParams({ ...params, doi: text })} mode='flat' label="Doi" />
-                            </View>
-                            <View style={[styles.filterBlockInput]}>
-                                <TextInput onChangeText={text => setParams({ ...params, topicalCollection: text })} mode='flat' label="Topical Collection" />
-                            </View>
-                        </View>
-                        <View style={styles.filtersRow}>
-                            <View style={[styles.filterBlockInput, { flex: 3 }]}>
-                                <TextInput onChangeText={text => setParams({ ...params, issn: text })} mode='flat' label="Issn" />
-                            </View>
-                            <View style={[styles.filterBlockInput, { flex: 3 }]}>
-                                <TextInput onChangeText={text => setParams({ ...params, volume: parseInt(text) })} mode='flat' keyboardType="numeric" label="Volume" />
-                            </View>
-                            <View style={[styles.filterBlockInput, { flex: 3 }]}>
-                                <TextInput onChangeText={text => setParams({ ...params, number: parseInt(text) })} mode='flat' keyboardType="numeric" label="Number" />
-                            </View>
-                        </View>
-                        <View style={styles.filtersRow}>
-                            <View style={[styles.filterBlockInput]}>
-                                <TextInput onChangeText={text => setParams({ ...params, publisher: text })} mode='flat' label="Publisher" />
-                            </View>
-                            <View style={[styles.filterBlockInput]}>
-                                <TextInput onChangeText={text => setParams({ ...params, issuetype: text })} mode='flat' label="Issue type" />
-                            </View>
-                        </View>
-                        <View style={styles.filtersRow}>
-                            <View style={[styles.filterBlockInput]}>
-                                <TextInput onChangeText={text => setParams({ ...params, publicationDate: parseInt(text) })} keyboardType="numeric" mode='flat' label="Year" />
-                            </View>
-                            <View style={[styles.filterBlockInput]}>
-                                <TextInput onChangeText={text => setParams({ ...params, keyWords: text })} mode='flat' label="Key words" placeholder="Ex: security, informatic, network" />
-                            </View>
-                        </View>
-                        <Button onPress={handleSumitQuery}><MaterialIcons name="search" />Seach</Button>
-                    </ScrollView>
-                }</View>
+                    <KeyboardAvoidingView style={{ marginBottom: 60 }} behavior={undefined} keyboardVerticalOffset={keyboardVerticalOffset} >
+                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, title: text })} mode='flat' label="Title" />
+                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, publicationName: text })} mode='flat' label="Publication name" />
+                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, doi: text })} mode='flat' label="Doi" />
+                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, topicalCollection: text })} mode='flat' label="Topical Collection" />
+                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, issn: text })} mode='flat' label="Issn" />
+                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, volume: parseInt(text) })} mode='flat' keyboardType="numeric" label="Volume" />
+                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, number: parseInt(text) })} mode='flat' keyboardType="numeric" label="Number" />
+                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, publisher: text })} mode='flat' label="Publisher" />
+                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, issuetype: text })} mode='flat' label="Issue type" />
+                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, publicationDate: parseInt(text) })} keyboardType="numeric" mode='flat' label="Year" />
+                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, keyWords: text })} mode='flat' label="Key words" placeholder="Ex: security, informatic, network" />
+                        <Button style={[styles.input, styles.sumitBtn]} onPress={handleSumitQuery}><MaterialIcons name="search" color="gray" size={20} /></Button>
+                    </KeyboardAvoidingView>
+                }
+            </ScrollView>
         </View>
     )
 }
 
 const styles = StyleSheet.create(({
+    component: {
+        flexDirection: 'column',
+    },
     filterBlockInput: {
-        // maxWidth: Dimensions.get('window').width / 2 - 10,
         marginBottom: 3,
         marginHorizontal: 2,
         flex: 2
     },
-    filtersRow: {
+    rowContent: {
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         marginBottom: 2
+    },
+    searchBar: {
+        flex: 2,
+    },
+    inputs: {
+        paddingRight: 40,
+        paddingLeft: 10
+    },
+    input: {
+        backgroundColor: '#fff',
+        height: 50,
+        marginBottom: 15,
+        borderBottom: 0
+    },
+    btnToggleFilters: {
+        backgroundColor: '#fff',
+        shadowColor: "#red",
+        maxWidth: 70,
+        padding: 3,
+    },
+    sumitBtn: {
+        backgroundColor: '#fff',
+        width: 150,
+        marginBottom: 5,
+        marginLeft: 'auto',
+        borderColor: 'red',
+        marginRight: 'auto'
     }
 }
 ))
