@@ -128,6 +128,7 @@ const styles = StyleSheet.create(({
     },
     sumitBtn: {
         backgroundColor: '#fff',
+        paddingTop: 3,
         width: 150,
         marginBottom: 5,
         marginLeft: 'auto',
