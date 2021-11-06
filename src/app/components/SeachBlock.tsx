@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
+import { Dimensions, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button, Searchbar, Text, TextInput } from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -62,7 +62,7 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
     }, [])
     return (
         <View style={styles.component}>
-            <View style={styles.rowContent}>
+            {/* <View style={styles.rowContent}>
                 <Searchbar
                     placeholder="Fast Search Here..."
                     onFocus={() => setshowToggleFiltersBtn(true)}
@@ -73,10 +73,23 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
                     onTouchCancel={() => setShowFiltersBlock(false)}
                     onSubmitEditing={handleSumitQuery}
                     style={styles.searchBar}
-                />
+                ></Searchbar>
                 {showToggleFiltersBtn && <Button mode="outlined" style={styles.btnToggleFilters} onPress={() => setShowFiltersBlock(!showFiltersBlock)}>
                     {showFiltersBlock ? <MaterialIcons color="gray" size={20} name="cancel" /> : <MaterialCommunityIcons color="gray" size={20} name="text-box-search-outline" />}
                 </Button>}
+            </View> */}
+            <View style={styles.parent}>
+                <Searchbar
+                    value={value}
+                    style={styles.searchBar}
+                />
+                <TouchableOpacity
+                    style={styles.closeButtonParent}
+                >
+                    {showToggleFiltersBtn && <Button mode="outlined" style={styles.btnToggleFilters} onPress={() => setShowFiltersBlock(!showFiltersBlock)}>
+                        {showFiltersBlock ? <MaterialIcons color="gray" size={20} name="cancel" /> : <MaterialCommunityIcons color="gray" size={20} name="text-box-search-outline" />}
+                    </Button>}
+                </TouchableOpacity>
             </View>
             <ScrollView style={styles.inputs}>
                 {showToggleFiltersBtn && showFiltersBlock &&
@@ -141,7 +154,26 @@ const styles = StyleSheet.create(({
         marginLeft: 'auto',
         borderColor: 'red',
         marginRight: 'auto'
-    }
+    }, textInput: {
+        height: 40,
+        width: "90%",
+    },
+    closeButton: {
+        height: 16,
+        width: 16,
+    },
+    closeButtonParent: {
+        justifyContent: "center",
+        alignItems: "center",
+        marginRight: 5,
+    },
+    parent: {
+        // borderColor: "gray",
+        borderRadius: 5,
+        borderWidth: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
 }
 ))
 
