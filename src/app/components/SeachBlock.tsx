@@ -51,6 +51,11 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
             return fastInputQuery
         return q
     }
+    const handleToggleBtn = () => {
+        if (!showFiltersBlock) {
+            setshowToggleFiltersBtn(false)
+        }
+    }
     useEffect(() => {
         if (showToggleFiltersBtn)
             setshowToggleFiltersBtn(false)
@@ -60,6 +65,8 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
             <View style={styles.rowContent}>
                 <Searchbar
                     placeholder="Fast Search Here..."
+                    onFocus={() => setshowToggleFiltersBtn(true)}
+                    onBlur={() => handleToggleBtn()}
                     onPressIn={() => setshowToggleFiltersBtn(!showToggleFiltersBtn)}
                     onChangeText={text => setFastInputQuery(text)}
                     value={fastInputQuery}
