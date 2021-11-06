@@ -24,7 +24,7 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
         issn: '',
         doi: '',
         publisher: '',
-        publicationDate: 2000,
+        publicationDate: 0,
         volume: 0,
         number: 0,
         issuetype: '',
@@ -36,6 +36,7 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
         const query = buildQueryWithInputFilters()
         onChangeInputQuery(query)
         setShowFiltersBlock(false)
+        setshowToggleFiltersBtn(false)
         onSubmitInputQuery()
     }
     const buildQueryWithInputFilters = () => {
@@ -73,17 +74,17 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
             <ScrollView style={styles.inputs}>
                 {showFiltersBlock &&
                     <KeyboardAvoidingView style={{ marginBottom: 60 }} behavior={undefined} keyboardVerticalOffset={keyboardVerticalOffset} >
-                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, title: text })} mode='flat' label="Title" />
-                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, publicationName: text })} mode='flat' label="Publication name" />
-                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, doi: text })} mode='flat' label="Doi" />
-                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, topicalCollection: text })} mode='flat' label="Topical Collection" />
-                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, issn: text })} mode='flat' label="Issn" />
-                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, volume: parseInt(text) })} mode='flat' keyboardType="numeric" label="Volume" />
-                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, number: parseInt(text) })} mode='flat' keyboardType="numeric" label="Number" />
-                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, publisher: text })} mode='flat' label="Publisher" />
-                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, issuetype: text })} mode='flat' label="Issue type" />
-                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, publicationDate: parseInt(text) })} keyboardType="numeric" mode='flat' label="Year" />
-                        <TextInput style={styles.input} onChangeText={text => setParams({ ...params, keyWords: text })} mode='flat' label="Key words" placeholder="Ex: security, informatic, network" />
+                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, title: text })} mode='flat' label="Title" />
+                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, publicationName: text })} mode='flat' label="Publication name" />
+                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, doi: text })} mode='flat' label="Doi" />
+                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, topicalCollection: text })} mode='flat' label="Topical Collection" />
+                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, issn: text })} mode='flat' label="Issn" />
+                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, volume: parseInt(text) })} mode='flat' keyboardType="numeric" label="Volume" />
+                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, number: parseInt(text) })} mode='flat' keyboardType="numeric" label="Number" />
+                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, publisher: text })} mode='flat' label="Publisher" />
+                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, issuetype: text })} mode='flat' label="Issue type" />
+                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, publicationDate: parseInt(text) })} keyboardType="numeric" mode='flat' label="Year" />
+                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, keyWords: text })} mode='flat' label="Key words" placeholder="Ex: security, informatic, network" />
                         <Button style={[styles.input, styles.sumitBtn]} onPress={handleSumitQuery}><MaterialIcons name="search" color="gray" size={20} /></Button>
                     </KeyboardAvoidingView>
                 }
