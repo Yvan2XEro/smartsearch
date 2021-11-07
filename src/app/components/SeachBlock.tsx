@@ -88,7 +88,6 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
                     value={fastInputQuery}
                     onTouchCancel={() => setShowFiltersBlock(false)}
                     onSubmitEditing={handleSumitQuery}
-                    value={value}
                     style={styles.searchBar}
                 />
                 <TouchableOpacity
