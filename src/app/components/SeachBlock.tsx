@@ -4,6 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Button, Searchbar, Text, TextInput } from 'react-native-paper';
 import { TextInput as RnTextInput } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface IProps {
@@ -90,17 +91,46 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
             <ScrollView style={styles.inputs}>
                 {showToggleFiltersBtn && showFiltersBlock &&
                     <KeyboardAvoidingView style={{ marginBottom: 60 }} behavior={undefined} keyboardVerticalOffset={keyboardVerticalOffset} >
-                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, title: text })} mode='flat' label="Title" />
-                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, publicationName: text })} mode='flat' label="Publication name" />
-                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, doi: text })} mode='flat' label="Doi" />
-                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, topicalCollection: text })} mode='flat' label="Topical Collection" />
-                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, issn: text })} mode='flat' label="Issn" />
-                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, volume: parseInt(text) })} mode='flat' keyboardType="numeric" label="Volume" />
-                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, number: parseInt(text) })} mode='flat' keyboardType="numeric" label="Number" />
-                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, publisher: text })} mode='flat' label="Publisher" />
-                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, issuetype: text })} mode='flat' label="Issue type" />
-                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, publicationDate: parseInt(text) })} keyboardType="numeric" mode='flat' label="Year" />
-                        <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, keyWords: text })} mode='flat' label="Key words" placeholder="Ex: security, informatic, network" />
+                        <View style={styles.flexRow}>
+                            <MaterialCommunityIcons name="book" size={50} />
+                            <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, title: text })} mode='flat' label="Title" />
+                        </View>
+                        <View style={styles.flexRow}>
+                            <MaterialIcons name="drive-file-rename-outline" size={50} />
+                            <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, publicationName: text })} mode='flat' label="Publication name" />
+                        </View>
+                        <View style={styles.flexRow}>
+                            <MaterialCommunityIcons name="identifier" size={50} />
+                            <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, doi: text })} mode='flat' label="Doi" />
+                        </View>
+                        <View style={styles.flexRow}>
+                            <MaterialCommunityIcons name="bookshelf" size={50} />
+                            <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, topicalCollection: text })} mode='flat' label="Topical Collection" />
+                        </View>
+                        <View style={styles.flexRow}>
+                            <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, issn: text })} mode='flat' label="Issn" />
+                        </View>
+                        <View style={styles.flexRow}>
+                            <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, volume: parseInt(text) })} mode='flat' keyboardType="numeric" label="Volume" />
+                        </View>
+                        <View style={styles.flexRow}>
+                            <MaterialCommunityIcons name="sort-numeric-variant" size={50} />
+                            <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, number: parseInt(text) })} mode='flat' keyboardType="numeric" label="Number" />
+                        </View>
+                        <View style={styles.flexRow}>
+                            <Entypo name="user" size={47} />
+                            <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, publisher: text })} mode='flat' label="Publisher" />
+                        </View>
+                        <View style={styles.flexRow}>
+                            <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, issuetype: text })} mode='flat' label="Issue type" />
+                        </View>
+                        <View style={styles.flexRow}>
+                            <MaterialCommunityIcons name="calendar-blank" size={50} />
+                            <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, publicationDate: parseInt(text) })} keyboardType="numeric" mode='flat' label="Year" />
+                        </View>
+                        <View style={styles.flexRow}>
+                            <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, keyWords: text })} mode='flat' label="Key words" placeholder="Ex: security, informatic, network" />
+                        </View>
                         <Button style={[styles.input, styles.sumitBtn]} onPress={handleSumitQuery}><MaterialIcons name="search" color="gray" size={20} /></Button>
                     </KeyboardAvoidingView>
                 }
@@ -112,6 +142,10 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
 const styles = StyleSheet.create(({
     component: {
         flexDirection: 'column',
+    },
+    flexRow: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
     },
     filterBlockInput: {
         marginBottom: 3,
@@ -136,6 +170,7 @@ const styles = StyleSheet.create(({
         paddingLeft: 10
     },
     input: {
+        flex: 2,
         backgroundColor: '#fff',
         height: 50,
         marginBottom: 15,
