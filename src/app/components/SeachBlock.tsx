@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Dimensions, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button, Searchbar, Text, TextInput } from 'react-native-paper';
+import { TextInput as RnTextInput } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -62,24 +63,9 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
     }, [])
     return (
         <View style={styles.component}>
-            {/* <View style={styles.rowContent}>
-                <Searchbar
-                    placeholder="Fast Search Here..."
-                    onFocus={() => setshowToggleFiltersBtn(true)}
-                    onBlur={() => handleToggleBtn()}
-                    onPressIn={() => setshowToggleFiltersBtn(!showToggleFiltersBtn)}
-                    onChangeText={text => setFastInputQuery(text)}
-                    value={fastInputQuery}
-                    onTouchCancel={() => setShowFiltersBlock(false)}
-                    onSubmitEditing={handleSumitQuery}
-                    style={styles.searchBar}
-                ></Searchbar>
-                {showToggleFiltersBtn && <Button mode="outlined" style={styles.btnToggleFilters} onPress={() => setShowFiltersBlock(!showFiltersBlock)}>
-                    {showFiltersBlock ? <MaterialIcons color="gray" size={20} name="cancel" /> : <MaterialCommunityIcons color="gray" size={20} name="text-box-search-outline" />}
-                </Button>}
-            </View> */}
-            <View style={styles.parent}>
-                <Searchbar
+            <View style={[styles.rowContent]}>
+                <MaterialIcons name="search" size={25} style={{ marginTop: 10 }} />
+                <RnTextInput
                     placeholder="Fast Search Here..."
                     onFocus={() => setshowToggleFiltersBtn(true)}
                     onBlur={() => handleToggleBtn()}
@@ -90,13 +76,16 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
                     onSubmitEditing={handleSumitQuery}
                     style={styles.searchBar}
                 />
-                <TouchableOpacity
-                    style={styles.closeButtonParent}
-                >
-                    {showToggleFiltersBtn && <Button mode="outlined" style={styles.btnToggleFilters} onPress={() => setShowFiltersBlock(!showFiltersBlock)}>
-                        {showFiltersBlock ? <MaterialIcons color="gray" size={20} name="cancel" /> : <MaterialCommunityIcons color="gray" size={20} name="text-box-search-outline" />}
-                    </Button>}
-                </TouchableOpacity>
+                {fastInputQuery != '' &&
+                    <TouchableOpacity onPress={() => setFastInputQuery('')}>
+                        <MaterialCommunityIcons style={{ marginTop: 10, marginRight: 20 }} name="close-circle" size={25} />
+                    </TouchableOpacity>
+                }
+                {showToggleFiltersBtn &&
+                    <TouchableOpacity style={styles.btnToggleFilters} onPress={() => setShowFiltersBlock(!showFiltersBlock)}>
+                        <MaterialCommunityIcons color={showFiltersBlock ? "red" : "green"} size={25} name="text-search" />
+                    </TouchableOpacity>
+                }
             </View>
             <ScrollView style={styles.inputs}>
                 {showToggleFiltersBtn && showFiltersBlock &&
@@ -132,7 +121,12 @@ const styles = StyleSheet.create(({
     rowContent: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        marginBottom: 2
+        marginBottom: 2,
+        backgroundColor: '#fff',
+        borderBottomColor: 'gray',
+        borderBottomWidth: 1,
+        paddingRight: 10,
+        paddingLeft: 10
     },
     searchBar: {
         flex: 2,
@@ -149,37 +143,26 @@ const styles = StyleSheet.create(({
     },
     btnToggleFilters: {
         backgroundColor: '#fff',
-        shadowColor: "#red",
         maxWidth: 70,
-        padding: 3,
+        paddingTop: 13,
+        paddingRight: 10,
     },
     sumitBtn: {
-        backgroundColor: '#fff',
+        borderColor: '#e91e63',
         paddingTop: 3,
-        width: 150,
         marginBottom: 5,
         marginLeft: 'auto',
-        borderColor: 'red',
+        borderWidth: 0.5,
+        width: '100%',
         marginRight: 'auto'
-    }, textInput: {
+    },
+    textInput: {
         height: 40,
         width: "90%",
     },
     closeButton: {
         height: 16,
         width: 16,
-    },
-    closeButtonParent: {
-        justifyContent: "center",
-        alignItems: "center",
-        marginRight: 5,
-    },
-    parent: {
-        // borderColor: "gray",
-        borderRadius: 5,
-        borderWidth: 1,
-        flexDirection: "row",
-        justifyContent: "space-between",
     },
 }
 ))
