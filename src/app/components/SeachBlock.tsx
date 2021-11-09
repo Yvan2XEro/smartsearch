@@ -108,9 +108,11 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
                             <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, topicalCollection: text })} mode='flat' label="Topical Collection" />
                         </View>
                         <View style={styles.flexRow}>
+                            <View style={styles.emptyIcons}></View>
                             <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, issn: text })} mode='flat' label="Issn" />
                         </View>
                         <View style={styles.flexRow}>
+                            <View style={styles.emptyIcons}></View>
                             <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, volume: parseInt(text) })} mode='flat' keyboardType="numeric" label="Volume" />
                         </View>
                         <View style={styles.flexRow}>
@@ -122,6 +124,7 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
                             <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, publisher: text })} mode='flat' label="Publisher" />
                         </View>
                         <View style={styles.flexRow}>
+                            <View style={styles.emptyIcons}></View>
                             <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, issuetype: text })} mode='flat' label="Issue type" />
                         </View>
                         <View style={styles.flexRow}>
@@ -129,6 +132,7 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
                             <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, publicationDate: parseInt(text) })} keyboardType="numeric" mode='flat' label="Year" />
                         </View>
                         <View style={styles.flexRow}>
+                            <View style={styles.emptyIcons}></View>
                             <TextInput theme={{ colors: { primary: 'gray' } }} style={styles.input} onChangeText={text => setParams({ ...params, keyWords: text })} mode='flat' label="Key words" placeholder="Ex: security, informatic, network" />
                         </View>
                         <Button style={[styles.input, styles.sumitBtn]} onPress={handleSumitQuery}><MaterialIcons name="search" color="gray" size={20} /></Button>
@@ -199,6 +203,9 @@ const styles = StyleSheet.create(({
         height: 16,
         width: 16,
     },
+    emptyIcons: {
+        width: 50
+    }
 }
 ))
 
