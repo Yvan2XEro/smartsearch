@@ -2,14 +2,17 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { MenuProvider } from 'react-native-popup-menu';
+import {Provider as PaperProvider } from 'react-native-paper'
 import RootNavigation from './src/app/navigations/RootNavigation';
 
 const App = () => {
   return (
     <MenuProvider>
-      <NavigationContainer>
-        <RootNavigation />
-      </NavigationContainer>
+      <PaperProvider>
+        <NavigationContainer>
+          <RootNavigation />
+        </NavigationContainer>
+      </PaperProvider>
     </MenuProvider>
   );
 };

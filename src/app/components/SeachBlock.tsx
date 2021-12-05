@@ -20,6 +20,7 @@ import {
   MenuOptions,
   MenuTrigger,
 } from 'react-native-popup-menu';
+import ListResultsModal from './ListResultsModal';
 
 interface IProps {
   onChangeInputQuery: (query: string) => void;
@@ -27,6 +28,7 @@ interface IProps {
   value: string;
   showSaveQueryButton: boolean;
   onSaveQuery: any;
+  onSelectItem:any;
 }
 const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0;
 const SearchBlock: React.FC<IProps> = ({
@@ -35,6 +37,7 @@ const SearchBlock: React.FC<IProps> = ({
   value,
   showSaveQueryButton,
   onSaveQuery,
+  onSelectItem,
 }) => {
   const [showFiltersBlock, setShowFiltersBlock] = useState(false);
 
@@ -52,6 +55,8 @@ const SearchBlock: React.FC<IProps> = ({
     issuetype: '',
     keyWords: '',
   });
+
+  const [showModal,setShowModal] = useState(false);
 
   const handleSumitQuery = () => {
     Keyboard.dismiss();
@@ -118,7 +123,7 @@ const SearchBlock: React.FC<IProps> = ({
                 </Text>
               </View>
             </MenuOption>
-            <MenuOption onSelect={() => {}}>
+            <MenuOption onSelect={() => setShowModal(true)}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <MaterialIcons
                   style={{marginRight: 3}}
@@ -269,6 +274,14 @@ const SearchBlock: React.FC<IProps> = ({
           </KeyboardAvoidingView>
         )}
       </ScrollView>
+      <ListResultsModal
+        onSelectItem={(data: any[])=>{
+            onSelectItem(data)
+            setShowModal(false)
+        }}
+        onDismiss={() => setShowModal(false)}
+        visible={showModal}
+      />
     </View>
   );
 };

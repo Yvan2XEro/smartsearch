@@ -118,6 +118,7 @@ const SearchScreen = ({
     <SafeAreaView style={styles.container}>
       <SearchBlock
         value={query}
+        onSelectItem={setData}
         onChangeInputQuery={setQuery}
         onSubmitInputQuery={() => {
           setData([]);
