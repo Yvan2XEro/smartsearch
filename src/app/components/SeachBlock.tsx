@@ -65,7 +65,7 @@ const SearchBlock: React.FC<IProps> = ({
   return (
     <View style={styles.component}>
       <View style={[styles.rowContent]}>
-        <MaterialIcons name="search" size={25} style={{marginTop: 10}} />
+        <MaterialIcons name="search" size={30} style={{marginTop: 10}} />
         <RnTextInput
           placeholder="Fast Search Here..."
           onChangeText={text => setFastInputQuery(text)}
@@ -99,7 +99,7 @@ const SearchBlock: React.FC<IProps> = ({
             behavior={undefined}
             keyboardVerticalOffset={keyboardVerticalOffset}>
             <View style={styles.flexRow}>
-              <MaterialCommunityIcons name="book" size={50} />
+              <Entypo name="book" size={50} />
               <TextInput
                 theme={{colors: {primary: 'gray'}}}
                 style={styles.input}
@@ -225,7 +225,7 @@ const SearchBlock: React.FC<IProps> = ({
             <Button
               style={[styles.input, styles.sumitBtn]}
               onPress={handleSumitQuery}>
-              <MaterialIcons name="search" color="gray" size={20} />
+              <MaterialIcons name="search" color="white" size={20} />
             </Button>
           </KeyboardAvoidingView>
         )}
@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   sumitBtn: {
-    borderColor: '#e91e63',
+    backgroundColor: '#2B49F7',
     paddingTop: 3,
     marginBottom: 5,
     marginLeft: 'auto',

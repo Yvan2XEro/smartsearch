@@ -9,17 +9,10 @@ import {
   View,
 } from 'react-native';
 import * as base from '../api/constants';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Document} from '../models/Document';
 import {useNavigation} from '@react-navigation/native';
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from 'react-native-popup-menu';
 import SearchBlock from '../components/SeachBlock';
+import DocItem from '../components/DocItem';
 
 const SearchScreen = ({
   onDataChange,
@@ -70,33 +63,33 @@ const SearchScreen = ({
     }
   };
 
-  const makeSearch = async (query: string, doi?: string) => {
-    setLoading(true);
-    try {
-      const response = await fetch(base.springer_url + `&q=${query}`);
-      const json = await response.json();
-      setTotal(json?.result[0]?.total ?? 0);
-      onDataChange(total);
-      setData(json.records);
-    } catch (error) {
-      Alert.alert(error + '');
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const makeSearch = async (query: string, doi?: string) => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await fetch(base.springer_url + `&q=${query}`);
+  //     const json = await response.json();
+  //     setTotal(json?.result[0]?.total ?? 0);
+  //     onDataChange(total);
+  //     setData(json.records);
+  //   } catch (error) {
+  //     Alert.alert(error + '');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  const makeSearch2 = async (req: string, doi?: string) => {
-    try {
-      const response = await fetch(base.elsevier_url + `&query=${req}`);
-      const json = await response.json();
-      setTotal(+json['search-results']['opensearch:totalResults']);
-      setData2(json['search-results']['entry']);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading2(false);
-    }
-  };
+  // const makeSearch2 = async (req: string, doi?: string) => {
+  //   try {
+  //     const response = await fetch(base.elsevier_url + `&query=${req}`);
+  //     const json = await response.json();
+  //     setTotal(+json['search-results']['opensearch:totalResults']);
+  //     setData2(json['search-results']['entry']);
+  //   } catch (error) {
+  //     console.error(error);
+  //   } finally {
+  //     setLoading2(false);
+  //   }
+  // };
 
   const [year, onChangeYear] = React.useState('2015');
   const [query, onChangeQuery] = React.useState('');
@@ -107,6 +100,8 @@ const SearchScreen = ({
         value={query}
         onChangeInputQuery={onChangeQuery}
         onSubmitInputQuery={() => {
+          setData([]);
+          setData2([])
           aggregateSearch(query);
         }}
       />
@@ -115,80 +110,29 @@ const SearchScreen = ({
           data={data}
           keyExtractor={({title}, index) => title + index}
           renderItem={({item}) => (
-            <View style={styles.item}>
-              {(item as any).contentType !== 'Article' ? (
-                <Icon
-                  name="book"
-                  size={30}
-                  style={{
-                    marginRight: 10,
-                    marginLeft: 0,
-                    color: 'purple',
-                  }}
-                />
-              ) : (
-                <MaterialIcons
-                  name="article"
-                  size={30}
-                  style={{
-                    marginRight: 10,
-                    marginLeft: 0,
-                    color: 'lightred',
-                  }}
-                />
-              )}
-              <Text
-                onPress={() => {
-                  year;
-                  /* 1. Navigate to the Details route with params, passing the params as an object in the method navigate */
-                  navigation.navigate(
-                    'SearchStack' as never,
-                    {
-                      screen: 'Details',
-                      params: {
-                        document: {
-                          title: (item as any).title,
-                          publicationDate: (item as any).publicationDate,
-                          contentType: (item as any).contentType,
-                          publisher: (item as any).publisher,
-                          abstract: (item as any).abstract,
-                          doi: (item as any).doi,
-                          openaccess: (item as any).openaccess,
-                          authors: (item as any).creators,
-                        } as Document,
-                      },
-                    } as never,
-                  );
-                }}
-                style={{flex: 1, flexWrap: 'wrap'}}>
-                {(item as any).title}, {(item as any).publicationDate}
-              </Text>
-              <View
-                style={{
-                  alignSelf: 'flex-start',
-                  position: 'absolute',
-                  paddingLeft: 15,
-                  right: 0,
-                }}>
-                <Menu>
-                  <MenuTrigger>
-                    <Icon name="dots-vertical" color="gray" size={20} />
-                  </MenuTrigger>
-
-                  <MenuOptions>
-                    <MenuOption onSelect={() => {}} text="Cite" />
-                    <MenuOption onSelect={() => {}}>
-                      <Text style={{color: 'red'}}>Save</Text>
-                    </MenuOption>
-                    <MenuOption
-                      onSelect={() => {}}
-                      disabled={true}
-                      text="Recommand"
-                    />
-                  </MenuOptions>
-                </Menu>
-              </View>
-            </View>
+            <DocItem
+              doc={item}
+              onPress={() => {
+                navigation.navigate(
+                  'SearchStack' as never,
+                  {
+                    screen: 'Details',
+                    params: {
+                      document: {
+                        title: (item as any).title,
+                        publicationDate: (item as any).publicationDate,
+                        contentType: (item as any).contentType,
+                        publisher: (item as any).publisher,
+                        abstract: (item as any).abstract,
+                        doi: (item as any).doi,
+                        openaccess: (item as any).openaccess,
+                        authors: (item as any).creators,
+                      } as Document,
+                    },
+                  } as never,
+                );
+              }}
+            />
           )}
           initialNumToRender={10} // how many item to display first
           onEndReachedThreshold={2} // so when you are at 5 pixel from the bottom react run onEndReached function
@@ -204,22 +148,6 @@ const SearchScreen = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  item: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    height: 60,
-    padding: 12,
-    shadowColor: 'rgb(0, 0, 0)',
-    shadowOffset: {
-      width: 3,
-      height: 3,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-    elevation: 2,
-    backgroundColor: 'white',
-    margin: 5,
   },
   item2: {
     backgroundColor: 'lightgray',
