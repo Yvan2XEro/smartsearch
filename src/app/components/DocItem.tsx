@@ -1,5 +1,5 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 import {
   Menu,
   MenuOptions,
@@ -9,65 +9,59 @@ import {
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const DocItem = ({doc, onPress}: {doc:any, onPress: any}) => {
-    return (
-      <View style={styles.doc}>
-        {(doc as any).contentType !== 'Article' ? (
-          <Icon
-            name="book"
-            size={30}
-            style={{
-              marginRight: 10,
-              marginLeft: 0,
-              color: 'purple',
-            }}
-          />
-        ) : (
-          <MaterialIcons
-            name="article"
-            size={30}
-            style={{
-              marginRight: 10,
-              marginLeft: 0,
-              color: 'lightred',
-            }}
-          />
-        )}
-        <Text
-          onPress={onPress}
-          style={{flex: 1, flexWrap: 'wrap'}}>
-          {(doc as any).title}, {(doc as any).publicationDate}
-        </Text>
-        <View
+const DocItem = ({doc, onPress}: {doc: any; onPress: any}) => {
+  return (
+    <View style={styles.doc}>
+      {(doc as any).contentType !== 'Article' ? (
+        <Icon
+          name="book"
+          size={30}
           style={{
-            alignSelf: 'flex-start',
-            position: 'absolute',
-            paddingLeft: 15,
-            right: 0,
-          }}>
-          <Menu>
-            <MenuTrigger>
-              <Icon name="dots-vertical" color="gray" size={20} />
-            </MenuTrigger>
+            marginRight: 10,
+            marginLeft: 0,
+            color: 'purple',
+          }}
+        />
+      ) : (
+        <MaterialIcons
+          name="article"
+          size={30}
+          style={{
+            marginRight: 10,
+            marginLeft: 0,
+            color: 'lightred',
+          }}
+        />
+      )}
+      <Text onPress={onPress} style={{flex: 1, flexWrap: 'wrap'}}>
+        {(doc as any).title}, {(doc as any).publicationDate}
+      </Text>
+      <View
+        style={{
+          alignSelf: 'flex-start',
+          position: 'absolute',
+          paddingLeft: 15,
+          right: 0,
+        }}>
+        <Menu>
+          <MenuTrigger>
+            <Icon name="dots-vertical" color="gray" size={20} />
+          </MenuTrigger>
 
-            <MenuOptions>
-              <MenuOption onSelect={() => {}} text="Cite" />
-              <MenuOption onSelect={() => {}}>
-                <Text style={{color: 'red'}}>Save</Text>
-              </MenuOption>
-              <MenuOption
-                onSelect={() => {}}
-                disabled={true}
-                text="Recommand"
-              />
-            </MenuOptions>
-          </Menu>
-        </View>
+          <MenuOptions>
+            <MenuOption onSelect={() => {}} text="Cite" />
+            <MenuOption onSelect={() => {}}>
+              <Text style={{color: 'red'}}>Save</Text>
+            </MenuOption>
+            <MenuOption onSelect={() => {}} disabled={true} text="Recommand" />
+          </MenuOptions>
+        </Menu>
       </View>
-    );
-}
+    </View>
+  );
+};
 
-export default DocItem
+export default DocItem;
 
 const styles = StyleSheet.create({
   doc: {

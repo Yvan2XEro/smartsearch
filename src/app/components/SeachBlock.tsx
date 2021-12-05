@@ -28,7 +28,7 @@ interface IProps {
   value: string;
   showSaveQueryButton: boolean;
   onSaveQuery: any;
-  onSelectItem:any;
+  onSelectItem: any;
 }
 const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0;
 const SearchBlock: React.FC<IProps> = ({
@@ -56,7 +56,7 @@ const SearchBlock: React.FC<IProps> = ({
     keyWords: '',
   });
 
-  const [showModal,setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleSumitQuery = () => {
     Keyboard.dismiss();
@@ -275,9 +275,9 @@ const SearchBlock: React.FC<IProps> = ({
         )}
       </ScrollView>
       <ListResultsModal
-        onSelectItem={(data: any[])=>{
-            onSelectItem(data)
-            setShowModal(false)
+        onSelectItem={(data: any[]) => {
+          onSelectItem(data);
+          setShowModal(false);
         }}
         onDismiss={() => setShowModal(false)}
         visible={showModal}

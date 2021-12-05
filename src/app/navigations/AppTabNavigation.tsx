@@ -1,17 +1,17 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React, { useState } from 'react'
-import { Text } from 'react-native-paper';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import React, {useState} from 'react';
+import {Text} from 'react-native-paper';
 import SearchScreen from '../containers/SearchScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AppHeader from '../components/AppHeader';
 
 const Tab = createBottomTabNavigator();
-const SettingsScreen = ({ navigation, route }: { navigation: any; route: any }) => {
+const SettingsScreen = ({navigation, route}: {navigation: any; route: any}) => {
   return <Text>This is Settings page using search ontology</Text>;
 };
 
-const HomeScreen = ({ navigation, route }: { navigation: any; route: any }) => {
+const HomeScreen = ({navigation, route}: {navigation: any; route: any}) => {
   return <Text>This is home page</Text>;
 };
 export function AppTabNavigation() {
