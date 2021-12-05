@@ -113,7 +113,9 @@ const SearchBlock: React.FC<IProps> = ({
                   size={20}
                   name="content-save-all-outline"
                 />
-                <Text style={!showSaveQueryButton && {color: 'gray'}}>Save this query</Text>
+                <Text style={!showSaveQueryButton && {color: 'gray'}}>
+                  Save this results
+                </Text>
               </View>
             </MenuOption>
             <MenuOption onSelect={() => {}}>
@@ -123,7 +125,7 @@ const SearchBlock: React.FC<IProps> = ({
                   size={20}
                   name="snippet-folder"
                 />
-                <Text>Saved queries</Text>
+                <Text>Saved results</Text>
               </View>
             </MenuOption>
           </MenuOptions>
