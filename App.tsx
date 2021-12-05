@@ -16,6 +16,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import SearchScreen from './src/app/containers/SearchScreen';
 import DetailScreen from './src/app/containers/DetailScreen';
 import { MenuProvider } from 'react-native-popup-menu';
+import RootNavigation from './src/app/navigations/RootNavigation';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -129,7 +130,7 @@ const App = () => {
   return (
     <MenuProvider>
       <NavigationContainer>
-        <MyTabs />
+        <RootNavigation />
       </NavigationContainer>
     </MenuProvider>
   );

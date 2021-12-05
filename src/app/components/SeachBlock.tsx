@@ -84,7 +84,7 @@ const SearchBlock: React.FC<IProps> = ({ onChangeInputQuery, onSubmitInputQuery,
                 }
                 {showToggleFiltersBtn &&
                     <TouchableOpacity style={styles.btnToggleFilters} onPress={() => setShowFiltersBlock(!showFiltersBlock)}>
-                        <MaterialCommunityIcons color={showFiltersBlock ? "red" : "green"} size={25} name="text-search" />
+                        <MaterialCommunityIcons size={25} name={showFiltersBlock?"filter-menu":"filter-menu-outline"} />
                     </TouchableOpacity>
                 }
             </View>
