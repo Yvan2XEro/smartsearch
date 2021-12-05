@@ -106,7 +106,7 @@ const SearchBlock: React.FC<IProps> = ({
             <Entypo name="dots-three-vertical" color="gray" size={25} />
           </MenuTrigger>
           <MenuOptions>
-            <MenuOption onSelect={onSaveQuery} disabled={showSaveQueryButton}>
+            <MenuOption onSelect={onSaveQuery} disabled={!showSaveQueryButton}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <MaterialCommunityIcons
                   style={{marginRight: 3}}
