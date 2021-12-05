@@ -33,11 +33,11 @@ const ListResultsModal = ({
     loadQueries();
   }, []);
 
-  const remove = (name:string) => {
-      const q = queries.filter(item=>(item as any).name!=name)
-      setQueries(q)
-      localStorage.set("queries", JSON.stringify(q))
-  }; 
+  const remove = (name: string) => {
+    const q = queries.filter(item => (item as any).name != name);
+    setQueries(q);
+    localStorage.set('queries', JSON.stringify(q));
+  };
   return (
     <Portal>
       <Modal
@@ -87,7 +87,9 @@ const ListResultsModal = ({
                     <Text style={{fontSize: 10}}>{searchedAt}</Text>
                   </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{marginLeft: 25}} onPress={()=>remove(name)}>
+                <TouchableOpacity
+                  style={{marginLeft: 25}}
+                  onPress={() => remove(name)}>
                   <SimpleLineIcons color="black" name="trash" size={25} />
                 </TouchableOpacity>
               </View>

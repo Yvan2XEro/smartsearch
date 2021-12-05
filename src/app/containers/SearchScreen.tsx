@@ -35,11 +35,13 @@ const SearchScreen = ({
         queriesTab = [...JSON.parse(queries)];
       }
       // if (queriesTab.indexOf(buildedQuery) != -1 && buildedQuery!="")
-      pushIfNotExists(queriesTab,{
+      pushIfNotExists(queriesTab, {
         query: buildedQuery,
-        name: "Search_"+moment(new Date().getTime()).format("YYYY-MM-DD HH:mm:ss"),
-        searchedAt: moment(new Date().getTime()).format("YYYY-MM-DD HH:mm:ss"),
-        data
+        name:
+          'Search_' +
+          moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss'),
+        searchedAt: moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss'),
+        data,
       });
       await localStorage.set('queries', JSON.stringify(queriesTab));
     } catch (error) {
@@ -47,9 +49,9 @@ const SearchScreen = ({
     }
   };
 
-  React.useEffect(() =>{
-    setShowSaveQueryButton(data.length>0);
-  },[data])
+  React.useEffect(() => {
+    setShowSaveQueryButton(data.length > 0);
+  }, [data]);
 
   const aggregateSearch = async (query: string) => {
     setbuildedQuery(query);
