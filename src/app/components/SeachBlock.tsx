@@ -14,17 +14,27 @@ import {TextInput as RnTextInput} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {
+  Menu,
+  MenuOption,
+  MenuOptions,
+  MenuTrigger,
+} from 'react-native-popup-menu';
 
 interface IProps {
   onChangeInputQuery: (query: string) => void;
   onSubmitInputQuery: () => void;
   value: string;
+  showSaveQueryButton: boolean;
+  onSaveQuery: any;
 }
 const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0;
 const SearchBlock: React.FC<IProps> = ({
   onChangeInputQuery,
   onSubmitInputQuery,
   value,
+  showSaveQueryButton,
+  onSaveQuery,
 }) => {
   const [showFiltersBlock, setShowFiltersBlock] = useState(false);
 
@@ -84,13 +94,40 @@ const SearchBlock: React.FC<IProps> = ({
           </TouchableOpacity>
         )}
         <TouchableOpacity
-          style={styles.btnToggleFilters}
+          style={styles.searchBarBtn}
           onPress={() => setShowFiltersBlock(!showFiltersBlock)}>
           <MaterialCommunityIcons
             size={25}
             name={showFiltersBlock ? 'filter-menu' : 'filter-menu-outline'}
           />
         </TouchableOpacity>
+        <Menu style={{alignSelf: 'center'}}>
+          <MenuTrigger>
+            <Entypo name="dots-three-vertical" color="gray" size={25} />
+          </MenuTrigger>
+          <MenuOptions>
+            <MenuOption onSelect={onSaveQuery} disabled={showSaveQueryButton}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <MaterialCommunityIcons
+                  style={{marginRight: 3}}
+                  size={20}
+                  name="content-save-all-outline"
+                />
+                <Text style={!showSaveQueryButton && {color: 'gray'}}>Save this query</Text>
+              </View>
+            </MenuOption>
+            <MenuOption onSelect={() => {}}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <MaterialIcons
+                  style={{marginRight: 3}}
+                  size={20}
+                  name="snippet-folder"
+                />
+                <Text>Saved queries</Text>
+              </View>
+            </MenuOption>
+          </MenuOptions>
+        </Menu>
       </View>
       <ScrollView style={styles.inputs}>
         {showFiltersBlock && (
@@ -277,7 +314,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderBottom: 0,
   },
-  btnToggleFilters: {
+  searchBarBtn: {
     backgroundColor: '#fff',
     maxWidth: 70,
     paddingTop: 13,

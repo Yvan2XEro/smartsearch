@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Document} from '../models/Document';
 import Entypo from 'react-native-vector-icons/Entypo'
+import { Paragraph } from 'react-native-paper';
 const DetailScreen = ({route, navigation}: {route: any; navigation: any}) => {
   /* 2. Get the param */
   const document: Document = route.params.document;
@@ -12,9 +13,30 @@ const DetailScreen = ({route, navigation}: {route: any; navigation: any}) => {
       }}>
       <ScrollView>
         {document.openaccess && (
-          <View style={{ width:100, padding: 5, borderRadius:5, marginBottom: 20, alignSelf: 'center', backgroundColor: 'green'}}>
-            <Entypo name="open-book"  color='white' size={25} style={{alignSelf: 'center'}} />
-            <Text style={{fontSize: 10, fontWeight: 'bold', textAlign: 'center', color: 'white'}}>Open access!</Text>
+          <View
+            style={{
+              width: 100,
+              padding: 5,
+              borderRadius: 5,
+              marginBottom: 20,
+              alignSelf: 'center',
+              backgroundColor: 'green',
+            }}>
+            <Entypo
+              name="open-book"
+              color="white"
+              size={25}
+              style={{alignSelf: 'center'}}
+            />
+            <Text
+              style={{
+                fontSize: 10,
+                fontWeight: 'bold',
+                textAlign: 'center',
+                color: 'white',
+              }}>
+              Open access!
+            </Text>
           </View>
         )}
         <View style={styles.row}>
@@ -60,9 +82,9 @@ const DetailScreen = ({route, navigation}: {route: any; navigation: any}) => {
         </View>
         <View>
           <Text style={styles.label}>Abstract :</Text>
-          <View style={{flex: 1}}>
-            <Text style={styles.content}>{document.abstract}</Text>
-          </View>
+          <Paragraph style={{flex: 1}}>
+            {document.abstract}
+          </Paragraph>
         </View>
       </ScrollView>
     </View>

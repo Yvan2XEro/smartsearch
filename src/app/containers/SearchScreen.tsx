@@ -5,14 +5,14 @@ import {
   FlatList,
   SafeAreaView,
   StyleSheet,
-  Text,
-  View,
 } from 'react-native';
 import * as base from '../api/constants';
 import {Document} from '../models/Document';
 import {useNavigation} from '@react-navigation/native';
 import SearchBlock from '../components/SeachBlock';
 import DocItem from '../components/DocItem';
+import {localStorage, pushIfNotExists} from '../services';
+import moment from 'moment';
 
 const SearchScreen = ({
   onDataChange,
@@ -23,16 +23,36 @@ const SearchScreen = ({
 
   const [data, setData] = useState(Array());
   const [data2, setData2] = useState([]);
-  const [data3, setData3] = useState([]);
-  const [data4, setData4] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-
   const [isLoading, setLoading] = useState(false);
-  const [isLoading2, setLoading2] = useState(true);
+  const [showSaveQueryButton, setShowSaveQueryButton] = useState(false);
+  const [buildedQuery, setbuildedQuery] = useState('');
+  const onSaveQuery = async () => {
+    try {
+      let queries = await localStorage.get('queries');
+      let queriesTab: any[] = [];
+      if (queries !== null) {
+        queriesTab = [...JSON.parse(queries)];
+      }
+      // if (queriesTab.indexOf(buildedQuery) != -1 && buildedQuery!="")
+      pushIfNotExists(queriesTab,{
+        query: buildedQuery,
+        name: "Search_"+moment(new Date().getTime()).format("YYYY-MM-DD HH:mm:ss"),
+        searchedAt: moment(new Date().getTime()).format("YYYY-MM-DD HH:mm:ss"),
+        data
+      });
+      await localStorage.set('queries', JSON.stringify(queriesTab));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  const [total, setTotal] = useState(0);
+  React.useEffect(() =>{
+    setShowSaveQueryButton(data.length>0);
+  },[data])
 
   const aggregateSearch = async (query: string) => {
+    setbuildedQuery(query);
     setLoading(true);
     try {
       const response1 = await fetch(
@@ -92,18 +112,20 @@ const SearchScreen = ({
   // };
 
   const [year, onChangeYear] = React.useState('2015');
-  const [query, onChangeQuery] = React.useState('');
+  const [query, setQuery] = React.useState('');
 
   return (
     <SafeAreaView style={styles.container}>
       <SearchBlock
         value={query}
-        onChangeInputQuery={onChangeQuery}
+        onChangeInputQuery={setQuery}
         onSubmitInputQuery={() => {
           setData([]);
-          setData2([])
+          setData2([]);
           aggregateSearch(query);
         }}
+        showSaveQueryButton={showSaveQueryButton}
+        onSaveQuery={onSaveQuery}
       />
       {data && (
         <FlatList
