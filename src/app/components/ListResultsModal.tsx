@@ -32,6 +32,12 @@ const ListResultsModal = ({
   React.useEffect(() => {
     loadQueries();
   }, []);
+
+  const remove = (name:string) => {
+      const q = queries.filter(item=>(item as any).name!=name)
+      setQueries(q)
+      localStorage.set("queries", JSON.stringify(q))
+  }; 
   return (
     <Portal>
       <Modal
@@ -71,13 +77,20 @@ const ListResultsModal = ({
         {queries.length > 0 ? (
           <ScrollView style={{marginHorizontal: 5}}>
             {queries.map(({name, searchedAt, data}, i) => (
-              <TouchableOpacity onPress={()=>onSelectItem(data)} style={styles.item} key={i}>
-                <MaterialCommunityIcons name="history" size={35} />
-                <View style={{marginLeft: 10}}>
-                  <Paragraph>{name}</Paragraph>
-                  <Text style={{fontSize: 10}}>{searchedAt}</Text>
-                </View>
-              </TouchableOpacity>
+              <View key={i} style={[styles.item]}>
+                <TouchableOpacity
+                  onPress={() => onSelectItem(data)}
+                  style={styles.row}>
+                  <MaterialCommunityIcons name="history" size={35} />
+                  <View style={{marginLeft: 10}}>
+                    <Paragraph>{name}</Paragraph>
+                    <Text style={{fontSize: 10}}>{searchedAt}</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={{marginLeft: 25}} onPress={()=>remove(name)}>
+                  <SimpleLineIcons color="black" name="trash" size={25} />
+                </TouchableOpacity>
+              </View>
             ))}
           </ScrollView>
         ) : (
@@ -95,7 +108,6 @@ export default ListResultsModal;
 const styles = StyleSheet.create({
   item: {
     alignItems: 'center',
-    flexDirection: 'row',
     height: 60,
     padding: 5,
     shadowColor: 'rgb(0, 0, 0)',
@@ -108,5 +120,10 @@ const styles = StyleSheet.create({
     elevation: 2,
     backgroundColor: 'white',
     margin: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  row: {
+    flexDirection: 'row',
   },
 });
