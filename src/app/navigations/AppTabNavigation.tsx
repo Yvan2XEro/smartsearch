@@ -30,8 +30,10 @@ export function AppTabNavigation() {
         component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
-          header: ({navigation, route})=><AppHeader navigation={navigation} route={route} title="Home" />,
-          tabBarIcon: ({ color, size }) => (
+          header: ({navigation}) => (
+            <AppHeader type="app" navigation={navigation} title="Home" />
+          ),
+          tabBarIcon: ({color, size}) => (
             <MaterialIcons name="home" color={color} size={size} />
           ),
         }}
@@ -42,7 +44,7 @@ export function AppTabNavigation() {
         options={{
           tabBarLabel: 'Search',
           headerShown: false,
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons
               name="book-search-outline"
               color={color}
@@ -57,7 +59,10 @@ export function AppTabNavigation() {
         component={SettingsScreen}
         options={{
           tabBarLabel: 'Settings',
-          tabBarIcon: ({ color, size }) => (
+          header: ({navigation}) => (
+            <AppHeader navigation={navigation} title="Settings" type="app" />
+          ),
+          tabBarIcon: ({color, size}) => (
             <MaterialIcons name="settings-display" color={color} size={size} />
           ),
         }}

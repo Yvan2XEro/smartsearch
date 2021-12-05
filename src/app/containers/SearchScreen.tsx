@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -6,19 +6,14 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
-import { Searchbar } from 'react-native-paper';
 import * as base from '../api/constants';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Foundation from 'react-native-vector-icons/Foundation';
-import { Document } from '../models/Document';
-import { useNavigation } from '@react-navigation/native';
+import {Document} from '../models/Document';
+import {useNavigation} from '@react-navigation/native';
 import {
-  MenuContext,
   Menu,
   MenuOptions,
   MenuOption,
@@ -50,18 +45,18 @@ const SearchScreen = ({
       const response1 = await fetch(
         base.springer_url + `&q=${query}` + ' &s=' + currentPage + ' &p=' + 10,
       );
-      console.log("QUERY: " + query)
+      console.log('QUERY: ' + query);
       const response2 = await fetch(base.elsevier_url + `&query=${query}`);
       const json1 = await response1.json();
       const json2 = await response2.json();
       const dat =
         json2['search-results'] && json2['search-results']['entry']
           ? json2['search-results']['entry'].map((item: any) => {
-            return {
-              title: item['dc:title'],
-              publicationDate: item['prism:coverDate'],
-            };
-          })
+              return {
+                title: item['dc:title'],
+                publicationDate: item['prism:coverDate'],
+              };
+            })
           : [];
       setData2(dat);
       const values: any[] = [...data, ...json1.records, ...data2];
@@ -113,12 +108,13 @@ const SearchScreen = ({
         onChangeInputQuery={onChangeQuery}
         onSubmitInputQuery={() => {
           aggregateSearch(query);
-        }} />
+        }}
+      />
       {data && (
         <FlatList
           data={data}
-          keyExtractor={({ title }, index) => title + index}
-          renderItem={({ item }) => (
+          keyExtractor={({title}, index) => title + index}
+          renderItem={({item}) => (
             <View style={styles.item}>
               {(item as any).contentType !== 'Article' ? (
                 <Icon
@@ -143,25 +139,28 @@ const SearchScreen = ({
               )}
               <Text
                 onPress={() => {
-                  year
+                  year;
                   /* 1. Navigate to the Details route with params, passing the params as an object in the method navigate */
                   navigation.navigate(
-                    'Details' as never,
+                    'SearchStack' as never,
                     {
-                      document: {
-                        title: (item as any).title,
-                        publicationDate: (item as any).publicationDate,
-                        contentType: (item as any).contentType,
-                        publisher: (item as any).publisher,
-                        abstract: (item as any).abstract,
-                        doi: (item as any).doi,
-                        openaccess: (item as any).openaccess,
-                        authors: (item as any).creators,
-                      } as Document,
+                      screen: 'Details',
+                      params: {
+                        document: {
+                          title: (item as any).title,
+                          publicationDate: (item as any).publicationDate,
+                          contentType: (item as any).contentType,
+                          publisher: (item as any).publisher,
+                          abstract: (item as any).abstract,
+                          doi: (item as any).doi,
+                          openaccess: (item as any).openaccess,
+                          authors: (item as any).creators,
+                        } as Document,
+                      },
                     } as never,
                   );
                 }}
-                style={{ flex: 1, flexWrap: 'wrap' }}>
+                style={{flex: 1, flexWrap: 'wrap'}}>
                 {(item as any).title}, {(item as any).publicationDate}
               </Text>
               <View
@@ -177,12 +176,12 @@ const SearchScreen = ({
                   </MenuTrigger>
 
                   <MenuOptions>
-                    <MenuOption onSelect={() => { }} text="Cite" />
-                    <MenuOption onSelect={() => { }}>
-                      <Text style={{ color: 'red' }}>Save</Text>
+                    <MenuOption onSelect={() => {}} text="Cite" />
+                    <MenuOption onSelect={() => {}}>
+                      <Text style={{color: 'red'}}>Save</Text>
                     </MenuOption>
                     <MenuOption
-                      onSelect={() => { }}
+                      onSelect={() => {}}
                       disabled={true}
                       text="Recommand"
                     />
