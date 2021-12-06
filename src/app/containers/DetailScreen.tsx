@@ -3,90 +3,92 @@ import {Button, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Document} from '../models/Document';
 import Entypo from 'react-native-vector-icons/Entypo'
 import { Paragraph } from 'react-native-paper';
+import DetailsHeader from '../components/DetailsHeader';
 const DetailScreen = ({route, navigation}: {route: any; navigation: any}) => {
   /* 2. Get the param */
   const document: Document = route.params.document;
   return (
-    <View
-      style={{
-        margin: 5,
-      }}>
-      <ScrollView>
-        {document.openaccess && (
-          <View
-            style={{
-              width: 100,
-              padding: 5,
-              borderRadius: 5,
-              marginBottom: 20,
-              alignSelf: 'center',
-              backgroundColor: 'green',
-            }}>
-            <Entypo
-              name="open-book"
-              color="white"
-              size={25}
-              style={{alignSelf: 'center'}}
-            />
-            <Text
+    <View>
+      <DetailsHeader navigation={navigation} title="Details" />
+      <View
+        style={{
+          margin: 5,
+        }}>
+        <ScrollView>
+          {document.openaccess && (
+            <View
               style={{
-                fontSize: 10,
-                fontWeight: 'bold',
-                textAlign: 'center',
-                color: 'white',
+                width: 100,
+                padding: 5,
+                borderRadius: 5,
+                marginBottom: 20,
+                alignSelf: 'center',
+                backgroundColor: 'green',
               }}>
-              Open access!
-            </Text>
+              <Entypo
+                name="open-book"
+                color="white"
+                size={25}
+                style={{alignSelf: 'center'}}
+              />
+              <Text
+                style={{
+                  fontSize: 10,
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  color: 'white',
+                }}>
+                Open access!
+              </Text>
+            </View>
+          )}
+          <View style={styles.row}>
+            <Text style={styles.label}>Title: </Text>
+            <View style={{flex: 1}}>
+              <Text style={styles.content}>{document.title}</Text>
+            </View>
           </View>
-        )}
-        <View style={styles.row}>
-          <Text style={styles.label}>Title: </Text>
-          <View style={{flex: 1}}>
-            <Text style={styles.content}>{document.title}</Text>
+          <View style={styles.row}>
+            <Text style={styles.label}>Doi: </Text>
+            <View style={{flex: 1}}>
+              <Text style={styles.content}>{document.doi}</Text>
+            </View>
           </View>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.label}>Doi: </Text>
-          <View style={{flex: 1}}>
-            <Text style={styles.content}>{document.doi}</Text>
+          <View style={styles.row}>
+            <Text style={styles.label}>Publicate Date: </Text>
+            <View style={{flex: 1}}>
+              <Text style={styles.content}>{document.publicationDate}</Text>
+            </View>
           </View>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.label}>Publicate Date: </Text>
-          <View style={{flex: 1}}>
-            <Text style={styles.content}>{document.publicationDate}</Text>
+          <View style={styles.row}>
+            <Text style={styles.label}>Publisher: </Text>
+            <View style={{flex: 1}}>
+              <Text style={styles.content}>{document.publisher}</Text>
+            </View>
           </View>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.label}>Publisher: </Text>
-          <View style={{flex: 1}}>
-            <Text style={styles.content}>{document.publisher}</Text>
+          <View style={styles.row}>
+            <Text style={styles.label}>Authors: </Text>
+            <View style={{flex: 1}}>
+              <Text style={styles.content}>
+                {document.authors?.reduce(
+                  (acc, item) => acc + ', ' + item.creator,
+                  '',
+                )}
+              </Text>
+            </View>
           </View>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.label}>Authors: </Text>
-          <View style={{flex: 1}}>
-            <Text style={styles.content}>
-              {document.authors?.reduce(
-                (acc, item) => acc + ', ' + item.creator,
-                '',
-              )}
-            </Text>
+          <View style={styles.row}>
+            <Text style={styles.label}>Type :</Text>
+            <View style={{flex: 1}}>
+              <Text style={styles.content}>{document.contentType}</Text>
+            </View>
           </View>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.label}>Type :</Text>
-          <View style={{flex: 1}}>
-            <Text style={styles.content}>{document.contentType}</Text>
+          <View>
+            <Text style={styles.label}>Abstract :</Text>
+            <Paragraph style={{flex: 1}}>{document.abstract}</Paragraph>
           </View>
-        </View>
-        <View>
-          <Text style={styles.label}>Abstract :</Text>
-          <Paragraph style={{flex: 1}}>
-            {document.abstract}
-          </Paragraph>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </View>
   );
 };

@@ -11,9 +11,7 @@ const SearchStackNavigation = () => {
       <Stack.Screen name="Search" component={SearchScreen} />
       <Stack.Screen
         options={{
-          header: ({navigation}) => (
-            <AppHeader navigation={navigation} title="Details" type="back" />
-          ),
+          headerShown: false,
         }}
         name="Details"
         component={DetailScreen}
