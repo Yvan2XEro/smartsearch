@@ -34,7 +34,6 @@ const SearchScreen = ({
       if (queries !== null) {
         queriesTab = [...JSON.parse(queries)];
       }
-      // if (queriesTab.indexOf(buildedQuery) != -1 && buildedQuery!="")
       pushIfNotExists(queriesTab, {
         query: buildedQuery,
         name:

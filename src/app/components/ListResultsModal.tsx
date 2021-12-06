@@ -41,7 +41,7 @@ const ListResultsModal = ({
   return (
     <Portal>
       <Modal
-        style={{backgroundColor: '#fff', alignItems: 'flex-start'}}
+        style={{backgroundColor: '#fff', justifyContent: 'flex-start',}}
         visible={visible}
         onDismiss={onDismiss}>
         <TouchableOpacity
@@ -76,10 +76,10 @@ const ListResultsModal = ({
         </View>
         {queries.length > 0 ? (
           <ScrollView style={{marginHorizontal: 5}}>
-            {queries.map(({name, searchedAt, data}, i) => (
+            {queries.map(({name, searchedAt, data, query}, i) => (
               <View key={i} style={[styles.item]}>
                 <TouchableOpacity
-                  onPress={() => onSelectItem(data)}
+                  onPress={() => onSelectItem({data, query})}
                   style={styles.row}>
                   <MaterialCommunityIcons name="history" size={35} />
                   <View style={{marginLeft: 10}}>

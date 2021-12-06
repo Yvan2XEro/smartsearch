@@ -275,7 +275,8 @@ const SearchBlock: React.FC<IProps> = ({
         )}
       </ScrollView>
       <ListResultsModal
-        onSelectItem={(data: any[]) => {
+        onSelectItem={({data, query}:{data: any[], query: string}) => {
+          onChangeInputQuery(query);
           onSelectItem(data);
           setShowModal(false);
         }}
