@@ -41,7 +41,7 @@ const ListResultsModal = ({
   return (
     <Portal>
       <Modal
-        style={{backgroundColor: '#fff', justifyContent: 'flex-start',}}
+        style={{backgroundColor: '#fff', justifyContent: 'flex-start'}}
         visible={visible}
         onDismiss={onDismiss}>
         <TouchableOpacity
@@ -97,7 +97,8 @@ const ListResultsModal = ({
           </ScrollView>
         ) : (
           <View>
-            <Text>Empty set!</Text>
+            <AntDesign name="warning" style={{alignSelf: 'center'}} size={30} color="red" />
+            <Text style={{fontSize: 18, textAlign: 'center',}}>Empty set!</Text>
           </View>
         )}
       </Modal>
