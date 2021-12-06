@@ -17,10 +17,12 @@ const ListResultsModal = ({
   visible,
   onDismiss,
   onSelectItem,
+  reloadLocalStorage,
 }: {
   visible: boolean;
   onDismiss: any;
   onSelectItem: any;
+  reloadLocalStorage: number
 }) => {
   const [queries, setQueries] = React.useState([]);
   const loadQueries = async () => {
@@ -31,7 +33,7 @@ const ListResultsModal = ({
   };
   React.useEffect(() => {
     loadQueries();
-  }, []);
+  }, [reloadLocalStorage]);
 
   const remove = (name: string) => {
     const q = queries.filter(item => (item as any).name != name);

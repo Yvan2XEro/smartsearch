@@ -29,6 +29,7 @@ interface IProps {
   showSaveQueryButton: boolean;
   onSaveQuery: any;
   onSelectItem: any;
+  reloadLocalStorage: number;
 }
 const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0;
 const SearchBlock: React.FC<IProps> = ({
@@ -38,6 +39,7 @@ const SearchBlock: React.FC<IProps> = ({
   showSaveQueryButton,
   onSaveQuery,
   onSelectItem,
+  reloadLocalStorage,
 }) => {
   const [showFiltersBlock, setShowFiltersBlock] = useState(false);
 
@@ -275,12 +277,13 @@ const SearchBlock: React.FC<IProps> = ({
         )}
       </ScrollView>
       <ListResultsModal
-        onSelectItem={({data, query}:{data: any[], query: string}) => {
+        onSelectItem={({data, query}: {data: any[]; query: string}) => {
           onChangeInputQuery(query);
           onSelectItem(data);
           setShowModal(false);
         }}
         onDismiss={() => setShowModal(false)}
+        reloadLocalStorage={reloadLocalStorage}
         visible={showModal}
       />
     </View>

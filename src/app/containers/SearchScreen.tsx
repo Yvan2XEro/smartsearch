@@ -27,6 +27,7 @@ const SearchScreen = ({
   const [isLoading, setLoading] = useState(false);
   const [showSaveQueryButton, setShowSaveQueryButton] = useState(false);
   const [buildedQuery, setbuildedQuery] = useState('');
+  const [reloadLocalStorage, setReloadLocalStorage] = useState(0)
   const onSaveQuery = async () => {
     try {
       let queries = await localStorage.get('queries');
@@ -45,6 +46,8 @@ const SearchScreen = ({
       await localStorage.set('queries', JSON.stringify(queriesTab));
     } catch (error) {
       console.log(error);
+    } finally {
+      setReloadLocalStorage(reloadLocalStorage + 1);
     }
   };
 
@@ -128,6 +131,7 @@ const SearchScreen = ({
         }}
         showSaveQueryButton={showSaveQueryButton}
         onSaveQuery={onSaveQuery}
+        reloadLocalStorage={reloadLocalStorage}
       />
       {data && (
         <FlatList
