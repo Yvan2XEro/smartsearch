@@ -1,15 +1,21 @@
-import React from 'react';
+import * as React from 'react';
 import {Button, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Document} from '../models/Document';
 import Entypo from 'react-native-vector-icons/Entypo'
 import { Paragraph } from 'react-native-paper';
 import DetailsHeader from '../components/DetailsHeader';
+import FiltersListModal from '../components/FiltersListModal';
 const DetailScreen = ({route, navigation}: {route: any; navigation: any}) => {
   /* 2. Get the param */
   const document: Document = route.params.document;
+  const [visible, setVisible] = React.useState(false);
   return (
     <View>
-      <DetailsHeader navigation={navigation} title="Details" />
+      <DetailsHeader
+        navigation={navigation}
+        title="Details"
+        onSelectFilterList={() => setVisible(true)}
+      />
       <View
         style={{
           margin: 5,
@@ -89,6 +95,11 @@ const DetailScreen = ({route, navigation}: {route: any; navigation: any}) => {
           </View>
         </ScrollView>
       </View>
+      <FiltersListModal
+        navigation={navigation}
+        setVisible={setVisible}
+        visible={visible}
+      />
     </View>
   );
 };

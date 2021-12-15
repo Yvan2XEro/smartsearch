@@ -51,7 +51,7 @@ const ListResultsModal = ({
           style={{margin: 5, marginBottom: 10}}>
           <AntDesign name="arrowleft" size={30} />
         </TouchableOpacity>
-        <Text style={{fontSize: 25, color: '#000'}}>Saved queries</Text>
+        <Text style={{fontSize: 20, color: '#000'}}>Saved queries</Text>
         <View
           style={[
             styles.item,

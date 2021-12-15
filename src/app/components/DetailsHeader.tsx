@@ -7,9 +7,11 @@ import Entypo from 'react-native-vector-icons/Entypo';
 const DetailsHeader = ({
   navigation,
   title,
+  onSelectFilterList
 }: {
   navigation: any;
   title: string | undefined;
+  onSelectFilterList:any;
 }) => {
   return (
     <View style={styles.header}>
@@ -26,7 +28,7 @@ const DetailsHeader = ({
           <Entypo name="dots-three-vertical" color="gray" size={25} />
         </MenuTrigger>
         <MenuOptions>
-          <MenuOption text="Filters" />
+          <MenuOption onSelect={onSelectFilterList} text="Filters" />
           <MenuOption text="Details settings" />
         </MenuOptions>
       </Menu>
