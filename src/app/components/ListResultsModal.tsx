@@ -22,7 +22,7 @@ const ListResultsModal = ({
   visible: boolean;
   onDismiss: any;
   onSelectItem: any;
-  reloadLocalStorage: number
+  reloadLocalStorage: number;
 }) => {
   const [queries, setQueries] = React.useState([]);
   const loadQueries = async () => {
@@ -99,8 +99,13 @@ const ListResultsModal = ({
           </ScrollView>
         ) : (
           <View>
-            <AntDesign name="warning" style={{alignSelf: 'center'}} size={30} color="red" />
-            <Text style={{fontSize: 18, textAlign: 'center',}}>Empty set!</Text>
+            <AntDesign
+              name="warning"
+              style={{alignSelf: 'center'}}
+              size={30}
+              color="red"
+            />
+            <Text style={{fontSize: 18, textAlign: 'center'}}>Empty set!</Text>
           </View>
         )}
       </Modal>

@@ -1,6 +1,11 @@
-import React from 'react'
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { List, Modal, Portal } from 'react-native-paper'
+import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {List, Modal, Portal} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const FiltersListModal = ({
@@ -10,7 +15,7 @@ const FiltersListModal = ({
 }: {
   navigation: any;
   setVisible: any;
-  visible:boolean;
+  visible: boolean;
 }) => {
   return (
     <Portal>
@@ -40,6 +45,6 @@ const FiltersListModal = ({
   );
 };
 
-export default FiltersListModal
+export default FiltersListModal;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
