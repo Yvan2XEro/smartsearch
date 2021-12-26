@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
-  Dimensions,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -9,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {Button, Searchbar, Text, TextInput} from 'react-native-paper';
+import {Button, Text} from 'react-native-paper';
 import {TextInput as RnTextInput} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -21,6 +20,7 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import ListResultsModal from './ListResultsModal';
+import SearchInput from './shared/SearchInput';
 
 interface IProps {
   onChangeInputQuery: (query: string) => void;
@@ -144,130 +144,92 @@ const SearchBlock: React.FC<IProps> = ({
             style={{marginBottom: 60}}
             behavior={undefined}
             keyboardVerticalOffset={keyboardVerticalOffset}>
-            <View style={styles.flexRow}>
-              <Entypo name="book" size={50} />
-              <TextInput
-                theme={{colors: {primary: 'gray'}}}
-                style={styles.input}
-                onChangeText={text => setParams({...params, title: text})}
-                mode="flat"
-                label="Title"
-              />
-            </View>
-            <View style={styles.flexRow}>
-              <MaterialIcons name="drive-file-rename-outline" size={50} />
-              <TextInput
-                theme={{colors: {primary: 'gray'}}}
-                style={styles.input}
-                onChangeText={text =>
-                  setParams({...params, publicationName: text})
-                }
-                mode="flat"
-                label="Publication name"
-              />
-            </View>
-            <View style={styles.flexRow}>
-              <MaterialCommunityIcons name="identifier" size={50} />
-              <TextInput
-                theme={{colors: {primary: 'gray'}}}
-                style={styles.input}
-                onChangeText={text => setParams({...params, doi: text})}
-                mode="flat"
-                label="Doi"
-              />
-            </View>
-            <View style={styles.flexRow}>
-              <MaterialCommunityIcons name="bookshelf" size={50} />
-              <TextInput
-                theme={{colors: {primary: 'gray'}}}
-                style={styles.input}
-                onChangeText={text =>
-                  setParams({...params, topicalCollection: text})
-                }
-                mode="flat"
-                label="Topical Collection"
-              />
-            </View>
-            <View style={styles.flexRow}>
-              <View style={styles.emptyIcons}></View>
-              <TextInput
-                theme={{colors: {primary: 'gray'}}}
-                style={styles.input}
-                onChangeText={text => setParams({...params, issn: text})}
-                mode="flat"
-                label="Issn"
-              />
-            </View>
-            <View style={styles.flexRow}>
-              <View style={styles.emptyIcons}></View>
-              <TextInput
-                theme={{colors: {primary: 'gray'}}}
-                style={styles.input}
-                onChangeText={text =>
-                  setParams({...params, volume: parseInt(text)})
-                }
-                mode="flat"
-                keyboardType="numeric"
-                label="Volume"
-              />
-            </View>
-            <View style={styles.flexRow}>
-              <MaterialCommunityIcons name="sort-numeric-variant" size={50} />
-              <TextInput
-                theme={{colors: {primary: 'gray'}}}
-                style={styles.input}
-                onChangeText={text =>
-                  setParams({...params, number: parseInt(text)})
-                }
-                mode="flat"
-                keyboardType="numeric"
-                label="Number"
-              />
-            </View>
-            <View style={styles.flexRow}>
-              <Entypo name="user" size={47} />
-              <TextInput
-                theme={{colors: {primary: 'gray'}}}
-                style={styles.input}
-                onChangeText={text => setParams({...params, publisher: text})}
-                mode="flat"
-                label="Publisher"
-              />
-            </View>
-            <View style={styles.flexRow}>
-              <View style={styles.emptyIcons}></View>
-              <TextInput
-                theme={{colors: {primary: 'gray'}}}
-                style={styles.input}
-                onChangeText={text => setParams({...params, issuetype: text})}
-                mode="flat"
-                label="Issue type"
-              />
-            </View>
-            <View style={styles.flexRow}>
-              <MaterialCommunityIcons name="calendar-blank" size={50} />
-              <TextInput
-                theme={{colors: {primary: 'gray'}}}
-                style={styles.input}
-                onChangeText={text =>
-                  setParams({...params, publicationDate: parseInt(text)})
-                }
-                keyboardType="numeric"
-                mode="flat"
-                label="Year"
-              />
-            </View>
-            <View style={styles.flexRow}>
-              <View style={styles.emptyIcons}></View>
-              <TextInput
-                theme={{colors: {primary: 'gray'}}}
-                style={styles.input}
-                onChangeText={text => setParams({...params, keyWords: text})}
-                mode="flat"
-                label="Key words"
-                placeholder="Ex: security, informatic, network"
-              />
-            </View>
+            <SearchInput
+              label="Title"
+              onChangeText={(text: string) =>
+                setParams({...params, title: text})
+              }
+              fieldIcon={<Entypo name="book" size={50} />}
+            />
+            <SearchInput
+              onChangeText={(text: string) =>
+                setParams({...params, publicationName: text})
+              }
+              fieldIcon={
+                <MaterialIcons name="drive-file-rename-outline" size={50} />
+              }
+              label="Publication name"
+            />
+            <SearchInput
+              onChangeText={(text: string) => setParams({...params, doi: text})}
+              fieldIcon={<MaterialCommunityIcons name="identifier" size={50} />}
+              label="Doi"
+            />
+            <SearchInput
+              onChangeText={(text: string) =>
+                setParams({...params, topicalCollection: text})
+              }
+              fieldIcon={<MaterialCommunityIcons name="bookshelf" size={50} />}
+              label="Topical Collection"
+            />
+            <SearchInput
+              onChangeText={(text: string) =>
+                setParams({...params, issn: text})
+              }
+              fieldIcon={<View style={styles.emptyIcons}></View>}
+              label="Issn"
+            />
+            <SearchInput
+              keyboardType="numeric"
+              label="Volume"
+              onChangeText={(text: number) =>
+                setParams({...params, volume: text})
+              }
+              fieldIcon={<View style={styles.emptyIcons}></View>}
+            />
+            <SearchInput
+              keyboardType="numeric"
+              label="Number"
+              onChangeText={(text: number) =>
+                setParams({...params, number: text})
+              }
+              fieldIcon={
+                <MaterialCommunityIcons name="sort-numeric-variant" size={50} />
+              }
+            />
+            <SearchInput
+              label="Publisher"
+              onChangeText={(text: string) =>
+                setParams({...params, publisher: text})
+              }
+              fieldIcon={<Entypo name="user" size={47} />}
+            />
+            <SearchInput
+              label="Issue type"
+              onChangeText={(text: string) =>
+                setParams({...params, publisher: text})
+              }
+              fieldIcon={<View style={styles.emptyIcons}></View>}
+            />
+            <SearchInput
+              keyboardType="numeric"
+              label="Year"
+              onChangeText={(text: number) =>
+                setParams({...params, publicationDate: text})
+              }
+              fieldIcon={
+                <MaterialCommunityIcons name="calendar-blank" size={50} />
+              }
+            />
+            <SearchInput
+              keyboardType="numeric"
+              onChangeText={(text: string) =>
+                setParams({...params, keyWords: text})
+              }
+              fieldIcon={<View style={styles.emptyIcons}></View>}
+              label="Key words"
+              placeholder="Ex: security, informatic, network"
+            />
             <Button
               style={[styles.input, styles.sumitBtn]}
               onPress={handleSumitQuery}>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Button, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Document} from '../models/Document';
 import Entypo from 'react-native-vector-icons/Entypo'
 import { Paragraph } from 'react-native-paper';

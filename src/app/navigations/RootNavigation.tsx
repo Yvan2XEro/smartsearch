@@ -4,12 +4,7 @@ import {
   DrawerItem,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import * as React from 'react';
-import Icon from 'react-native-vector-icons/Octicons';
-import AppHeader from '../components/AppHeader';
-import DetailScreen from '../containers/DetailScreen';
-import SearchScreen from '../containers/SearchScreen';
 import {AppTabNavigation} from './AppTabNavigation';
 import SearchStackNavigation from './SearchStackNavigation';
 
