@@ -27,7 +27,7 @@ const SearchScreen = ({
   const [isLoading, setLoading] = useState(false);
   const [showSaveQueryButton, setShowSaveQueryButton] = useState(false);
   const [buildedQuery, setbuildedQuery] = useState('');
-  const [reloadLocalStorage, setReloadLocalStorage] = useState(0)
+  const [reloadLocalStorage, setReloadLocalStorage] = useState(0);
   const onSaveQuery = async () => {
     try {
       let queries = await localStorage.get('queries');
