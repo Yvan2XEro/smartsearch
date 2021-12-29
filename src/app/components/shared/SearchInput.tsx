@@ -17,7 +17,7 @@ fieldIcon
 }) => {
   return (
     <View style={styles.inputWrapper}>
-      <Text style={{fontSize: 12}}>{label}:</Text>
+      <Text style={{fontSize: 13}}>{label}:</Text>
       <View
         style={{
           flexDirection: 'row',
