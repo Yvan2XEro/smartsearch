@@ -42,7 +42,6 @@ const SearchBlock: React.FC<IProps> = ({
   reloadLocalStorage,
 }) => {
   const [showFiltersBlock, setShowFiltersBlock] = useState(false);
-
   const [fastInputQuery, setFastInputQuery] = useState('');
   const [params, setParams] = useState({
     title: '',
@@ -285,8 +284,7 @@ const styles = StyleSheet.create({
     flex: 2,
   },
   inputs: {
-    paddingRight: 40,
-    paddingLeft: 10,
+    paddingHorizontal: 40
   },
   input: {
     flex: 2,

@@ -23,7 +23,6 @@ fieldIcon
           flexDirection: 'row',
           justifyContent: 'flex-start',
           backgroundColor: '#fff',
-          // borderRadius: 10,
           borderBottomWidth: 0.5,
           overflow: 'hidden'
         }}>
@@ -50,6 +49,6 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: '#fff',
-    borderBottom: 0,
+    borderBottomWidth: 0,
   },
 });
