@@ -23,10 +23,11 @@ fieldIcon
           flexDirection: 'row',
           justifyContent: 'flex-start',
           backgroundColor: '#fff',
+          borderRadius: 10,
           borderBottomWidth: 0.5,
-          overflow: 'hidden'
+          overflow: 'hidden',
         }}>
-        {fieldIcon}
+        <View style={{justifyContent: 'center', paddingLeft:5}}>{fieldIcon}</View>
         <View style={{width: '100%'}}>
           <TextInput
             style={styles.input}
@@ -48,7 +49,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   input: {
-    backgroundColor: '#fff',
     borderBottomWidth: 0,
   },
 });
