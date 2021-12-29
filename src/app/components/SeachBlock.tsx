@@ -221,7 +221,7 @@ const SearchBlock: React.FC<IProps> = ({
               onChangeText={(text: string) =>
                 setParams({...params, publisher: text})
               }
-              fieldIcon={<Entypo name="user" size={47} />}
+              fieldIcon={<Entypo name="user" size={marginLeftInput-3} />}
             />
             <SearchInput
               label="Issue type"
