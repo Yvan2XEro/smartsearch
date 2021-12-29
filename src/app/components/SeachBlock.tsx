@@ -79,9 +79,13 @@ const SearchBlock: React.FC<IProps> = ({
   };
 
   return (
-    <View style={styles.component}>
+    <View style={{flexDirection: 'column'}}>
       <View style={[styles.rowContent]}>
-        <MaterialIcons name="search" size={30} style={{marginTop: 10}} />
+        <MaterialIcons
+          name="search"
+          size={marginLeftInput}
+          style={{marginTop: 10}}
+        />
         <RnTextInput
           placeholder="Fast Search Here..."
           onChangeText={text => setFastInputQuery(text)}
@@ -148,34 +152,47 @@ const SearchBlock: React.FC<IProps> = ({
               onChangeText={(text: string) =>
                 setParams({...params, title: text})
               }
-              fieldIcon={<Entypo name="book" size={50} />}
+              fieldIcon={<Entypo name="book" size={marginLeftInput} />}
             />
             <SearchInput
               onChangeText={(text: string) =>
                 setParams({...params, publicationName: text})
               }
               fieldIcon={
-                <MaterialIcons name="drive-file-rename-outline" size={50} />
+                <MaterialIcons
+                  name="drive-file-rename-outline"
+                  size={marginLeftInput}
+                />
               }
               label="Publication name"
             />
             <SearchInput
               onChangeText={(text: string) => setParams({...params, doi: text})}
-              fieldIcon={<MaterialCommunityIcons name="identifier" size={50} />}
+              fieldIcon={
+                <MaterialCommunityIcons
+                  name="identifier"
+                  size={marginLeftInput}
+                />
+              }
               label="Doi"
             />
             <SearchInput
               onChangeText={(text: string) =>
                 setParams({...params, topicalCollection: text})
               }
-              fieldIcon={<MaterialCommunityIcons name="bookshelf" size={50} />}
+              fieldIcon={
+                <MaterialCommunityIcons
+                  name="bookshelf"
+                  size={marginLeftInput}
+                />
+              }
               label="Topical Collection"
             />
             <SearchInput
               onChangeText={(text: string) =>
                 setParams({...params, issn: text})
               }
-              fieldIcon={<View style={styles.emptyIcons}></View>}
+              fieldIcon={<EmptyIcon />}
               label="Issn"
             />
             <SearchInput
@@ -184,7 +201,7 @@ const SearchBlock: React.FC<IProps> = ({
               onChangeText={(text: number) =>
                 setParams({...params, volume: text})
               }
-              fieldIcon={<View style={styles.emptyIcons}></View>}
+              fieldIcon={<EmptyIcon />}
             />
             <SearchInput
               keyboardType="numeric"
@@ -193,7 +210,10 @@ const SearchBlock: React.FC<IProps> = ({
                 setParams({...params, number: text})
               }
               fieldIcon={
-                <MaterialCommunityIcons name="sort-numeric-variant" size={50} />
+                <MaterialCommunityIcons
+                  name="sort-numeric-variant"
+                  size={marginLeftInput}
+                />
               }
             />
             <SearchInput
@@ -208,7 +228,7 @@ const SearchBlock: React.FC<IProps> = ({
               onChangeText={(text: string) =>
                 setParams({...params, publisher: text})
               }
-              fieldIcon={<View style={styles.emptyIcons}></View>}
+              fieldIcon={<EmptyIcon />}
             />
             <SearchInput
               keyboardType="numeric"
@@ -217,7 +237,10 @@ const SearchBlock: React.FC<IProps> = ({
                 setParams({...params, publicationDate: text})
               }
               fieldIcon={
-                <MaterialCommunityIcons name="calendar-blank" size={50} />
+                <MaterialCommunityIcons
+                  name="calendar-blank"
+                  size={marginLeftInput}
+                />
               }
             />
             <SearchInput
@@ -225,7 +248,7 @@ const SearchBlock: React.FC<IProps> = ({
               onChangeText={(text: string) =>
                 setParams({...params, keyWords: text})
               }
-              fieldIcon={<View style={styles.emptyIcons}></View>}
+              fieldIcon={<EmptyIcon />}
               label="Key words"
               placeholder="Ex: security, informatic, network"
             />
@@ -251,10 +274,10 @@ const SearchBlock: React.FC<IProps> = ({
   );
 };
 
+const EmptyIcon = () => <View style={{width: marginLeftInput}}/>;
+const marginLeftInput = 30
+
 const styles = StyleSheet.create({
-  component: {
-    flexDirection: 'column',
-  },
   flexRow: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -315,10 +338,7 @@ const styles = StyleSheet.create({
   closeButton: {
     height: 16,
     width: 16,
-  },
-  emptyIcons: {
-    width: 50,
-  },
+  }
 });
 
 export default SearchBlock;
