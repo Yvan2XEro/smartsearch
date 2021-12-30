@@ -22,9 +22,10 @@ const DrawerContent = ({navigation}:{navigation:any}) => {
             source={{
               uri: 'https://cdn.pixabay.com/photo/2016/04/01/10/11/avatar-1299805__340.png',
             }}
+            size={50}
             style={{backgroundColor: '#fff'}}
           />
-          <View>
+          <View style={{marginLeft: 25}}>
             <PText style={{fontSize: 17, textAlign: 'center'}}>
               Super User
             </PText>
