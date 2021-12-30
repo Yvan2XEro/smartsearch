@@ -7,6 +7,7 @@ import {
 import * as React from 'react';
 import DrawerContent from '../components/DrawerContent';
 import {AppTabNavigation} from './AppTabNavigation';
+import SavedDocsStack from './SavedDocsStack';
 import SearchStackNavigation from './SearchStackNavigation';
 
 const Drawer = createDrawerNavigator();
@@ -20,14 +21,17 @@ export default function RootNavigation() {
         itemStyle: {marginVertical: 10},
       }}
       drawerContent={(props: any) => {
-        return (
-          <DrawerContent {...props}/>
-        );
+        return <DrawerContent {...props} />;
       }}>
       <Drawer.Screen
         name="App"
         options={{title: 'Home'}}
         component={AppTabNavigation}
+      />
+      <Drawer.Screen
+        name="SavedDocsStack"
+        options={{title: 'Saved docs'}}
+        component={SavedDocsStack}
       />
       <Drawer.Screen
         name="SearchStack"

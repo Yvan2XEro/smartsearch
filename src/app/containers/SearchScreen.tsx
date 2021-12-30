@@ -11,9 +11,10 @@ import {Document} from '../models/Document';
 import {useNavigation} from '@react-navigation/native';
 import SearchBlock from '../components/SeachBlock';
 import DocItem from '../components/DocItem';
-import {localStorage, pushIfNotExists} from '../services';
+import {localStorage, pushSearchResultsIfNotExists} from '../services';
 import moment from 'moment';
 import { Snackbar } from 'react-native-paper';
+import { DOCS_KEY } from './SavedDocuments';
 
 const SearchScreen = ({
   onDataChange,
@@ -41,12 +42,12 @@ const SearchScreen = ({
       if (queries !== null) {
         queriesTab = [...JSON.parse(queries)];
       }
-      pushIfNotExists(queriesTab, {
+      pushSearchResultsIfNotExists(queriesTab, {
         query: buildedQuery,
         name:
           'Search_' +
           moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss'),
-        searchedAt: moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss'),
+        createdAt: moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss'),
         data,
       });
       await localStorage.set('queries', JSON.stringify(queriesTab));
@@ -62,6 +63,23 @@ const SearchScreen = ({
   React.useEffect(() => {
     setShowSaveQueryButton(data.length > 0);
   }, [data]);
+
+  // When want to save doc in localstorage
+  const onSaveDoc = async(doc:any) =>{
+    const docsStr = await localStorage.get('docs');
+    let docs = [];
+    if (docsStr != '') {
+      docs = JSON.parse(docsStr);
+    }
+    pushSearchResultsIfNotExists(docs, {
+      data: doc,
+      createdAt: moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss'),
+    });
+
+    await localStorage.set(DOCS_KEY, JSON.stringify(docs));
+    setSnackbarMessage("Doc saved!")
+    setShowSnackbar(true)
+  }
 
   const aggregateSearch = async (query: string) => {
     setbuildedQuery(query);
@@ -148,6 +166,7 @@ const SearchScreen = ({
           renderItem={({item}) => (
             <DocItem
               doc={item}
+              onSave={()=>onSaveDoc(item) }
               onPress={() => {
                 navigation.navigate(
                   'SearchStack' as never,

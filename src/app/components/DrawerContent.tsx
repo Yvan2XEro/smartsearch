@@ -43,7 +43,7 @@ const DrawerContent = ({navigation}:{navigation:any}) => {
           <CustomDrawerItem
             label="Saved documents"
             icon={<FontAwesome name="folder" size={draweIconSize} />}
-            onPress={() => navigation.navigate('Home')}
+            onPress={() => navigation.navigate('SavedDocsStack')}
           />
           <CustomDrawerItem
             label="Shareds"
