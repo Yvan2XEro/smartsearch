@@ -6,6 +6,7 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomDrawerItem from './CustomDrawerItem';
 
 const DrawerContent = ({navigation}:{navigation:any}) => {
@@ -32,8 +33,8 @@ const DrawerContent = ({navigation}:{navigation:any}) => {
             <Text style={{fontSize: 13}}>Une description de l'user</Text>
           </View>
         </View>
-        <Divider/>
-        <View style={{marginTop: 20}}>
+        <Divider />
+        <View style={{marginTop: 10}}>
           <CustomDrawerItem
             label="Home"
             icon={<SimpleLineIcons name="home" size={draweIconSize} />}
@@ -52,6 +53,11 @@ const DrawerContent = ({navigation}:{navigation:any}) => {
           <CustomDrawerItem
             label="Groups"
             icon={<FontAwesome5 name="users" size={draweIconSize} />}
+            onPress={() => navigation.navigate('Home')}
+          />
+          <CustomDrawerItem
+            label="Help"
+            icon={<MaterialIcons name="help" size={draweIconSize} />}
             onPress={() => navigation.navigate('Home')}
           />
           <CustomDrawerItem
