@@ -5,6 +5,7 @@ import { Avatar, Text as PText } from 'react-native-paper'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import CustomDrawerItem from './CustomDrawerItem';
 
 const DrawerContent = ({navigation}:{navigation:any}) => {
@@ -30,6 +31,7 @@ const DrawerContent = ({navigation}:{navigation:any}) => {
             <Text style={{fontSize: 13}}>Une description de l'user</Text>
           </View>
         </View>
+        <Divider/>
         <View style={{marginTop: 20}}>
           <CustomDrawerItem
             label="Home"
@@ -42,11 +44,22 @@ const DrawerContent = ({navigation}:{navigation:any}) => {
             onPress={() => navigation.navigate('Home')}
           />
           <CustomDrawerItem
+            label="Shareds"
+            icon={<SimpleLineIcons name="share-alt" size={draweIconSize} />}
+            onPress={() => navigation.navigate('Home')}
+          />
+          <CustomDrawerItem
+            label="Groups"
+            icon={<FontAwesome5 name="users" size={draweIconSize} />}
+            onPress={() => navigation.navigate('Home')}
+          />
+          <CustomDrawerItem
             label="Settings"
             icon={<SimpleLineIcons name="settings" size={draweIconSize} />}
             onPress={() => navigation.navigate('Home')}
           />
         </View>
+        <Divider />
         <View style={{marginTop: 20}}>
           <CustomDrawerItem
             label="Logout"
@@ -57,6 +70,13 @@ const DrawerContent = ({navigation}:{navigation:any}) => {
       </DrawerContentScrollView>
     );
 }
+
+function Divider() {
+    return (
+        <View style={{height: 0.5, backgroundColor: 'gray', marginTop: 10}} />
+    )
+}
+
 
 export default DrawerContent
 
