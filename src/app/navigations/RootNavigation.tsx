@@ -5,6 +5,7 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import * as React from 'react';
+import DrawerContent from '../components/DrawerContent';
 import {AppTabNavigation} from './AppTabNavigation';
 import SearchStackNavigation from './SearchStackNavigation';
 
@@ -20,13 +21,7 @@ export default function RootNavigation() {
       }}
       drawerContent={(props: any) => {
         return (
-          <DrawerContentScrollView {...props}>
-            <DrawerItemList {...props} />
-            <DrawerItem
-              label="Filter"
-              onPress={() => props.navigation.navigate('Home')}
-            />
-          </DrawerContentScrollView>
+          <DrawerContent {...props}/>
         );
       }}>
       <Drawer.Screen

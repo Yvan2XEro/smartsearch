@@ -13,6 +13,7 @@ import SearchBlock from '../components/SeachBlock';
 import DocItem from '../components/DocItem';
 import {localStorage, pushIfNotExists} from '../services';
 import moment from 'moment';
+import { Snackbar } from 'react-native-paper';
 
 const SearchScreen = ({
   onDataChange,
@@ -28,6 +29,11 @@ const SearchScreen = ({
   const [showSaveQueryButton, setShowSaveQueryButton] = useState(false);
   const [buildedQuery, setbuildedQuery] = useState('');
   const [reloadLocalStorage, setReloadLocalStorage] = useState(0);
+
+  // Pour la popup de notification!
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  
   const onSaveQuery = async () => {
     try {
       let queries = await localStorage.get('queries');
@@ -44,6 +50,8 @@ const SearchScreen = ({
         data,
       });
       await localStorage.set('queries', JSON.stringify(queriesTab));
+      setSnackbarMessage("Saved!")
+      setShowSnackbar(true)
     } catch (error) {
       console.log(error);
     } finally {
@@ -170,6 +178,13 @@ const SearchScreen = ({
         />
       )}
       {isLoading && <ActivityIndicator />}
+      <Snackbar
+        style={{bottom: 20}}
+        duration={3000}
+        visible={showSnackbar}
+        onDismiss={() => setShowSnackbar(false)}>
+        {snackbarMessage}
+      </Snackbar>
     </SafeAreaView>
   );
 };

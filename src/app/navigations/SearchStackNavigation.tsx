@@ -1,6 +1,5 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import AppHeader from '../components/AppHeader';
 import DetailScreen from '../containers/DetailScreen';
 import SearchScreen from '../containers/SearchScreen';
 

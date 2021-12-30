@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Modal, Paragraph, Portal} from 'react-native-paper';
+import {Modal, Paragraph, Portal, Snackbar} from 'react-native-paper';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
@@ -25,6 +25,10 @@ const ListResultsModal = ({
   reloadLocalStorage: number;
 }) => {
   const [queries, setQueries] = React.useState([]);
+  
+  const [showSnackbar, setShowSnackbar] = React.useState(false)
+  const [snackbarMessage, setSnackbarMessage] = React.useState("")
+  
   const loadQueries = async () => {
     const queriesString = await localStorage.get('queries');
     if (queriesString !== null) {
@@ -36,9 +40,13 @@ const ListResultsModal = ({
   }, [reloadLocalStorage]);
 
   const remove = (name: string) => {
-    const q = queries.filter(item => (item as any).name != name);
-    setQueries(q);
-    localStorage.set('queries', JSON.stringify(q));
+    if(name!="") {
+      const q = queries.filter(item => (item as any).name != name);
+      setQueries(q);
+      localStorage.set('queries', JSON.stringify(q));
+      setSnackbarMessage("Deleted!")
+      setShowSnackbar(true)
+    }
   };
   return (
     <Portal>
@@ -109,6 +117,13 @@ const ListResultsModal = ({
           </View>
         )}
       </Modal>
+      <Snackbar
+        style={{bottom: 20}}
+        duration={3000}
+        visible={showSnackbar}
+        onDismiss={() => setShowSnackbar(false)}>
+        {snackbarMessage}
+      </Snackbar>
     </Portal>
   );
 };
