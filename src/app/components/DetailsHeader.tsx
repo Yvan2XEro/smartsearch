@@ -29,6 +29,7 @@ const DetailsHeader = ({
         </MenuTrigger>
         <MenuOptions>
           <MenuOption onSelect={onSelectFilterList} text="Filters" />
+          <MenuOption text="Saved documents" />
           <MenuOption text="Details settings" />
         </MenuOptions>
       </Menu>
