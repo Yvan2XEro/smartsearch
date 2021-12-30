@@ -3,6 +3,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Avatar, Text as PText } from 'react-native-paper'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import CustomDrawerItem from './CustomDrawerItem';
 
@@ -38,11 +39,20 @@ const DrawerContent = ({navigation}:{navigation:any}) => {
           <CustomDrawerItem
             label="Saved documents"
             icon={<FontAwesome name="folder" size={draweIconSize} />}
-            onPress={()=>navigation.navigate("Home")}
+            onPress={() => navigation.navigate('Home')}
+          />
+          <CustomDrawerItem
+            label="Settings"
+            icon={<SimpleLineIcons name="settings" size={draweIconSize} />}
+            onPress={() => navigation.navigate('Home')}
           />
         </View>
-        <View>
-          <Text>Drawer Footer</Text>
+        <View style={{marginTop: 20}}>
+          <CustomDrawerItem
+            label="Logout"
+            icon={<Ionicons name="md-exit-outline" size={draweIconSize} />}
+            onPress={() => navigation.navigate('Home')}
+          />
         </View>
       </DrawerContentScrollView>
     );
