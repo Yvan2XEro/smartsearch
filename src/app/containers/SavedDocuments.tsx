@@ -1,13 +1,26 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { useSelector } from 'react-redux'
+import { docsSelector } from '../store/docs/selectors'
 
 const SavedDocuments = () => {
     
+    const docs = useSelector(docsSelector)
+    console.log("uuuuuuuuuu",docs.length)
     return (
-        <View>
-            <Text>Saved docs!</Text>
-        </View>
-    )
+      <View>
+        <FlatList
+          data={docs}
+          renderItem={({item}) => (
+            <Text>
+              {item.data.title.length > 48
+                ? item.data.title.substr(0, 45)
+                : item.data.title}
+            </Text>
+          )}
+        />
+      </View>
+    );
 }
 
 export default SavedDocuments

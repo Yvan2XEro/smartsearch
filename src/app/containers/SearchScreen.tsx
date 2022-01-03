@@ -15,6 +15,8 @@ import {localStorage, pushSearchResultsIfNotExists} from '../services';
 import moment from 'moment';
 import { Snackbar } from 'react-native-paper';
 import { DOCS_KEY } from './SavedDocuments';
+import { useDispatch } from 'react-redux';
+import { saveDocAction } from '../store/docs/actions';
 
 const SearchScreen = ({
   onDataChange,
@@ -65,18 +67,20 @@ const SearchScreen = ({
   }, [data]);
 
   // When want to save doc in localstorage
+  const dispatch = useDispatch()
   const onSaveDoc = async(doc:any) =>{
-    const docsStr = await localStorage.get('docs');
-    let docs = [];
-    if (docsStr != '') {
-      docs = JSON.parse(docsStr);
-    }
-    pushSearchResultsIfNotExists(docs, {
-      data: doc,
-      createdAt: moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss'),
-    });
+    // const docsStr = await localStorage.get('docs');
+    // let docs = [];
+    // if (docsStr != '') {
+    //   docs = JSON.parse(docsStr);
+    // }
+    // pushSearchResultsIfNotExists(docs, {
+    //   data: doc,
+    //   createdAt: moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss'),
+    // });
 
-    await localStorage.set(DOCS_KEY, JSON.stringify(docs));
+    // await localStorage.set(DOCS_KEY, JSON.stringify(docs));
+    await dispatch(saveDocAction(doc))
     setSnackbarMessage("Doc saved!")
     setShowSnackbar(true)
   }
