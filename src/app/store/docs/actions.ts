@@ -1,5 +1,5 @@
 import moment from "moment";
-import { LOAD_DOCS_ACTION, SAVE_DOC_ACTION } from ".";
+import { DELETE_DOC_ACTION, LOAD_DOCS_ACTION, SAVE_DOC_ACTION } from ".";
 import { DOCS_KEY } from "../../containers/SavedDocuments";
 import { localStorage, pushSearchResultsIfNotExists } from "../../services";
 
@@ -19,6 +19,16 @@ export const saveDocAction = (doc: any) => async (dispatch: any) => {
     return dispatch({
         type: SAVE_DOC_ACTION,
         payload: data
+    })
+}
+
+export const deleteDocAction = (doc: any) => async (dispatch: any) => {
+    let docs = JSON.parse(await localStorage.get(DOCS_KEY, JSON.stringify([])));
+    // console.log("yoooo")
+    await localStorage.set(DOCS_KEY, JSON.stringify(docs.filter((d: any) => JSON.stringify(d.data)!=JSON.stringify(doc))))
+    return dispatch({
+        type: DELETE_DOC_ACTION,
+        payload: doc
     })
 }
 

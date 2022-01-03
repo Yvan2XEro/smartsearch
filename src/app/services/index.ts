@@ -5,8 +5,8 @@ export const localStorage = {
   async set(key: string, value: string) {
     await AsyncStorage.setItem(`@${key}`, value);
   },
-  async get(key: string) {
-    return await AsyncStorage.getItem(`@${key}`) || "";
+  async get(key: string, defaultValue:string="") {
+    return await AsyncStorage.getItem(`@${key}`) || defaultValue;
   },
   async delete(key: string) {
     await AsyncStorage.removeItem(`@${key}`);

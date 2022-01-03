@@ -1,27 +1,54 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import DocItem from '../components/DocItem'
+import { deleteDocAction } from '../store/docs/actions'
 import { docsSelector } from '../store/docs/selectors'
 
-const SavedDocuments = () => {
-    
-    const docs = useSelector(docsSelector)
-    console.log("uuuuuuuuuu",docs.length)
-    return (
-      <View>
-        <FlatList
-          data={docs}
-          renderItem={({item}) => (
-            <Text>
-              {item.data.title.length > 48
-                ? item.data.title.substr(0, 45)
-                : item.data.title}
-            </Text>
-          )}
-        />
-      </View>
-    );
-}
+const SavedDocuments = ({navigation}: {navigation: any}) => {
+  const docs = useSelector(docsSelector);
+
+  const dispatch = useDispatch()
+  const onDelete = useCallback(
+    (doc) => {
+      dispatch(deleteDocAction(doc))
+    },
+    [dispatch],
+  )
+  return (
+    <View>
+      <FlatList
+        data={docs}
+        renderItem={({item}) => (
+          <DocItem
+            doc={item.data}
+            onDelete={()=>onDelete(item.data)}
+            onPress={() => {
+              navigation.navigate(
+                'SearchStack' as never,
+                {
+                  screen: 'Details',
+                  params: {
+                    document: {
+                      title: (item.data as any).title,
+                      publicationDate: (item.data as any).publicationDate,
+                      contentType: (item.data as any).contentType,
+                      publisher: (item.data as any).publisher,
+                      abstract: (item.data as any).abstract,
+                      doi: (item.data as any).doi,
+                      openaccess: (item.data as any).openaccess,
+                      authors: (item.data as any).creators,
+                    } as Document,
+                  },
+                } as never,
+              );
+            }}
+          />
+        )}
+      />
+    </View>
+  );
+};
 
 export default SavedDocuments
 

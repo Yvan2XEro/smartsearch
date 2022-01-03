@@ -8,11 +8,18 @@ import {
 } from 'react-native-popup-menu';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { localStorage, pushSearchResultsIfNotExists } from '../services';
-import moment from 'moment';
 
-const DocItem = ({doc, onPress, onSave}: {doc: any; onPress: any; onSave:any}) => {
-
+const DocItem = ({
+  doc,
+  onPress,
+  onSave,
+  onDelete,
+}: {
+  doc: any;
+  onPress: any;
+  onSave?: any;
+  onDelete?: any;
+}) => {
   return (
     <View style={styles.doc}>
       {(doc as any).contentType !== 'Article' ? (
@@ -53,9 +60,16 @@ const DocItem = ({doc, onPress, onSave}: {doc: any; onPress: any; onSave:any}) =
 
           <MenuOptions>
             <MenuOption onSelect={() => {}} text="Cite" />
-            <MenuOption onSelect={onSave}>
-              <Text style={{color: 'red'}}>Save</Text>
-            </MenuOption>
+            {onSave && (
+              <MenuOption onSelect={onSave}>
+                <Text style={{color: 'red'}}>Save</Text>
+              </MenuOption>
+            )}
+            {onDelete && (
+              <MenuOption onSelect={onDelete}>
+                <Text style={{color: 'red'}}>Delete</Text>
+              </MenuOption>
+            )}
             <MenuOption onSelect={() => {}} disabled={true} text="Recommand" />
           </MenuOptions>
         </Menu>

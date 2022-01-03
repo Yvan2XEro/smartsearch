@@ -7,7 +7,7 @@ export type StoreAction = {
 }
 
 export const SAVE_DOC_ACTION = 'SAVE_DOC_ACTION'
-export const DELE_DOC_ACTION = 'DELE_DOC_ACTION'
+export const DELETE_DOC_ACTION = 'DELETE_DOC_ACTION'
 export const LOAD_DOCS_ACTION = 'LOAD_DOCS_ACTION'
 
 export default function savedDocsReducer(state=[], action: StoreAction) {
@@ -18,8 +18,8 @@ export default function savedDocsReducer(state=[], action: StoreAction) {
         case SAVE_DOC_ACTION:
             return [...state, action.payload]
 
-        case DELE_DOC_ACTION:
-            return state.filter(d=>d!=action.payload)
+        case DELETE_DOC_ACTION:
+            return state.filter(d=>JSON.stringify(d)!=JSON.stringify(action.payload))
 
         default:
             return state;
