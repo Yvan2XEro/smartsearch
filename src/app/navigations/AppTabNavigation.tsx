@@ -30,11 +30,11 @@ export function AppTabNavigation() {
         component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
-          header: ({ navigation }) => (
+          header: ({navigation}) => (
             <AppHeader type="app" navigation={navigation} title="Home" />
           ),
-          tabBarIcon: ({ color, size }) => (
-            <View style={styles.tabBarStyle}>
+          tabBarIcon: ({color, size, focused}) => (
+            <View style={[styles.tabBarStyle, focused? styles.focusedStyles:{}]}>
               <MaterialIcons name="home" color={color} size={size} />
             </View>
           ),
@@ -46,8 +46,8 @@ export function AppTabNavigation() {
         options={{
           tabBarLabel: 'Search',
           headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <View style={styles.tabBarStyle}>
+          tabBarIcon: ({color, size, focused}) => (
+            <View style={[styles.tabBarStyle, focused? styles.focusedStyles:{}]}>
               <MaterialCommunityIcons
                 name="book-search-outline"
                 color={color}
@@ -64,8 +64,8 @@ export function AppTabNavigation() {
         options={{
           tabBarLabel: 'Chats',
           headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <View style={styles.tabBarStyle}>
+          tabBarIcon: ({color, size, focused}) => (
+            <View style={[styles.tabBarStyle, focused? styles.focusedStyles:{}]}>
               <Ionicons name="chatbubbles-outline" color={color} size={size} />
             </View>
           ),
@@ -81,5 +81,9 @@ const styles = StyleSheet.create({
     width: '99%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  focusedStyles: {
+    borderTopWidth: 1,
+    borderTopColor: 'red'
   }
 })

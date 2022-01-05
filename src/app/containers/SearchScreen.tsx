@@ -18,6 +18,7 @@ import { DOCS_KEY } from './SavedDocuments';
 import { useDispatch } from 'react-redux';
 import { saveDocAction } from '../store/docs/actions';
 import AppSnackbar, { appSnackbarStyles } from '../components/AppSnackbar';
+import { saveNewQueryResultAction } from '../store/queriesResults/actions';
 
 const SearchScreen = ({
   onDataChange,
@@ -38,42 +39,34 @@ const SearchScreen = ({
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   
-  const onSaveQuery = async () => {
-    try {
-      let queries = await localStorage.get('queries');
-      let queriesTab: any[] = [];
-      if (queries !== null) {
-        queriesTab = [...JSON.parse(queries)];
-      }
-      pushSearchResultsIfNotExists(queriesTab, {
+  const dispatch = useDispatch()
+
+  // pour enregistrer un resultat
+  const onSaveQuery = React.useCallback(()=>{
+    dispatch(
+      saveNewQueryResultAction({
         query: buildedQuery,
         name:
           'Search_' +
           moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss'),
         createdAt: moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss'),
         data,
-      });
-      await localStorage.set('queries', JSON.stringify(queriesTab));
-      setSnackbarMessage("Saved!")
-      setShowSnackbar(true)
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setReloadLocalStorage(reloadLocalStorage + 1);
-    }
-  };
+      }),
+    );
+      setSnackbarMessage('Saved!');
+      setShowSnackbar(true);
+  },[])
 
   React.useEffect(() => {
     setShowSaveQueryButton(data.length > 0);
   }, [data]);
 
   // When want to save doc in localstorage
-  const dispatch = useDispatch()
-  const onSaveDoc = async(doc:any) =>{
-    await dispatch(saveDocAction(doc))
-    setSnackbarMessage("Doc saved!")
-    setShowSnackbar(true)
-  }
+  const onSaveDoc = React.useCallback(async (doc: any) => {
+    await dispatch(saveDocAction(doc));
+    setSnackbarMessage('Doc saved!');
+    setShowSnackbar(true);
+  }, []);
 
   const aggregateSearch = async (query: string) => {
     setbuildedQuery(query);

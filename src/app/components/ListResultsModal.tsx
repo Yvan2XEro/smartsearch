@@ -13,6 +13,9 @@ import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {localStorage} from '../services';
 import AppSnackbar, { appSnackbarStyles } from './AppSnackbar';
+import { useDispatch, useSelector } from 'react-redux';
+import { allQueriesResults } from '../store/queriesResults/selectors';
+import { deleteQueryResultAction } from '../store/queriesResults/actions';
 
 const ListResultsModal = ({
   visible,
@@ -25,30 +28,21 @@ const ListResultsModal = ({
   onSelectItem: any;
   reloadLocalStorage: number;
 }) => {
-  const [queries, setQueries] = React.useState([]);
+  const queries = useSelector(allQueriesResults);
   
   const [showSnackbar, setShowSnackbar] = React.useState(false)
   const [snackbarMessage, setSnackbarMessage] = React.useState("")
   
-  const loadQueries = async () => {
-    const queriesString = await localStorage.get('queries');
-    if (queriesString !== null) {
-      setQueries(JSON.parse(queriesString));
-    }
-  };
-  React.useEffect(() => {
-    loadQueries();
-  }, [reloadLocalStorage]);
+  const dispatch = useDispatch()
+  const remove  = React.useCallback(
+    (name:string) => {
+      dispatch(deleteQueryResultAction({name}))
+      setSnackbarMessage('Deleted!');
+      setShowSnackbar(true);
+    },
+    [],
+  )
 
-  const remove = (name: string) => {
-    if(name!="") {
-      const q = queries.filter(item => (item as any).name != name);
-      setQueries(q);
-      localStorage.set('queries', JSON.stringify(q));
-      setSnackbarMessage("Deleted!")
-      setShowSnackbar(true)
-    }
-  };
   return (
     <Portal>
       <Modal
@@ -87,7 +81,7 @@ const ListResultsModal = ({
         </View>
         {queries.length > 0 ? (
           <ScrollView style={{marginHorizontal: 5}}>
-            {queries.map(({name, searchedAt, data, query}, i) => (
+            {queries.map(({name, searchedAt, data, query}:any, i:number) => (
               <View key={i} style={[styles.item]}>
                 <TouchableOpacity
                   onPress={() => onSelectItem({data, query})}

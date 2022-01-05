@@ -5,6 +5,7 @@ import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import DrawerContent from '../components/DrawerContent';
 import { loadDocsAction } from '../store/docs/actions';
+import { loadResultsAction } from '../store/queriesResults/actions';
 import {AppTabNavigation} from './AppTabNavigation';
 import SavedDocsStack from './SavedDocsStack';
 import SearchStackNavigation from './SearchStackNavigation';
@@ -12,8 +13,11 @@ import SearchStackNavigation from './SearchStackNavigation';
 const Drawer = createDrawerNavigator();
 export default function RootNavigation() {
   const dispatch = useDispatch();
+  
+  // Initialiser les states redux
   React.useEffect(() => {
     dispatch(loadDocsAction());
+    dispatch(loadResultsAction());
   }, []);
   return (
     <Drawer.Navigator
