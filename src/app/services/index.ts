@@ -21,7 +21,7 @@ function exists(array: any[], item: any) {
   for (let i = 0; i < array.length; i++) {
     if (
       JSON.stringify(array[i].data) == JSON.stringify(item.data) ||
-      array[i].query == item.query
+      ((array[i].hasOwnProperty("query") && item.hasOwnProperty("query")) && array[i].query == item.query)
     )
       return true;
   }
@@ -31,5 +31,7 @@ function exists(array: any[], item: any) {
 export const pushSearchResultsIfNotExists = (array: any[], item: any) => {
   if (!exists(array, item)) {
     array.push(item);
+    return true;
   }
+  return false;
 };

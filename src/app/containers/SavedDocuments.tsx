@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
+import AppSnackbar, { appSnackbarStyles } from '../components/AppSnackbar'
 import DocItem from '../components/DocItem'
 import { deleteDocAction } from '../store/docs/actions'
 import { docsSelector } from '../store/docs/selectors'
@@ -8,13 +9,21 @@ import { docsSelector } from '../store/docs/selectors'
 const SavedDocuments = ({navigation}: {navigation: any}) => {
   const docs = useSelector(docsSelector);
 
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  
   const dispatch = useDispatch()
   const onDelete = useCallback(
     (doc) => {
+      console.log(docs.length)
       dispatch(deleteDocAction(doc))
+      console.log(docs.length);
+      setSnackbarMessage("Deleted")
+      setShowSnackbar(true)
     },
-    [dispatch],
+    [],
   )
+
   return (
     <View>
       <FlatList
@@ -22,7 +31,7 @@ const SavedDocuments = ({navigation}: {navigation: any}) => {
         renderItem={({item}) => (
           <DocItem
             doc={item.data}
-            onDelete={()=>onDelete(item.data)}
+            onDelete={() => onDelete(item.data)}
             onPress={() => {
               navigation.navigate(
                 'SearchStack' as never,
@@ -45,6 +54,12 @@ const SavedDocuments = ({navigation}: {navigation: any}) => {
             }}
           />
         )}
+      />
+      <AppSnackbar
+        style={appSnackbarStyles}
+        visible={showSnackbar}
+        onDismiss={() => setShowSnackbar(false)}
+        message={snackbarMessage}
       />
     </View>
   );

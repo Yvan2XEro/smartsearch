@@ -17,6 +17,7 @@ import { Snackbar } from 'react-native-paper';
 import { DOCS_KEY } from './SavedDocuments';
 import { useDispatch } from 'react-redux';
 import { saveDocAction } from '../store/docs/actions';
+import AppSnackbar, { appSnackbarStyles } from '../components/AppSnackbar';
 
 const SearchScreen = ({
   onDataChange,
@@ -69,17 +70,6 @@ const SearchScreen = ({
   // When want to save doc in localstorage
   const dispatch = useDispatch()
   const onSaveDoc = async(doc:any) =>{
-    // const docsStr = await localStorage.get('docs');
-    // let docs = [];
-    // if (docsStr != '') {
-    //   docs = JSON.parse(docsStr);
-    // }
-    // pushSearchResultsIfNotExists(docs, {
-    //   data: doc,
-    //   createdAt: moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss'),
-    // });
-
-    // await localStorage.set(DOCS_KEY, JSON.stringify(docs));
     await dispatch(saveDocAction(doc))
     setSnackbarMessage("Doc saved!")
     setShowSnackbar(true)
@@ -170,7 +160,7 @@ const SearchScreen = ({
           renderItem={({item}) => (
             <DocItem
               doc={item}
-              onSave={()=>onSaveDoc(item) }
+              onSave={() => onSaveDoc(item)}
               onPress={() => {
                 navigation.navigate(
                   'SearchStack' as never,
@@ -201,13 +191,12 @@ const SearchScreen = ({
         />
       )}
       {isLoading && <ActivityIndicator />}
-      <Snackbar
-        style={{bottom: 20}}
-        duration={3000}
+      <AppSnackbar
+        style={appSnackbarStyles}
         visible={showSnackbar}
-        onDismiss={() => setShowSnackbar(false)}>
-        {snackbarMessage}
-      </Snackbar>
+        onDismiss={() => setShowSnackbar(false)}
+        message={snackbarMessage}
+      />
     </SafeAreaView>
   );
 };

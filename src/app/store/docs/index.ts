@@ -19,7 +19,7 @@ export default function savedDocsReducer(state=[], action: StoreAction) {
             return [...state, action.payload]
 
         case DELETE_DOC_ACTION:
-            return state.filter(d=>JSON.stringify(d)!=JSON.stringify(action.payload))
+            return state.filter((d: any) => d.data != action.payload)
 
         default:
             return state;

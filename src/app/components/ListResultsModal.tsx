@@ -12,6 +12,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {localStorage} from '../services';
+import AppSnackbar, { appSnackbarStyles } from './AppSnackbar';
 
 const ListResultsModal = ({
   visible,
@@ -117,13 +118,12 @@ const ListResultsModal = ({
           </View>
         )}
       </Modal>
-      <Snackbar
-        style={{bottom: 20}}
-        duration={3000}
+      <AppSnackbar
+        style={appSnackbarStyles}
         visible={showSnackbar}
-        onDismiss={() => setShowSnackbar(false)}>
-        {snackbarMessage}
-      </Snackbar>
+        onDismiss={() => setShowSnackbar(false)}
+        message={snackbarMessage}
+      />
     </Portal>
   );
 };
