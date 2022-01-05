@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import AppSnackbar, { appSnackbarStyles } from '../components/AppSnackbar'
 import DocItem from '../components/DocItem'
@@ -25,7 +25,7 @@ const SavedDocuments = ({navigation}: {navigation: any}) => {
   )
 
   return (
-    <View>
+    <SafeAreaView style={{height: '100%'}}>
       <FlatList
         data={docs}
         renderItem={({item}) => (
@@ -61,7 +61,7 @@ const SavedDocuments = ({navigation}: {navigation: any}) => {
         onDismiss={() => setShowSnackbar(false)}
         message={snackbarMessage}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
