@@ -11,7 +11,7 @@ const AppHeader = ({
 }: {
   navigation: any;
   title: string | undefined;
-  type: string;
+  type?: string;
 }) => {
   return (
     <View style={styles.header}>

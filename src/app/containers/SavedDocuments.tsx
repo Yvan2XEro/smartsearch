@@ -1,17 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { FlatList, SafeAreaView, StyleSheet } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import AppSnackbar, { appSnackbarStyles } from '../components/AppSnackbar'
 import DocItem from '../components/DocItem'
 import { deleteDocAction } from '../store/docs/actions'
 import { docsSelector } from '../store/docs/selectors'
 
-const SavedDocuments = ({navigation}: {navigation: any}) => {
+const SavedDocuments = ({ navigation }: { navigation: any }) => {
   const docs = useSelector(docsSelector);
 
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  
+
   const dispatch = useDispatch()
   const onDelete = useCallback(
     (doc) => {
@@ -25,10 +25,10 @@ const SavedDocuments = ({navigation}: {navigation: any}) => {
   )
 
   return (
-    <SafeAreaView style={{height: '100%'}}>
+    <SafeAreaView style={{ height: '100%' }}>
       <FlatList
         data={docs}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <DocItem
             doc={item.data}
             onDelete={() => onDelete(item.data)}

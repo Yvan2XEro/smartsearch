@@ -24,7 +24,7 @@ fieldIcon
           justifyContent: 'flex-start',
           backgroundColor: '#fff',
           borderRadius: 10,
-          borderBottomWidth: 0.5,
+          // borderBottomWidth: 0.5,
           overflow: 'hidden',
         }}>
         <View style={{justifyContent: 'center', paddingLeft:5}}>{fieldIcon}</View>
@@ -36,6 +36,7 @@ fieldIcon
             placeholder={placeholder ? placeholder : ''}
           />
         </View>
+        {/* <View style={{width:'94%', height:0.07, alignSelf: 'center', backgroundColor: '#000'}}/> */}
       </View>
     </View>
   );

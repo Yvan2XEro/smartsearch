@@ -39,7 +39,7 @@ const DocItem = ({
           style={{
             marginRight: 10,
             marginLeft: 0,
-            color: '#FF7F7F',
+            // color: '#580258',
           }}
         />
       )}

@@ -47,6 +47,7 @@ const SearchBlock: React.FC<IProps> = ({
     title: '',
     publicationName: '',
     topicalCollection: '',
+    authorName: '',
     issn: '',
     doi: '',
     publisher: '',
@@ -167,6 +168,13 @@ const SearchBlock: React.FC<IProps> = ({
               label="Publication name"
             />
             <SearchInput
+              label="Author"
+              onChangeText={(text: string) =>
+                setParams({...params, authorName: text})
+              }
+              fieldIcon={<Entypo name="user" size={marginLeftInput - 3} />}
+            />
+            <SearchInput
               onChangeText={(text: string) => setParams({...params, doi: text})}
               fieldIcon={
                 <MaterialCommunityIcons
@@ -221,7 +229,7 @@ const SearchBlock: React.FC<IProps> = ({
               onChangeText={(text: string) =>
                 setParams({...params, publisher: text})
               }
-              fieldIcon={<Entypo name="user" size={marginLeftInput-3} />}
+              fieldIcon={<Entypo name="user" size={marginLeftInput - 3} />}
             />
             <SearchInput
               label="Issue type"

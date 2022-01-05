@@ -56,13 +56,13 @@ const DrawerContent = ({navigation}:{navigation:any}) => {
             onPress={() => navigation.navigate('Home')}
           />
           <CustomDrawerItem
-            label="Help"
-            icon={<MaterialIcons name="help" size={draweIconSize} />}
+            label="Settings"
+            icon={<SimpleLineIcons name="settings" size={draweIconSize} />}
             onPress={() => navigation.navigate('Home')}
           />
           <CustomDrawerItem
-            label="Settings"
-            icon={<SimpleLineIcons name="settings" size={draweIconSize} />}
+            label="Help"
+            icon={<MaterialIcons name="help" size={draweIconSize} />}
             onPress={() => navigation.navigate('Home')}
           />
         </View>
