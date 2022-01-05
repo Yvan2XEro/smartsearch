@@ -11,10 +11,6 @@ import {Document} from '../models/Document';
 import {useNavigation} from '@react-navigation/native';
 import SearchBlock from '../components/SeachBlock';
 import DocItem from '../components/DocItem';
-import {localStorage, pushSearchResultsIfNotExists} from '../services';
-import moment from 'moment';
-import { Snackbar } from 'react-native-paper';
-import { DOCS_KEY } from './SavedDocuments';
 import { useDispatch } from 'react-redux';
 import { saveDocAction } from '../store/docs/actions';
 import AppSnackbar, { appSnackbarStyles } from '../components/AppSnackbar';
@@ -33,7 +29,6 @@ const SearchScreen = ({
   const [isLoading, setLoading] = useState(false);
   const [showSaveQueryButton, setShowSaveQueryButton] = useState(false);
   const [buildedQuery, setbuildedQuery] = useState('');
-  const [reloadLocalStorage, setReloadLocalStorage] = useState(0);
 
   // Pour la popup de notification!
   const [showSnackbar, setShowSnackbar] = useState(false);
@@ -44,7 +39,6 @@ const SearchScreen = ({
   // pour enregistrer un resultat
   const onSaveQuery = React.useCallback(()=>{
 
-    console.log('yooooooooo', data.length);
     dispatch(
       saveNewQueryResultAction({
         results:data,
@@ -142,7 +136,6 @@ const SearchScreen = ({
         }}
         showSaveQueryButton={showSaveQueryButton}
         onSaveQuery={onSaveQuery}
-        reloadLocalStorage={reloadLocalStorage}
       />
       {data && (
         <FlatList

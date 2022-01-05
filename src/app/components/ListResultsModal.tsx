@@ -6,12 +6,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Modal, Paragraph, Portal, Snackbar} from 'react-native-paper';
+import {Modal, Paragraph, Portal} from 'react-native-paper';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {localStorage} from '../services';
 import AppSnackbar, { appSnackbarStyles } from './AppSnackbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { allQueriesResults } from '../store/queriesResults/selectors';
@@ -21,12 +20,10 @@ const ListResultsModal = ({
   visible,
   onDismiss,
   onSelectItem,
-  reloadLocalStorage,
 }: {
   visible: boolean;
   onDismiss: any;
   onSelectItem: any;
-  reloadLocalStorage: number;
 }) => {
   const queries = useSelector(allQueriesResults);
   

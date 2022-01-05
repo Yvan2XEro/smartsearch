@@ -29,7 +29,6 @@ interface IProps {
   showSaveQueryButton: boolean;
   onSaveQuery: any;
   onSelectItem: any;
-  reloadLocalStorage: number;
 }
 const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0;
 const SearchBlock: React.FC<IProps> = ({
@@ -39,7 +38,6 @@ const SearchBlock: React.FC<IProps> = ({
   showSaveQueryButton,
   onSaveQuery,
   onSelectItem,
-  reloadLocalStorage,
 }) => {
   const [showFiltersBlock, setShowFiltersBlock] = useState(false);
   const [fastInputQuery, setFastInputQuery] = useState(value);
@@ -275,7 +273,6 @@ const SearchBlock: React.FC<IProps> = ({
           setShowModal(false);
         }}
         onDismiss={() => setShowModal(false)}
-        reloadLocalStorage={reloadLocalStorage}
         visible={showModal}
       />
     </View>
