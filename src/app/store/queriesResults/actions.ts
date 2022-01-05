@@ -9,7 +9,7 @@ export const saveNewQueryResultAction = ({ results, buildedQuery }: any) => asyn
     const data = {
         query: buildedQuery,
         name:
-            'Search_' +
+            buildedQuery+'_' +
             moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss'),
         createdAt: moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss'),
         data: results,
@@ -34,7 +34,7 @@ export const deleteQueryResultAction = ({name}:any) => async(dispatch:any) =>{
 
 export const loadResultsAction = () => async (dispatch:any) =>{
     const results = await getSavedQueries()
-    
+
     return dispatch({
         type: LOAD_RESULTS_ACTION,
         payload: results

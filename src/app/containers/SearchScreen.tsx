@@ -43,14 +43,12 @@ const SearchScreen = ({
 
   // pour enregistrer un resultat
   const onSaveQuery = React.useCallback(()=>{
+
+    console.log('yooooooooo', data.length);
     dispatch(
       saveNewQueryResultAction({
-        query: buildedQuery,
-        name:
-          'Search_' +
-          moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss'),
-        createdAt: moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss'),
-        data,
+        results:data,
+        buildedQuery
       }),
     );
       setSnackbarMessage('Saved!');

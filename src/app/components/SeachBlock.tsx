@@ -42,7 +42,7 @@ const SearchBlock: React.FC<IProps> = ({
   reloadLocalStorage,
 }) => {
   const [showFiltersBlock, setShowFiltersBlock] = useState(false);
-  const [fastInputQuery, setFastInputQuery] = useState('');
+  const [fastInputQuery, setFastInputQuery] = useState(value);
   const [params, setParams] = useState({
     title: '',
     publicationName: '',
