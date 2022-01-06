@@ -8,12 +8,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AppHeader from '../components/AppHeader';
 import ChatStackNavigation from './ChatStackNavigation';
 import { StyleSheet, View } from 'react-native'
+import HomeScreen from '../containers/HomeScreen';
 
 const Tab = createBottomTabNavigator();
-
-const HomeScreen = ({ navigation, route }: { navigation: any; route: any }) => {
-  return <Text>This is home page</Text>;
-};
 export function AppTabNavigation() {
   const [total, setTotal] = useState(0);
   const handleDataChange = (total: number) => {
@@ -30,8 +27,9 @@ export function AppTabNavigation() {
         component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
-          header: ({navigation}) => (
-            <AppHeader type="app" navigation={navigation} title="Home" />
+          title: 'SMART SEARCH',
+          header: ({navigation, options}) => (
+            <AppHeader type="app" navigation={navigation} title={options.title} />
           ),
           tabBarIcon: ({color, size, focused}) => (
             <View style={[styles.tabBarStyle, focused? styles.focusedStyles:{}]}>

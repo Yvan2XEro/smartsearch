@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {Text} from 'react-native-paper';
+import {View, Text, StyleSheet} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 

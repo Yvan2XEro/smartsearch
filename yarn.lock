@@ -6210,12 +6210,22 @@ react-native-navigation-bar@^0.2.1:
   resolved "https://registry.yarnpkg.com/react-native-navigation-bar/-/react-native-navigation-bar-0.2.1.tgz#e25e585742124040ff069a69a4445be83de77000"
   integrity sha1-4l5YV0ISQED/BppppERb6D3ncAA=
 
+react-native-pager-view@^5.4.9:
+  version "5.4.9"
+  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-5.4.9.tgz#c0d40847cfeda5a4e729b53271b0ee0fedff3eb5"
+  integrity sha512-D6tzxpwMGdl6CXgtskGWhKRc5cJakCazESRGt7PkqnpyiH3N35ft1KmR82pCSQetAFlytFiToeu3a/dG5CELvA==
+
 react-native-paper-dates@^0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/react-native-paper-dates/-/react-native-paper-dates-0.8.0.tgz#8c2f0a968677131009e2072ea22074ea1caef205"
   integrity sha512-jHd2wPoViRhUWX4sDwkOuZ6DvNAZ0U8uEYDFfuXKbbmWpq4sNT7zZTay49CaO/kGeKNusl9j39WQYVbRoGmZcA==
   dependencies:
     color "^3.2.1"
+
+react-native-paper-tabs@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/react-native-paper-tabs/-/react-native-paper-tabs-0.7.0.tgz#97ae5838f8a2d3ac2826cf1dee065364d7c3bad8"
+  integrity sha512-TXz1G1hLJNvykJ57VhjKFVRgRDC2bxzb/bwPJ59POK9nGO0yD+Rx7+W5D0i5/ZQF1uKSV92IMv+eowd/BRM46Q==
 
 react-native-paper@^4.9.2:
   version "4.10.0"
