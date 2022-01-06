@@ -4,7 +4,9 @@ import docsReducer from "./docs";
 import queriesResultsReducer from "./queriesResults";
 
 
-export default createStore(combineReducers({
+const store = createStore(combineReducers({
     docs:docsReducer,
     queriesResults: queriesResultsReducer
 }), applyMiddleware(thunk))
+
+export default store;
