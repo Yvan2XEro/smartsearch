@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import {Button, Text} from 'react-native-paper';
-import {TextInput as RnTextInput} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Button, Text } from 'react-native-paper';
+import { TextInput as RnTextInput } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -80,13 +80,13 @@ const SearchBlock: React.FC<IProps> = ({
   };
 
   return (
-    <View style={{flexDirection: 'column'}}>
+    <View style={{ flexDirection: 'column' }}>
       <View style={[styles.rowContent]}>
         <MaterialIcons
-        onPress={() =>navigation.openDrawer()}
+          onPress={() => navigation.openDrawer()}
           name="apps"
           size={marginLeftInput}
-          style={{marginTop: 10}}
+          style={{ marginTop: 10 }}
         />
         <RnTextInput
           placeholder="Fast Search Here..."
@@ -99,7 +99,7 @@ const SearchBlock: React.FC<IProps> = ({
         {fastInputQuery != '' && (
           <TouchableOpacity onPress={() => setFastInputQuery('')}>
             <MaterialCommunityIcons
-              style={{marginTop: 10, marginRight: 20}}
+              style={{ marginTop: 10, marginRight: 20 }}
               name="close-circle"
               size={25}
             />
@@ -113,27 +113,27 @@ const SearchBlock: React.FC<IProps> = ({
             name={showFiltersBlock ? 'filter-menu' : 'filter-menu-outline'}
           />
         </TouchableOpacity>
-        <Menu style={{alignSelf: 'center'}}>
+        <Menu style={{ alignSelf: 'center' }}>
           <MenuTrigger>
             <Entypo name="dots-three-vertical" color="gray" size={25} />
           </MenuTrigger>
           <MenuOptions>
             <MenuOption onSelect={onSaveQuery} disabled={!showSaveQueryButton}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <MaterialCommunityIcons
-                  style={{marginRight: 3}}
+                  style={{ marginRight: 3 }}
                   size={20}
                   name="content-save-all-outline"
                 />
-                <Text style={!showSaveQueryButton && {color: 'gray'}}>
+                <Text style={!showSaveQueryButton && { color: 'gray' }}>
                   Save this results
                 </Text>
               </View>
             </MenuOption>
             <MenuOption onSelect={() => setShowModal(true)}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <MaterialIcons
-                  style={{marginRight: 3}}
+                  style={{ marginRight: 3 }}
                   size={20}
                   name="snippet-folder"
                 />
@@ -146,19 +146,19 @@ const SearchBlock: React.FC<IProps> = ({
       <ScrollView style={styles.inputs}>
         {showFiltersBlock && (
           <KeyboardAvoidingView
-            style={{marginBottom: 60}}
+            style={{ marginBottom: 60 }}
             behavior={undefined}
             keyboardVerticalOffset={keyboardVerticalOffset}>
             <SearchInput
               label="Title"
               onChangeText={(text: string) =>
-                setParams({...params, title: text})
+                setParams({ ...params, title: text })
               }
               fieldIcon={<Entypo name="book" size={marginLeftInput} />}
             />
             <SearchInput
               onChangeText={(text: string) =>
-                setParams({...params, publicationName: text})
+                setParams({ ...params, publicationName: text })
               }
               fieldIcon={
                 <MaterialIcons
@@ -171,12 +171,12 @@ const SearchBlock: React.FC<IProps> = ({
             <SearchInput
               label="Author"
               onChangeText={(text: string) =>
-                setParams({...params, authorName: text})
+                setParams({ ...params, authorName: text })
               }
               fieldIcon={<Entypo name="user" size={marginLeftInput - 3} />}
             />
             <SearchInput
-              onChangeText={(text: string) => setParams({...params, doi: text})}
+              onChangeText={(text: string) => setParams({ ...params, doi: text })}
               fieldIcon={
                 <MaterialCommunityIcons
                   name="identifier"
@@ -187,7 +187,7 @@ const SearchBlock: React.FC<IProps> = ({
             />
             <SearchInput
               onChangeText={(text: string) =>
-                setParams({...params, topicalCollection: text})
+                setParams({ ...params, topicalCollection: text })
               }
               fieldIcon={
                 <MaterialCommunityIcons
@@ -199,7 +199,7 @@ const SearchBlock: React.FC<IProps> = ({
             />
             <SearchInput
               onChangeText={(text: string) =>
-                setParams({...params, issn: text})
+                setParams({ ...params, issn: text })
               }
               fieldIcon={<EmptyIcon />}
               label="Issn"
@@ -208,7 +208,7 @@ const SearchBlock: React.FC<IProps> = ({
               keyboardType="numeric"
               label="Volume"
               onChangeText={(text: number) =>
-                setParams({...params, volume: text})
+                setParams({ ...params, volume: text })
               }
               fieldIcon={<EmptyIcon />}
             />
@@ -216,7 +216,7 @@ const SearchBlock: React.FC<IProps> = ({
               keyboardType="numeric"
               label="Number"
               onChangeText={(text: number) =>
-                setParams({...params, number: text})
+                setParams({ ...params, number: text })
               }
               fieldIcon={
                 <MaterialCommunityIcons
@@ -228,14 +228,14 @@ const SearchBlock: React.FC<IProps> = ({
             <SearchInput
               label="Publisher"
               onChangeText={(text: string) =>
-                setParams({...params, publisher: text})
+                setParams({ ...params, publisher: text })
               }
               fieldIcon={<Entypo name="user" size={marginLeftInput - 3} />}
             />
             <SearchInput
               label="Issue type"
               onChangeText={(text: string) =>
-                setParams({...params, publisher: text})
+                setParams({ ...params, publisher: text })
               }
               fieldIcon={<EmptyIcon />}
             />
@@ -243,7 +243,7 @@ const SearchBlock: React.FC<IProps> = ({
               keyboardType="numeric"
               label="Year"
               onChangeText={(text: number) =>
-                setParams({...params, publicationDate: text})
+                setParams({ ...params, publicationDate: text })
               }
               fieldIcon={
                 <MaterialCommunityIcons
@@ -255,7 +255,7 @@ const SearchBlock: React.FC<IProps> = ({
             <SearchInput
               keyboardType="numeric"
               onChangeText={(text: string) =>
-                setParams({...params, keyWords: text})
+                setParams({ ...params, keyWords: text })
               }
               fieldIcon={<EmptyIcon />}
               label="Key words"
@@ -270,7 +270,7 @@ const SearchBlock: React.FC<IProps> = ({
         )}
       </ScrollView>
       <ListResultsModal
-        onSelectItem={({data, query}: {data: any[]; query: string}) => {
+        onSelectItem={({ data, query }: { data: any[]; query: string }) => {
           onChangeInputQuery(query);
           onSelectItem(data);
           setShowModal(false);
@@ -282,7 +282,7 @@ const SearchBlock: React.FC<IProps> = ({
   );
 };
 
-const EmptyIcon = () => <View style={{width: marginLeftInput}}/>;
+const EmptyIcon = () => <View style={{ width: marginLeftInput }} />;
 const marginLeftInput = 30
 
 const styles = StyleSheet.create({

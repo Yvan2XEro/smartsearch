@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -7,8 +7,8 @@ import {
   StyleSheet,
 } from 'react-native';
 import * as base from '../api/constants';
-import {Document} from '../models/Document';
-import {useNavigation} from '@react-navigation/native';
+import { Document } from '../models/Document';
+import { useNavigation } from '@react-navigation/native';
 import SearchBlock from '../components/SeachBlock';
 import DocItem from '../components/DocItem';
 import { useDispatch } from 'react-redux';
@@ -33,21 +33,21 @@ const SearchScreen = ({
   // Pour la popup de notification!
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  
+
   const dispatch = useDispatch()
 
   // pour enregistrer un resultat
-  const onSaveQuery = React.useCallback(()=>{
+  const onSaveQuery = React.useCallback(() => {
 
     dispatch(
       saveNewQueryResultAction({
-        results:data,
+        results: data,
         buildedQuery
       }),
     );
-      setSnackbarMessage('Saved!');
-      setShowSnackbar(true);
-  },[])
+    setSnackbarMessage('Saved!');
+    setShowSnackbar(true);
+  }, [])
 
   React.useEffect(() => {
     setShowSaveQueryButton(data.length > 0);
@@ -74,11 +74,11 @@ const SearchScreen = ({
       const dat =
         json2['search-results'] && json2['search-results']['entry']
           ? json2['search-results']['entry'].map((item: any) => {
-              return {
-                title: item['dc:title'],
-                publicationDate: item['prism:coverDate'],
-              };
-            })
+            return {
+              title: item['dc:title'],
+              publicationDate: item['prism:coverDate'],
+            };
+          })
           : [];
       setData2(dat);
       const values: any[] = [...data, ...json1.records, ...data2];
@@ -141,8 +141,8 @@ const SearchScreen = ({
       {data && (
         <FlatList
           data={data}
-          keyExtractor={({title}, index) => title + index}
-          renderItem={({item}) => (
+          keyExtractor={({ title }, index) => title + index}
+          renderItem={({ item }) => (
             <DocItem
               doc={item}
               onSave={() => onSaveDoc(item)}

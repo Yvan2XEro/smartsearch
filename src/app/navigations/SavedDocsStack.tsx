@@ -10,8 +10,8 @@ const SavedDocsStack = () => {
     return (
         <Stack.Navigator >
             <Stack.Screen name='SavedDocs' options={{
-                header: (({navigation})=><AppHeader navigation={navigation} title="Saved docs" />)
-            }} component={SavedDocuments}  />
+                header: (({ navigation }) => <AppHeader navigation={navigation} title="Saved docs" />)
+            }} component={SavedDocuments} />
         </Stack.Navigator>
     )
 }

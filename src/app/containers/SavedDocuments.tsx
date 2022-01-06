@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { FlatList, SafeAreaView, StyleSheet } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import AppSnackbar, { appSnackbarStyles } from '../components/AppSnackbar'
-import DocItem from '../components/DocItem'
-import { deleteDocAction } from '../store/docs/actions'
-import { docsSelector } from '../store/docs/selectors'
+import React, { useCallback, useEffect, useState } from 'react';
+import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import AppSnackbar, { appSnackbarStyles } from '../components/AppSnackbar';
+import DocItem from '../components/DocItem';
+import { deleteDocAction } from '../store/docs/actions';
+import { docsSelector } from '../store/docs/selectors';
 
 const SavedDocuments = ({ navigation }: { navigation: any }) => {
   const docs = useSelector(docsSelector);
@@ -12,17 +12,14 @@ const SavedDocuments = ({ navigation }: { navigation: any }) => {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
 
-  const dispatch = useDispatch()
-  const onDelete = useCallback(
-    (doc) => {
-      console.log(docs.length)
-      dispatch(deleteDocAction(doc))
-      console.log(docs.length);
-      setSnackbarMessage("Deleted")
-      setShowSnackbar(true)
-    },
-    [],
-  )
+  const dispatch = useDispatch();
+  const onDelete = useCallback(doc => {
+    console.log(docs.length);
+    dispatch(deleteDocAction(doc));
+    console.log(docs.length);
+    setSnackbarMessage('Deleted');
+    setShowSnackbar(true);
+  }, []);
 
   return (
     <SafeAreaView style={{ height: '100%' }}>
@@ -65,8 +62,8 @@ const SavedDocuments = ({ navigation }: { navigation: any }) => {
   );
 };
 
-export default SavedDocuments
+export default SavedDocuments;
 
 export const DOCS_KEY = 'docs';
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

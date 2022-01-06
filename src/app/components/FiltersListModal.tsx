@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {List, Modal, Portal} from 'react-native-paper';
+import { List, Modal, Portal } from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const FiltersListModal = ({
@@ -21,14 +21,14 @@ const FiltersListModal = ({
     <Portal>
       <Modal
         visible={visible}
-        style={{backgroundColor: '#fff', justifyContent: 'flex-start'}}>
+        style={{ backgroundColor: '#fff', justifyContent: 'flex-start' }}>
         <TouchableOpacity
           onPress={() => setVisible(false)}
-          style={{margin: 5, marginBottom: 10}}>
+          style={{ margin: 5, marginBottom: 10 }}>
           <AntDesign name="arrowleft" size={30} />
         </TouchableOpacity>
         <View>
-          <Text style={{fontSize: 20, color: '#000', textAlign: 'center'}}>
+          <Text style={{ fontSize: 20, color: '#000', textAlign: 'center' }}>
             Display details filters
           </Text>
           <List.Section title="Filters">

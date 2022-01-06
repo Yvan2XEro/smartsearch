@@ -8,28 +8,28 @@ import ChatsListScreen from '../containers/ChatsListScreen'
 const Stack = createNativeStackNavigator()
 
 const ChatStackNavigation = () => {
-    return (
-      <Stack.Navigator
-        initialRouteName="ChatsList"
-        screenOptions={{
-          headerShown: false,
-        }}>
-        <Stack.Screen
-          name="ChatsList"
-          component={ChatsListScreen}
-          options={{
-            title: 'Chats',
-          }}
-        />
-        <Stack.Screen
-          name="ChatRoom"
-          component={ChatRoomScreen}
-          options={{
-            title: 'Chat Room',
-          }}
-        />
-      </Stack.Navigator>
-    );
+  return (
+    <Stack.Navigator
+      initialRouteName="ChatsList"
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen
+        name="ChatsList"
+        component={ChatsListScreen}
+        options={{
+          title: 'Chats',
+        }}
+      />
+      <Stack.Screen
+        name="ChatRoom"
+        component={ChatRoomScreen}
+        options={{
+          title: 'Chat Room',
+        }}
+      />
+    </Stack.Navigator>
+  );
 }
 
 export default ChatStackNavigation

@@ -21,7 +21,7 @@ export function AppTabNavigation() {
       initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: '#e91e63',
-        header: ({navigation, options}) => (
+        header: ({ navigation, options }) => (
           <AppHeader type="app" navigation={navigation} title={options.title} />
         ),
       }}>
@@ -31,7 +31,7 @@ export function AppTabNavigation() {
         options={{
           tabBarLabel: 'Home',
           title: 'SMART SEARCH',
-          tabBarIcon: ({color, size, focused}) => (
+          tabBarIcon: ({ color, size, focused }) => (
             <View
               style={[styles.tabBarStyle, focused ? styles.focusedStyles : {}]}>
               <MaterialIcons name="home" color={color} size={size} />
@@ -45,7 +45,7 @@ export function AppTabNavigation() {
         options={{
           tabBarLabel: 'Search',
           headerShown: false,
-          tabBarIcon: ({color, size, focused}) => (
+          tabBarIcon: ({ color, size, focused }) => (
             <View
               style={[styles.tabBarStyle, focused ? styles.focusedStyles : {}]}>
               <MaterialCommunityIcons
@@ -64,7 +64,7 @@ export function AppTabNavigation() {
         options={{
           tabBarLabel: 'Chats',
           headerShown: false,
-          tabBarIcon: ({color, size, focused}) => (
+          tabBarIcon: ({ color, size, focused }) => (
             <View
               style={[styles.tabBarStyle, focused ? styles.focusedStyles : {}]}>
               <Ionicons name="chatbubbles-outline" color={color} size={size} />
