@@ -31,7 +31,7 @@ const ChatRoomScreen = ({navigation, route}:any) => {
               </Text>
               <Text style={{textAlign: 'center'}}>Online</Text>
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity style={{marginLeft: 'auto',}}>
               <Entypo name="dots-three-vertical" color="gray" size={25} />
             </TouchableOpacity>
             <View></View>
@@ -149,6 +149,6 @@ const styles = StyleSheet.create({
     flex: 0.85,
     borderWidth: 1,
     borderRadius: 5,
-    // borderColor: theme.colors.primary,
+    borderColor: 'gray',
   },
 });
