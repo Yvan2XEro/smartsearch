@@ -34,7 +34,6 @@ const ChatRoomScreen = ({navigation, route}:any) => {
             <TouchableOpacity style={{marginLeft: 'auto',}}>
               <Entypo name="dots-three-vertical" color="gray" size={25} />
             </TouchableOpacity>
-            <View></View>
           </View>
         </View>
         <View style={{paddingTop: 10}}>
