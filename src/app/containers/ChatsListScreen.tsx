@@ -37,7 +37,7 @@ const ChatsListScreen = ({ navigation }: any) => {
           </View>
         </View>
         <View style={{backgroundColor: '#fff'}}>
-          <Text style={{textTransform: 'uppercase'}}>Online users</Text>
+          <Text style={{textTransform: 'uppercase', marginLeft:10}}>Online users</Text>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <OnlineItem />
             <OnlineItem />
@@ -53,21 +53,21 @@ const ChatsListScreen = ({ navigation }: any) => {
         </View>
         <View style={{backgroundColor: '#fefefe'}}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <ChatItem name="Beno Visual" />
-            <ChatItem name="Muriel Blanche" />
-            <ChatItem name="Massa Moooh" />
-            <ChatItem name="Jean Robert" />
-            <ChatItem name="Jean Robert" />
-            <ChatItem name="Jean Robert" />
-            <ChatItem name="Jean Robert" />
-            <ChatItem name="Jean Robert" />
-            <ChatItem name="Jean Robert" />
-            <ChatItem name="Jean Robert" />
-            <ChatItem name="Jean Robert" />
-            <ChatItem name="Jean Robert" />
-            <ChatItem name="Jean Robert" />
-            <ChatItem name="Jean Robert" />
-            <ChatItem name="Jean Robert" />
+            <ChatItem onPress={()=>navigation.navigate("ChatRoom", {chat:{user:{name:"test"}}})} name="Beno Visual" />
+            <ChatItem onPress={()=>navigation.navigate("ChatRoom", {chat:{user:{name:"test"}}})} name="Muriel Blanche" />
+            <ChatItem onPress={()=>navigation.navigate("ChatRoom", {chat:{user:{name:"test"}}})} name="Massa Moooh" />
+            <ChatItem onPress={()=>navigation.navigate("ChatRoom", {chat:{user:{name:"test"}}})} name="Jean Robert" />
+            <ChatItem onPress={()=>navigation.navigate("ChatRoom", {chat:{user:{name:"test"}}})} name="Jean Robert" />
+            <ChatItem onPress={()=>navigation.navigate("ChatRoom", {chat:{user:{name:"test"}}})} name="Jean Robert" />
+            <ChatItem onPress={()=>navigation.navigate("ChatRoom", {chat:{user:{name:"test"}}})} name="Jean Robert" />
+            <ChatItem onPress={()=>navigation.navigate("ChatRoom", {chat:{user:{name:"test"}}})} name="Jean Robert" />
+            <ChatItem onPress={()=>navigation.navigate("ChatRoom", {chat:{user:{name:"test"}}})} name="Jean Robert" />
+            <ChatItem onPress={()=>navigation.navigate("ChatRoom", {chat:{user:{name:"test"}}})} name="Jean Robert" />
+            <ChatItem onPress={()=>navigation.navigate("ChatRoom", {chat:{user:{name:"test"}}})} name="Jean Robert" />
+            <ChatItem onPress={()=>navigation.navigate("ChatRoom", {chat:{user:{name:"test"}}})} name="Jean Robert" />
+            <ChatItem onPress={()=>navigation.navigate("ChatRoom", {chat:{user:{name:"test"}}})} name="Jean Robert" />
+            <ChatItem onPress={()=>navigation.navigate("ChatRoom", {chat:{user:{name:"test"}}})} name="Jean Robert" />
+            <ChatItem onPress={()=>navigation.navigate("ChatRoom", {chat:{user:{name:"test"}}})} name="Jean Robert" />
           </ScrollView>
         </View>
       </View>
@@ -99,10 +99,10 @@ const OnlineItem = () => (
   </TouchableOpacity>
 );
 
-const ChatItem = ({name}:any) => (
+const ChatItem = ({name, onPress}: any) => (
   <TouchableOpacity
     style={{
-        marginTop: 10,
+      marginTop: 10,
       borderWidth: 0.1,
       borderColor: '#000',
       padding: 5,
@@ -110,7 +110,9 @@ const ChatItem = ({name}:any) => (
       borderRadius: 3,
       width: '98%',
       alignSelf: 'center',
-    }}>
+    }}
+    onPress={onPress}
+    >
     <View style={{flexDirection: 'row', alignItems: 'center'}}>
       <Avatar.Image
         source={{

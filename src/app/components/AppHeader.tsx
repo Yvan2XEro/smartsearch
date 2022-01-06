@@ -13,7 +13,7 @@ const AppHeader = ({
   type?: string;
 }) => {
   return (
-    <View style={styles.header}>
+    <View style={appHeaderStyles.header}>
       {type !== 'back' ? (
         <Entypo onPress={() => navigation.openDrawer()} name="menu" size={30} />
       ) : (
@@ -38,7 +38,7 @@ const AppHeader = ({
 };
 
 export default AppHeader;
-const styles = StyleSheet.create({
+const appHeaderStyles = StyleSheet.create({
   header: {
     paddingLeft: 16,
     height: 45,
