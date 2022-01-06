@@ -29,10 +29,14 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
                     'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
                 },
               ]}
+              navigation={navigation}
             />
           </TabScreen>
           <TabScreen label="Yours" icon="folder">
-            <ListDocsArticles docs={savedDocs.map((d: any) => d.data)} />
+            <ListDocsArticles
+              navigation={navigation}
+              docs={savedDocs.map((d: any) => d.data)}
+            />
           </TabScreen>
           <TabScreen label="Top" icon="star">
             <View style={{flex: 1}} />
@@ -59,13 +63,31 @@ const styles = StyleSheet.create({
 
 })
 
-const ListDocsArticles = ({docs}:any) => {
-  const {width} = Dimensions.get('window')
+const ListDocsArticles = ({docs, navigation}: any) => {
+  const {width} = Dimensions.get('window');
   return (
     <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
       <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
         {docs.map((item: any, i: number) => (
           <TouchableOpacity
+            onPress={() => navigation.navigate(
+                  'SearchStack' as never,
+                  {
+                    screen: 'Details',
+                    params: {
+                      document: {
+                        title: item.title,
+                        publicationDate: item.publicationDate,
+                        contentType: item.contentType,
+                        publisher: item.publisher,
+                        abstract: item.abstract,
+                        doi: item.doi,
+                        openaccess: item.openaccess,
+                        authors: item.creators,
+                      } as Document,
+                    },
+                  } as never,
+                )}
             key={i}
             style={{
               borderRadius: 5,
@@ -93,6 +115,6 @@ const ListDocsArticles = ({docs}:any) => {
       </View>
     </ScrollView>
   );
-}
+};
 
 export default HomeScreen;
