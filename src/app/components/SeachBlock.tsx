@@ -29,6 +29,7 @@ interface IProps {
   showSaveQueryButton: boolean;
   onSaveQuery: any;
   onSelectItem: any;
+  navigation: any;
 }
 const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0;
 const SearchBlock: React.FC<IProps> = ({
@@ -38,6 +39,7 @@ const SearchBlock: React.FC<IProps> = ({
   showSaveQueryButton,
   onSaveQuery,
   onSelectItem,
+  navigation,
 }) => {
   const [showFiltersBlock, setShowFiltersBlock] = useState(false);
   const [fastInputQuery, setFastInputQuery] = useState(value);
@@ -81,7 +83,8 @@ const SearchBlock: React.FC<IProps> = ({
     <View style={{flexDirection: 'column'}}>
       <View style={[styles.rowContent]}>
         <MaterialIcons
-          name="search"
+        onPress={() =>navigation.openDrawer()}
+          name="apps"
           size={marginLeftInput}
           style={{marginTop: 10}}
         />

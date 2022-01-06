@@ -8,14 +8,16 @@ const Stack = createNativeStackNavigator()
 
 const ChatStackNavigation = () => {
     return (
-      <Stack.Navigator initialRouteName="ChatsList">
+      <Stack.Navigator
+        initialRouteName="ChatsList"
+        screenOptions={{
+          headerShown: false,
+        }}>
         <Stack.Screen
           name="ChatsList"
           component={ChatsListScreen}
           options={{
-            header: ({navigation}) => (
-              <AppHeader navigation={navigation} title="Chats" type="app" />
-            ),
+            title: 'Chats'
           }}
         />
       </Stack.Navigator>

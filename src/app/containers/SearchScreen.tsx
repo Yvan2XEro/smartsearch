@@ -129,6 +129,7 @@ const SearchScreen = ({
         value={query}
         onSelectItem={setData}
         onChangeInputQuery={setQuery}
+        navigation={navigation}
         onSubmitInputQuery={() => {
           setData([]);
           setData2([]);

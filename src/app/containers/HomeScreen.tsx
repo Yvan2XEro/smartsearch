@@ -67,7 +67,7 @@ const ListDocsArticles = ({docs, navigation}: any) => {
   const {width} = Dimensions.get('window');
   return (
     <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
-      <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+      <View style={{flexWrap: 'wrap', flexDirection: 'row', marginTop: 10}}>
         {docs.map((item: any, i: number) => (
           <TouchableOpacity
             onPress={() => navigation.navigate(

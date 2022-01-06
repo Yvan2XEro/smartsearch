@@ -21,7 +21,7 @@ const DetailsHeader = ({
         size={30}
       />
       <View style={{marginLeft: 16}}>
-        <Text style={{fontSize: 18}}>{title}</Text>
+        <Text style={{fontSize: 17, textTransform: 'uppercase'}}>{title}</Text>
       </View>
       <Menu style={{alignSelf: 'center', marginLeft: 'auto'}}>
         <MenuTrigger>

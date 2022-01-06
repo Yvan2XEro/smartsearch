@@ -21,6 +21,9 @@ export function AppTabNavigation() {
       initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: '#e91e63',
+        header: ({navigation, options}) => (
+          <AppHeader type="app" navigation={navigation} title={options.title} />
+        ),
       }}>
       <Tab.Screen
         name="Home"
@@ -28,11 +31,9 @@ export function AppTabNavigation() {
         options={{
           tabBarLabel: 'Home',
           title: 'SMART SEARCH',
-          header: ({navigation, options}) => (
-            <AppHeader type="app" navigation={navigation} title={options.title} />
-          ),
           tabBarIcon: ({color, size, focused}) => (
-            <View style={[styles.tabBarStyle, focused? styles.focusedStyles:{}]}>
+            <View
+              style={[styles.tabBarStyle, focused ? styles.focusedStyles : {}]}>
               <MaterialIcons name="home" color={color} size={size} />
             </View>
           ),
@@ -45,7 +46,8 @@ export function AppTabNavigation() {
           tabBarLabel: 'Search',
           headerShown: false,
           tabBarIcon: ({color, size, focused}) => (
-            <View style={[styles.tabBarStyle, focused? styles.focusedStyles:{}]}>
+            <View
+              style={[styles.tabBarStyle, focused ? styles.focusedStyles : {}]}>
               <MaterialCommunityIcons
                 name="book-search-outline"
                 color={color}
@@ -63,7 +65,8 @@ export function AppTabNavigation() {
           tabBarLabel: 'Chats',
           headerShown: false,
           tabBarIcon: ({color, size, focused}) => (
-            <View style={[styles.tabBarStyle, focused? styles.focusedStyles:{}]}>
+            <View
+              style={[styles.tabBarStyle, focused ? styles.focusedStyles : {}]}>
               <Ionicons name="chatbubbles-outline" color={color} size={size} />
             </View>
           ),

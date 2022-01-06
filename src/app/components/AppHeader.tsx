@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -9,7 +9,7 @@ const AppHeader = ({
   type = 'app',
 }: {
   navigation: any;
-  title: string | undefined;
+  title?: string;
   type?: string;
 }) => {
   return (
@@ -23,9 +23,16 @@ const AppHeader = ({
           size={30}
         />
       )}
-      <View style={{width: '100%', marginLeft: 16}}>
-        <Text style={{fontSize: 18}}>{title}</Text>
+      <View style={{flex: 0.9, marginLeft: 16}}>
+        <Text style={{fontSize: 17, textTransform: 'uppercase'}}>{title}</Text>
       </View>
+      <TouchableOpacity>
+        <Ionicons
+          onPress={() => navigation.navigate('Search')}
+          name="ios-search"
+          size={25}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
