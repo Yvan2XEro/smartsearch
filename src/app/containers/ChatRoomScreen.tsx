@@ -82,6 +82,7 @@ const ChatRoomScreen = ({navigation, route}:any) => {
             paddingBottom: 10,
             backgroundColor: 'white',
             flexDirection: 'row',
+            justifyContent: 'space-between',
             width: '100%',
           }}>
           <TextInput style={[styles.textInput]} placeholder="Type message..." />
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   textInput: {
-    flex: 0.8,
+    flex: 0.85,
     borderWidth: 1,
     borderRadius: 5,
     // borderColor: theme.colors.primary,
