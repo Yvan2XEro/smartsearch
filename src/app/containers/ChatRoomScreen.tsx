@@ -36,9 +36,8 @@ const ChatRoomScreen = ({ navigation, route }: any) => {
                     </TouchableOpacity>
                 </View>
             </View>
-            <View style={{ paddingTop: 10 }}>
+            <View>
                 <ScrollView
-                    style={{ marginBottom: 150 }}
                     showsVerticalScrollIndicator={false}>
                     <TouchableOpacity style={[styles.item, styles.leftItem]}>
                         <Avatar.Image
