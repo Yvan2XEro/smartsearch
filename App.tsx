@@ -5,6 +5,7 @@ import { MenuProvider } from 'react-native-popup-menu';
 import {Provider as PaperProvider, DefaultTheme } from 'react-native-paper'
 import RootNavigation from './src/app/navigations/RootNavigation';
 import store from './src/app/store';
+import AuthStackNavigation from './src/app/navigations/AuthStackNavigation';
 
 const App = () => {
   return (
@@ -13,7 +14,8 @@ const App = () => {
         <PaperProvider
           theme={{...DefaultTheme, colors: {...DefaultTheme.colors, primary: 'black'}}}>
           <NavigationContainer>
-            <RootNavigation />
+            {/* <RootNavigation /> */}
+            <AuthStackNavigation />
           </NavigationContainer>
         </PaperProvider>
       </ReduxProvider>
