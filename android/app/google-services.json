@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "448522931485",
+    "project_id": "smart-search-db570",
+    "storage_bucket": "smart-search-db570.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:448522931485:android:ec18d1c6e21267fe36e5f4",
+        "android_client_info": {
+          "package_name": "com.smartsearch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "448522931485-ko24e70d0pmanqah6q4udfbo1qjvg121.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPjhyPgN8awnfoMFLgGjjeU8SdzXiu_Ws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "448522931485-ko24e70d0pmanqah6q4udfbo1qjvg121.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
