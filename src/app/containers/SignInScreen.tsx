@@ -47,6 +47,7 @@ const SignInScreen = ({navigation}: any) => {
           </View>
         </View>
         <TouchableOpacity
+          onPress={()=>navigation.replace("SignOut")}
           style={{
             flexDirection: 'row',
             alignItems: 'center',

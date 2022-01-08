@@ -9,9 +9,9 @@ const Stack = createNativeStackNavigator()
 const AuthStackNavigation = () => {
     return (
       <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="SignOut" component={SignOutScreen} />
         <Stack.Screen name="SignIn" component={SignInScreen} />
         <Stack.Screen name="Start" component={StartScreen} />
-        <Stack.Screen name="SignOut" component={SignOutScreen} />
       </Stack.Navigator>
     );
 }
