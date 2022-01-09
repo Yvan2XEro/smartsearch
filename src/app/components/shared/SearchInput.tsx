@@ -22,9 +22,9 @@ fieldIcon
         style={{
           flexDirection: 'row',
           justifyContent: 'flex-start',
-          backgroundColor: '#fff',
+          borderColor: 'gray',
           borderRadius: 10,
-          // borderBottomWidth: 0.5,
+          borderWidth: 0.5,
           overflow: 'hidden',
         }}>
         <View style={{justifyContent: 'center', paddingLeft:5}}>{fieldIcon}</View>

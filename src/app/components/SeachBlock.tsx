@@ -80,197 +80,217 @@ const SearchBlock: React.FC<IProps> = ({
   };
 
   return (
-    <View style={{ flexDirection: 'column' }}>
-      <View style={[styles.rowContent]}>
-        <MaterialIcons
-          onPress={() => navigation.openDrawer()}
-          name="apps"
-          size={marginLeftInput}
-          style={{ marginTop: 10 }}
-        />
-        <RnTextInput
-          placeholder="Fast Search Here..."
-          onChangeText={text => setFastInputQuery(text)}
-          value={fastInputQuery}
-          onTouchCancel={() => setShowFiltersBlock(false)}
-          onSubmitEditing={handleSumitQuery}
-          style={styles.searchBar}
-        />
-        {fastInputQuery != '' && (
-          <TouchableOpacity onPress={() => setFastInputQuery('')}>
+    <View>
+      <View
+        style={{
+          flexDirection: 'column',
+          backgroundColor: '#fff',
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 5,
+        }}>
+        <View style={[styles.rowContent]}>
+          <MaterialIcons
+            onPress={() => navigation.openDrawer()}
+            name="apps"
+            size={marginLeftInput}
+            style={{marginTop: 10}}
+          />
+          <RnTextInput
+            placeholder="Fast Search Here..."
+            onChangeText={text => setFastInputQuery(text)}
+            value={fastInputQuery}
+            autoFocus={true}
+            onTouchCancel={() => setShowFiltersBlock(false)}
+            onSubmitEditing={handleSumitQuery}
+            style={styles.searchBar}
+          />
+          {fastInputQuery != '' && (
+            <TouchableOpacity onPress={() => setFastInputQuery('')}>
+              <MaterialCommunityIcons
+                style={{marginTop: 10, marginRight: 20}}
+                name="close-circle"
+                size={25}
+              />
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity
+            style={styles.searchBarBtn}
+            onPress={() => setShowFiltersBlock(!showFiltersBlock)}>
             <MaterialCommunityIcons
-              style={{ marginTop: 10, marginRight: 20 }}
-              name="close-circle"
               size={25}
+              name={showFiltersBlock ? 'filter-menu' : 'filter-menu-outline'}
             />
           </TouchableOpacity>
-        )}
-        <TouchableOpacity
-          style={styles.searchBarBtn}
-          onPress={() => setShowFiltersBlock(!showFiltersBlock)}>
-          <MaterialCommunityIcons
-            size={25}
-            name={showFiltersBlock ? 'filter-menu' : 'filter-menu-outline'}
-          />
-        </TouchableOpacity>
-        <Menu style={{ alignSelf: 'center' }}>
-          <MenuTrigger>
-            <Entypo name="dots-three-vertical" color="gray" size={25} />
-          </MenuTrigger>
-          <MenuOptions>
-            <MenuOption onSelect={onSaveQuery} disabled={!showSaveQueryButton}>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <MaterialCommunityIcons
-                  style={{ marginRight: 3 }}
-                  size={20}
-                  name="content-save-all-outline"
-                />
-                <Text style={!showSaveQueryButton && { color: 'gray' }}>
-                  Save this results
-                </Text>
-              </View>
-            </MenuOption>
-            <MenuOption onSelect={() => setShowModal(true)}>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <MaterialIcons
-                  style={{ marginRight: 3 }}
-                  size={20}
-                  name="snippet-folder"
-                />
-                <Text>Saved results</Text>
-              </View>
-            </MenuOption>
-          </MenuOptions>
-        </Menu>
+          <Menu style={{alignSelf: 'center'}}>
+            <MenuTrigger>
+              <Entypo name="dots-three-vertical" color="gray" size={25} />
+            </MenuTrigger>
+            <MenuOptions>
+              <MenuOption
+                onSelect={onSaveQuery}
+                disabled={!showSaveQueryButton}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <MaterialCommunityIcons
+                    style={{marginRight: 3}}
+                    size={20}
+                    name="content-save-all-outline"
+                  />
+                  <Text style={!showSaveQueryButton && {color: 'gray'}}>
+                    Save this results
+                  </Text>
+                </View>
+              </MenuOption>
+              <MenuOption onSelect={() => setShowModal(true)}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <MaterialIcons
+                    style={{marginRight: 3}}
+                    size={20}
+                    name="snippet-folder"
+                  />
+                  <Text>Saved results</Text>
+                </View>
+              </MenuOption>
+            </MenuOptions>
+          </Menu>
+        </View>
+        <ScrollView style={styles.inputs}>
+          {showFiltersBlock && (
+            <KeyboardAvoidingView
+              style={{marginBottom: 100}}
+              behavior={undefined}
+              keyboardVerticalOffset={keyboardVerticalOffset}>
+              <SearchInput
+                label="Title"
+                onChangeText={(text: string) =>
+                  setParams({...params, title: text})
+                }
+                fieldIcon={<Entypo name="book" size={marginLeftInput} />}
+              />
+              <SearchInput
+                onChangeText={(text: string) =>
+                  setParams({...params, publicationName: text})
+                }
+                fieldIcon={
+                  <MaterialIcons
+                    name="drive-file-rename-outline"
+                    size={marginLeftInput}
+                  />
+                }
+                label="Publication name"
+              />
+              <SearchInput
+                label="Author"
+                onChangeText={(text: string) =>
+                  setParams({...params, authorName: text})
+                }
+                fieldIcon={<Entypo name="user" size={marginLeftInput - 3} />}
+              />
+              <SearchInput
+                onChangeText={(text: string) =>
+                  setParams({...params, doi: text})
+                }
+                fieldIcon={
+                  <MaterialCommunityIcons
+                    name="identifier"
+                    size={marginLeftInput}
+                  />
+                }
+                label="Doi"
+              />
+              <SearchInput
+                onChangeText={(text: string) =>
+                  setParams({...params, topicalCollection: text})
+                }
+                fieldIcon={
+                  <MaterialCommunityIcons
+                    name="bookshelf"
+                    size={marginLeftInput}
+                  />
+                }
+                label="Topical Collection"
+              />
+              <SearchInput
+                onChangeText={(text: string) =>
+                  setParams({...params, issn: text})
+                }
+                fieldIcon={<EmptyIcon />}
+                label="Issn"
+              />
+              <SearchInput
+                keyboardType="numeric"
+                label="Volume"
+                onChangeText={(text: number) =>
+                  setParams({...params, volume: text})
+                }
+                fieldIcon={<EmptyIcon />}
+              />
+              <SearchInput
+                keyboardType="numeric"
+                label="Number"
+                onChangeText={(text: number) =>
+                  setParams({...params, number: text})
+                }
+                fieldIcon={
+                  <MaterialCommunityIcons
+                    name="sort-numeric-variant"
+                    size={marginLeftInput}
+                  />
+                }
+              />
+              <SearchInput
+                label="Publisher"
+                onChangeText={(text: string) =>
+                  setParams({...params, publisher: text})
+                }
+                fieldIcon={<Entypo name="user" size={marginLeftInput - 3} />}
+              />
+              <SearchInput
+                label="Issue type"
+                onChangeText={(text: string) =>
+                  setParams({...params, publisher: text})
+                }
+                fieldIcon={<EmptyIcon />}
+              />
+              <SearchInput
+                keyboardType="numeric"
+                label="Year"
+                onChangeText={(text: number) =>
+                  setParams({...params, publicationDate: text})
+                }
+                fieldIcon={
+                  <MaterialCommunityIcons
+                    name="calendar-blank"
+                    size={marginLeftInput}
+                  />
+                }
+              />
+              <SearchInput
+                keyboardType="numeric"
+                onChangeText={(text: string) =>
+                  setParams({...params, keyWords: text})
+                }
+                fieldIcon={<EmptyIcon />}
+                label="Key words"
+                placeholder="Ex: security, informatic, network"
+              />
+              <Button
+                style={[styles.input, styles.sumitBtn]}
+                onPress={handleSumitQuery}>
+                  Search
+                {/* <MaterialIcons name="search" color="white" size={20} /> */}
+              </Button>
+            </KeyboardAvoidingView>
+          )}
+        </ScrollView>
       </View>
-      <ScrollView style={styles.inputs}>
-        {showFiltersBlock && (
-          <KeyboardAvoidingView
-            style={{ marginBottom: 60 }}
-            behavior={undefined}
-            keyboardVerticalOffset={keyboardVerticalOffset}>
-            <SearchInput
-              label="Title"
-              onChangeText={(text: string) =>
-                setParams({ ...params, title: text })
-              }
-              fieldIcon={<Entypo name="book" size={marginLeftInput} />}
-            />
-            <SearchInput
-              onChangeText={(text: string) =>
-                setParams({ ...params, publicationName: text })
-              }
-              fieldIcon={
-                <MaterialIcons
-                  name="drive-file-rename-outline"
-                  size={marginLeftInput}
-                />
-              }
-              label="Publication name"
-            />
-            <SearchInput
-              label="Author"
-              onChangeText={(text: string) =>
-                setParams({ ...params, authorName: text })
-              }
-              fieldIcon={<Entypo name="user" size={marginLeftInput - 3} />}
-            />
-            <SearchInput
-              onChangeText={(text: string) => setParams({ ...params, doi: text })}
-              fieldIcon={
-                <MaterialCommunityIcons
-                  name="identifier"
-                  size={marginLeftInput}
-                />
-              }
-              label="Doi"
-            />
-            <SearchInput
-              onChangeText={(text: string) =>
-                setParams({ ...params, topicalCollection: text })
-              }
-              fieldIcon={
-                <MaterialCommunityIcons
-                  name="bookshelf"
-                  size={marginLeftInput}
-                />
-              }
-              label="Topical Collection"
-            />
-            <SearchInput
-              onChangeText={(text: string) =>
-                setParams({ ...params, issn: text })
-              }
-              fieldIcon={<EmptyIcon />}
-              label="Issn"
-            />
-            <SearchInput
-              keyboardType="numeric"
-              label="Volume"
-              onChangeText={(text: number) =>
-                setParams({ ...params, volume: text })
-              }
-              fieldIcon={<EmptyIcon />}
-            />
-            <SearchInput
-              keyboardType="numeric"
-              label="Number"
-              onChangeText={(text: number) =>
-                setParams({ ...params, number: text })
-              }
-              fieldIcon={
-                <MaterialCommunityIcons
-                  name="sort-numeric-variant"
-                  size={marginLeftInput}
-                />
-              }
-            />
-            <SearchInput
-              label="Publisher"
-              onChangeText={(text: string) =>
-                setParams({ ...params, publisher: text })
-              }
-              fieldIcon={<Entypo name="user" size={marginLeftInput - 3} />}
-            />
-            <SearchInput
-              label="Issue type"
-              onChangeText={(text: string) =>
-                setParams({ ...params, publisher: text })
-              }
-              fieldIcon={<EmptyIcon />}
-            />
-            <SearchInput
-              keyboardType="numeric"
-              label="Year"
-              onChangeText={(text: number) =>
-                setParams({ ...params, publicationDate: text })
-              }
-              fieldIcon={
-                <MaterialCommunityIcons
-                  name="calendar-blank"
-                  size={marginLeftInput}
-                />
-              }
-            />
-            <SearchInput
-              keyboardType="numeric"
-              onChangeText={(text: string) =>
-                setParams({ ...params, keyWords: text })
-              }
-              fieldIcon={<EmptyIcon />}
-              label="Key words"
-              placeholder="Ex: security, informatic, network"
-            />
-            <Button
-              style={[styles.input, styles.sumitBtn]}
-              onPress={handleSumitQuery}>
-              <MaterialIcons name="search" color="white" size={20} />
-            </Button>
-          </KeyboardAvoidingView>
-        )}
-      </ScrollView>
       <ListResultsModal
-        onSelectItem={({ data, query }: { data: any[]; query: string }) => {
+        onSelectItem={({data, query}: {data: any[]; query: string}) => {
           onChangeInputQuery(query);
           onSelectItem(data);
           setShowModal(false);
@@ -299,23 +319,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     marginBottom: 2,
-    backgroundColor: '#fff',
     paddingRight: 10,
     paddingLeft: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
   searchBar: {
     flex: 2,
   },
   inputs: {
-    paddingHorizontal: 40
+    paddingHorizontal: 40,
   },
   input: {
     flex: 2,
@@ -331,7 +342,8 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   sumitBtn: {
-    backgroundColor: '#2B49F7',
+    // backgroundColor: '#2B49F7',
+    backgroundColor: 'gray',
     paddingTop: 3,
     marginBottom: 5,
     marginLeft: 'auto',
