@@ -11,7 +11,7 @@ import CustomDrawerItem from './CustomDrawerItem';
 import { AuthenticationContext } from '../contexts/AuthContextProvider';
 
 const DrawerContent = ({ navigation }: { navigation: any }) => {
-  const {logout} = React.useContext(AuthenticationContext)
+  const {logout, user} = React.useContext(AuthenticationContext)
   return (
     <DrawerContentScrollView>
       <View
@@ -23,13 +23,17 @@ const DrawerContent = ({ navigation }: { navigation: any }) => {
         }}>
         <Avatar.Image
           source={{
-            uri: 'https://cdn.pixabay.com/photo/2016/04/01/10/11/avatar-1299805__340.png',
+            uri: user.photoURL
+              ? user.photoURL
+              : 'https://cdn.pixabay.com/photo/2016/04/01/10/11/avatar-1299805__340.png',
           }}
           size={50}
           style={{backgroundColor: '#fff'}}
         />
         <View style={{marginLeft: 25}}>
-          <PText style={{fontSize: 17, textAlign: 'center'}}>Super User</PText>
+          <PText style={{fontSize: 17, textAlign: 'center'}}>
+            {user.displayName ? user.displayName : user.email}
+          </PText>
           <Text style={{fontSize: 13}}>Une description de l'user</Text>
         </View>
       </View>
