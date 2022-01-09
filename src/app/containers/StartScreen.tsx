@@ -2,6 +2,7 @@ import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Knowledge from '../assets/knowledge.svg'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { Button } from 'react-native-paper';
 
 const StartScreen = ({navigation}:any) => {
     return (
@@ -15,14 +16,12 @@ const StartScreen = ({navigation}:any) => {
             <Text>You can find any docs here.</Text>
           </View>
           <View style={{marginTop: 15}}>
-            <TouchableOpacity
+            <Button
               onPress={() => navigation.navigate('SignIn')}
-              style={{backgroundColor: 'gray', borderRadius: 20}}>
-              <Text style={{color: '#fff', fontSize: 25, textAlign: 'center'}}>
+              style={{backgroundColor: 'gray', borderRadius: 20}} labelStyle={{color: '#fff'}}>
                 Login
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+            </Button>
+            <Button
               onPress={() => navigation.navigate('SignOut')}
               style={{
                 borderWidth: 1,
@@ -30,8 +29,8 @@ const StartScreen = ({navigation}:any) => {
                 borderRadius: 20,
                 marginTop: 10,
               }}>
-              <Text style={{fontSize: 25, textAlign: 'center'}}>Register</Text>
-            </TouchableOpacity>
+              Register
+            </Button>
           </View>
           <TouchableOpacity
             style={{

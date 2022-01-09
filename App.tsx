@@ -19,8 +19,7 @@ const App = () => {
               colors: {...DefaultTheme.colors, primary: 'black'},
             }}>
             <NavigationContainer>
-              {/* <RootNavigation /> */}
-              <AuthStackNavigation />
+              <RootNavigation />
             </NavigationContainer>
           </PaperProvider>
         </AuthContextProvider>

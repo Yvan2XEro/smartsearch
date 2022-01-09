@@ -1,5 +1,5 @@
 import { DrawerContentScrollView } from '@react-navigation/drawer'
-import React from 'react'
+import * as React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Avatar, Text as PText } from 'react-native-paper'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
@@ -8,8 +8,10 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomDrawerItem from './CustomDrawerItem';
+import { AuthenticationContext } from '../contexts/AuthContextProvider';
 
 const DrawerContent = ({ navigation }: { navigation: any }) => {
+  const {logout} = React.useContext(AuthenticationContext)
   return (
     <DrawerContentScrollView>
       <View
@@ -24,17 +26,15 @@ const DrawerContent = ({ navigation }: { navigation: any }) => {
             uri: 'https://cdn.pixabay.com/photo/2016/04/01/10/11/avatar-1299805__340.png',
           }}
           size={50}
-          style={{ backgroundColor: '#fff' }}
+          style={{backgroundColor: '#fff'}}
         />
-        <View style={{ marginLeft: 25 }}>
-          <PText style={{ fontSize: 17, textAlign: 'center' }}>
-            Super User
-          </PText>
-          <Text style={{ fontSize: 13 }}>Une description de l'user</Text>
+        <View style={{marginLeft: 25}}>
+          <PText style={{fontSize: 17, textAlign: 'center'}}>Super User</PText>
+          <Text style={{fontSize: 13}}>Une description de l'user</Text>
         </View>
       </View>
       <Divider />
-      <View style={{ marginTop: 10 }}>
+      <View style={{marginTop: 10}}>
         <CustomDrawerItem
           label="Home"
           icon={<SimpleLineIcons name="home" size={draweIconSize} />}
@@ -67,11 +67,11 @@ const DrawerContent = ({ navigation }: { navigation: any }) => {
         />
       </View>
       <Divider />
-      <View style={{ marginTop: 20 }}>
+      <View style={{marginTop: 20}}>
         <CustomDrawerItem
           label="Logout"
           icon={<Ionicons name="md-exit-outline" size={draweIconSize} />}
-          onPress={() => navigation.navigate('Home')}
+          onPress={logout}
         />
       </View>
     </DrawerContentScrollView>

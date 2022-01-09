@@ -19,7 +19,6 @@ const SignInScreen = ({navigation}: any) => {
       setError('');
       setLoading(true);
       login({email, password}, EMAIL_PASSWORD)
-        .then(onLoginSuccess)
         .catch(error => {
           if (
             error.code == 'auth/user-not-found' ||
@@ -35,10 +34,6 @@ const SignInScreen = ({navigation}: any) => {
           setLoading(false);
           setGoogleLoading(false);
         });
-    };
-
-    const onLoginSuccess = () => {
-      navigation.replace('PaymentScreen');
     };
 
 
@@ -88,7 +83,6 @@ const SignInScreen = ({navigation}: any) => {
               onPress={() => {
                 setGoogleLoading(true);
                 login({}, GOOGLE)
-                  .then(onLoginSuccess)
                   .catch((err) => {
                     console.log(err)
                     setGoogleLoading(false)
