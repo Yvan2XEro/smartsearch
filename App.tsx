@@ -6,18 +6,24 @@ import {Provider as PaperProvider, DefaultTheme } from 'react-native-paper'
 import RootNavigation from './src/app/navigations/RootNavigation';
 import store from './src/app/store';
 import AuthStackNavigation from './src/app/navigations/AuthStackNavigation';
+import AuthContextProvider from './src/app/contexts/AuthContextProvider';
 
 const App = () => {
   return (
     <MenuProvider>
       <ReduxProvider store={store}>
-        <PaperProvider
-          theme={{...DefaultTheme, colors: {...DefaultTheme.colors, primary: 'black'}}}>
-          <NavigationContainer>
-            {/* <RootNavigation /> */}
-            <AuthStackNavigation />
-          </NavigationContainer>
-        </PaperProvider>
+        <AuthContextProvider>
+          <PaperProvider
+            theme={{
+              ...DefaultTheme,
+              colors: {...DefaultTheme.colors, primary: 'black'},
+            }}>
+            <NavigationContainer>
+              {/* <RootNavigation /> */}
+              <AuthStackNavigation />
+            </NavigationContainer>
+          </PaperProvider>
+        </AuthContextProvider>
       </ReduxProvider>
     </MenuProvider>
   );

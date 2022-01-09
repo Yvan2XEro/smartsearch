@@ -1,10 +1,48 @@
-import React from 'react';
-import {Image, KeyboardTypeOptions, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import * as React from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import LoginSvg from '../assets/login.svg';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
+import { AuthInput } from './SignOutScreen';
+import { AuthenticationContext, EMAIL_PASSWORD, GOOGLE } from '../contexts/AuthContextProvider';
+import { Button } from 'react-native-paper';
 
 const SignInScreen = ({navigation}: any) => {
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const [error, setError] = React.useState('');
+    const [googleLoading, setGoogleLoading] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
+    const {login} = React.useContext(AuthenticationContext);
+    const handleSimpleLogin = () => {
+      setError('');
+      setLoading(true);
+      login({email, password}, EMAIL_PASSWORD)
+        .then(onLoginSuccess)
+        .catch(error => {
+          if (
+            error.code == 'auth/user-not-found' ||
+            error.code == 'auth/wrong-password' ||
+            error.code == 'auth/invalid-email'
+          ) {
+            setPassword('');
+            setError('Bad credentials!');
+          }
+          console.log("yoo",error)
+        })
+        .then(() => {
+          setLoading(false);
+          setGoogleLoading(false);
+        });
+    };
+
+    const onLoginSuccess = () => {
+      navigation.replace('PaymentScreen');
+    };
+
+
+  const [isSecureEntry, setIsSecureEntry] = React.useState(true);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -15,39 +53,63 @@ const SignInScreen = ({navigation}: any) => {
           <Text style={styles.title}>LOGIN</Text>
         </View>
         <View style={{marginTop: 15}}>
-          <AuthInput icon="vpn-key" label="Email" onChangeText={() => {}} />
           <AuthInput
-            icon="lock-outline"
+            icon={<Entypo name="user" size={30} />}
+            value={email}
+            label="Email"
+            onChangeText={(text: string) => setEmail(text)}
+          />
+          <AuthInput
+            icon={<MaterialIcons name="lock-outline" size={30} />}
             label="Password"
-            onChangeText={() => {}}
-            secureTextEntry={true}
+            value={password}
+            onChangeText={(text: string) => setPassword(text)}
+            rigthIcon={
+              <TouchableOpacity
+                onPress={() => setIsSecureEntry(!isSecureEntry)}>
+                {isSecureEntry ? (
+                  <Entypo name="eye" size={30} />
+                ) : (
+                  <Entypo name="eye-with-line" size={30} />
+                )}
+              </TouchableOpacity>
+            }
+            secureTextEntry={isSecureEntry}
           />
           <View style={{marginTop: 10}}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('SignIn')}
+            {error != '' && <Text style={{color: 'red'}}>{error}</Text>}
+            <Button
+              onPress={handleSimpleLogin}
+              loading={loading}
               style={{backgroundColor: 'gray', borderRadius: 20}}>
-              <Text style={{color: '#fff', fontSize: 25, textAlign: 'center'}}>
-                Login
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('SignOut')}
+              <Text style={{color: '#fff', textAlign: 'center'}}>Login</Text>
+            </Button>
+            <Button
+              onPress={() => {
+                setGoogleLoading(true);
+                login({}, GOOGLE)
+                  .then(onLoginSuccess)
+                  .catch((err) => {
+                    console.log(err)
+                    setGoogleLoading(false)
+                  });
+              }}
+              loading={googleLoading}
+              icon={({size}) => (
+                <SimpleLineIcons name="social-google" color="red" size={size} />
+              )}
               style={{
                 borderWidth: 1,
                 borderColor: 'gray',
                 borderRadius: 20,
                 marginTop: 10,
-                flexDirection: 'row',
-                paddingVertical: 4,
-                justifyContent: 'center'
               }}>
-                  <SimpleLineIcons name="social-google" size={25} />
-              <Text style={{textAlign: 'center'}}>With google  account</Text>
-            </TouchableOpacity>
+              With google account
+            </Button>
           </View>
         </View>
         <TouchableOpacity
-          onPress={()=>navigation.replace("SignOut")}
+          onPress={() => navigation.replace('SignOut')}
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -57,44 +119,6 @@ const SignInScreen = ({navigation}: any) => {
           <Text>Register</Text>
           <MaterialIcons name="navigate-next" size={20} />
         </TouchableOpacity>
-      </View>
-    </View>
-  );
-};
-
-export const AuthInput = ({
-  label,
-  value,
-  icon,
-  onChangeText,
-  secureTextEntry=false,
-}: {
-  label: string;
-  value?: string;
-  icon: string;
-  onChangeText: any;
-  secureTextEntry?: boolean;
-}) => {
-  return (
-    <View>
-      <Text style={{fontSize: 16}}>{label} :</Text>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          borderWidth: 0.3,
-          borderColor: 'gray',
-          borderRadius: 20,
-          paddingLeft: 10,
-        }}>
-        <MaterialIcons name={icon} size={30} />
-        <TextInput
-          placeholder={label + '...'}
-          style={{width: '100%'}}
-          value={value}
-          onChangeText={onChangeText}
-          secureTextEntry={secureTextEntry}
-        />
       </View>
     </View>
   );
