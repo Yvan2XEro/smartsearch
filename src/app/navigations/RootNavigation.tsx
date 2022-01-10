@@ -65,7 +65,8 @@ export default function RootNavigation() {
       />
       <Drawer.Screen
         name="SharedScreen"
-        options={{title: 'Shared'}}
+        options={{
+          title: 'SHARED', headerShown: true}}
         component={SharedScreen}
       />
     </Drawer.Navigator>
