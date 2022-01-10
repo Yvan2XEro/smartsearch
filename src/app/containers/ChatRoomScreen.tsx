@@ -1,98 +1,42 @@
-import React from 'react'
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { Avatar } from 'react-native-paper';
-import Entypo from 'react-native-vector-icons/Entypo';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import React, { useContext, useEffect, useState } from 'react'
+import { StyleSheet, View } from 'react-native'
+import { GiftedChat, IMessage } from 'react-native-gifted-chat';
+import firestore from '@react-native-firebase/firestore'
+import { AuthenticationContext } from '../contexts/AuthContextProvider';
 
 const ChatRoomScreen = ({ navigation, route }: any) => {
+    const {user} = useContext(AuthenticationContext)
     const { chat } = route.params
+    const [messages, setMessages] = useState([])
+
+    const handleSend = (message: IMessage[])=>{
+      firestore()
+        .collection('chats')
+        .doc(Date.now().toString())
+        .set(messages[0]);
+    };
+    useEffect(() =>{
+        const subscriber = firestore().collection("chats").onSnapshot((snapshot)=>{
+            snapshot.docChanges().forEach(change=>{
+                if(change.type == 'added') {
+                    const data:any = {
+                      ...change.doc.data(),
+                      createdAt: change.doc.data().createdAt.toDate(),
+                    };
+                    setMessages((prevMessages)=>GiftedChat.append(prevMessages, data))
+                }
+            })
+        })
+        return subscriber
+    }, [])
     return (
-        <View style={{ height: '100%' }}>
-            <View style={styles.header}>
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                    }}>
-                    <Ionicons
-                        onPress={() => navigation.goBack()}
-                        name="arrow-back"
-                        size={30}
-                    />
-                    <View style={{ flex: 0.9, marginLeft: 16 }}>
-                        <Text
-                            style={{
-                                fontSize: 17,
-                                textTransform: 'uppercase',
-                                textAlign: 'center',
-                            }}>
-                            {chat.user.name}
-                        </Text>
-                        <Text style={{ textAlign: 'center' }}>Online</Text>
-                    </View>
-                    <TouchableOpacity style={{ marginLeft: 'auto', }}>
-                        <Entypo name="dots-three-vertical" color="gray" size={25} />
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <View>
-                <ScrollView
-                    showsVerticalScrollIndicator={false}>
-                    <TouchableOpacity style={[styles.item, styles.leftItem]}>
-                        <Avatar.Image
-                            style={[styles.image, { left: -10 }]}
-                            source={{
-                                uri: 'https://cdn.pixabay.com/photo/2017/07/18/23/54/peasants-2517476__340.jpg',
-                            }}
-                            size={30}
-                        />
-                        <View style={styles.text}>
-                            <Text style={{ color: 'black' }}>
-                                Lorem ipsum dolor sit, amet consectetur adipisicing.
-                            </Text>
-                            <Text style={{ fontSize: 8 }}>09-09-2022 08:09</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[styles.item, styles.rightItem]}>
-                        <Avatar.Image
-                            style={[styles.image, { right: -10 }]}
-                            source={{
-                                uri: 'https://cdn.pixabay.com/photo/2017/07/18/23/54/peasants-2517476__340.jpg',
-                            }}
-                            size={30}
-                        />
-                        <View style={styles.text}>
-                            <Text style={{ color: 'black' }}>
-                                Lorem ipsum dolor sit, amet consectetur adipisicing.
-                            </Text>
-                            <Text style={{ fontSize: 8 }}>09-09-2022 08:09</Text>
-                        </View>
-                    </TouchableOpacity>
-                </ScrollView>
-            </View>
-            <View
-                style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    marginBottom: 0,
-                    padding: 3,
-                    paddingBottom: 10,
-                    backgroundColor: 'white',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    width: '100%',
-                }}>
-                <TextInput style={[styles.textInput]} placeholder="Type message..." />
-                <TouchableOpacity style={{ flex: 0.15, marginLeft: 5 }}>
-                    <MaterialCommunityIcons
-                        name="send"
-                        // color={theme.colors.primary}
-                        size={50}
-                    />
-                </TouchableOpacity>
-            </View>
-        </View>
+      <View style={{height: '100%'}}>
+        <GiftedChat
+          messages={messages}
+          onSend={messages => handleSend(messages)}
+          user={{_id: user.id}}
+        />
+      </View>
     );
 }
 
