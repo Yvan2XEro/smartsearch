@@ -20,8 +20,9 @@ export function AppTabNavigation() {
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
-        tabBarActiveTintColor: '#e91e63',
-        header: ({ navigation, options }) => (
+        // tabBarActiveTintColor: '#e91e63',
+        tabBarActiveTintColor: tabBarActiveTintColor,
+        header: ({navigation, options}) => (
           <AppHeader type="app" navigation={navigation} title={options.title} />
         ),
       }}>
@@ -31,7 +32,7 @@ export function AppTabNavigation() {
         options={{
           tabBarLabel: 'Home',
           title: 'SMART SEARCH',
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({color, size, focused}) => (
             <View
               style={[styles.tabBarStyle, focused ? styles.focusedStyles : {}]}>
               <MaterialIcons name="home" color={color} size={size} />
@@ -45,7 +46,7 @@ export function AppTabNavigation() {
         options={{
           tabBarLabel: 'Search',
           headerShown: false,
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({color, size, focused}) => (
             <View
               style={[styles.tabBarStyle, focused ? styles.focusedStyles : {}]}>
               <MaterialCommunityIcons
@@ -64,7 +65,7 @@ export function AppTabNavigation() {
         options={{
           tabBarLabel: 'Chats',
           headerShown: false,
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({color, size, focused}) => (
             <View
               style={[styles.tabBarStyle, focused ? styles.focusedStyles : {}]}>
               <Ionicons name="chatbubbles-outline" color={color} size={size} />
@@ -76,6 +77,8 @@ export function AppTabNavigation() {
   );
 }
 
+const tabBarActiveTintColor = 'black'
+
 const styles = StyleSheet.create({
   tabBarStyle: {
     height: '100%',
@@ -84,7 +87,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   focusedStyles: {
-    borderTopWidth: 1,
-    borderTopColor: 'red'
-  }
-})
+    borderTopWidth: 1.5,
+    borderTopColor: tabBarActiveTintColor,
+  },
+});

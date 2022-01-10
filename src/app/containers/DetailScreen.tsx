@@ -20,7 +20,7 @@ const DetailScreen = ({ route, navigation }: { route: any; navigation: any }) =>
         style={{
           margin: 5,
         }}>
-        <ScrollView>
+        <ScrollView style={{marginBottom: 85}}>
           {document.openaccess && (
             <View
               style={{
