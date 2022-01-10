@@ -5,6 +5,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { Paragraph } from 'react-native-paper';
 import DetailsHeader from '../components/DetailsHeader';
 import FiltersListModal from '../components/FiltersListModal';
+
 const DetailScreen = ({ route, navigation }: { route: any; navigation: any }) => {
   /* 2. Get the param */
   const document: Document = route.params.document;

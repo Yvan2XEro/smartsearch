@@ -52,7 +52,7 @@ const DrawerContent = ({ navigation }: { navigation: any }) => {
         <CustomDrawerItem
           label="Shareds"
           icon={<SimpleLineIcons name="share-alt" size={draweIconSize} />}
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.navigate('SharedScreen')}
         />
         <CustomDrawerItem
           label="Groups"

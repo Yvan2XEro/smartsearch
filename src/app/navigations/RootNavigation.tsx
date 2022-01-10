@@ -12,6 +12,7 @@ import SearchStackNavigation from './SearchStackNavigation';
 import {AuthenticationContext} from '../contexts/AuthContextProvider';
 import auth from '@react-native-firebase/auth';
 import AuthStackNavigation from './AuthStackNavigation';
+import SharedScreen from '../containers/SharedScreen';
 
 const Drawer = createDrawerNavigator();
 export default function RootNavigation() {
@@ -61,6 +62,11 @@ export default function RootNavigation() {
         name="SearchStack"
         options={{title: 'Search'}}
         component={SearchStackNavigation}
+      />
+      <Drawer.Screen
+        name="SharedScreen"
+        options={{title: 'Shared'}}
+        component={SharedScreen}
       />
     </Drawer.Navigator>
   );
