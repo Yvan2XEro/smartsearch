@@ -9,9 +9,11 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomDrawerItem from './CustomDrawerItem';
 import { AuthenticationContext } from '../contexts/AuthContextProvider';
+import { useSelector } from 'react-redux';
 
 const DrawerContent = ({ navigation }: { navigation: any }) => {
-  const {logout, user} = React.useContext(AuthenticationContext)
+  const {logout} = React.useContext(AuthenticationContext)
+  const user = useSelector(({loggedUser}:any)=>loggedUser);
   return (
     <DrawerContentScrollView>
       <View

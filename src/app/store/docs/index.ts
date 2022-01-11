@@ -1,10 +1,7 @@
 import { DOCS_KEY } from "../../containers/SavedDocuments";
 import { localStorage } from "../../services";
+import { StoreAction } from "../../type";
 
-export type StoreAction = {
-    type: string,
-    payload: any
-}
 
 export const SAVE_DOC_ACTION = 'SAVE_DOC_ACTION'
 export const DELETE_DOC_ACTION = 'DELETE_DOC_ACTION'

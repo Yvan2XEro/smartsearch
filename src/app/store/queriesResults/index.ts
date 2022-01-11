@@ -1,4 +1,4 @@
-import { StoreAction } from "../docs";
+import { StoreAction } from "../../type"
 
 export const SAVE_NEW_RESULT_ACTION = "SAVE_NEW_RESULT_ACTION"
 export const LOAD_RESULTS_ACTION = "LOAD_RESULTS_ACTION"

@@ -26,7 +26,11 @@ const SignOutScreen = ({navigation}: any) => {
 
   const {login, register} = React.useContext(AuthenticationContext);
  const handleSignUp = () => {
-   if(!emailRegex.test(email)){
+
+  if(name.trim().length<3) {
+    setError("The name is too short!")
+  }
+   else if(!emailRegex.test(email)){
       setError('Invalid email adress!');
    }else if(password.length<6){
      setError('Password too short (min 6 characters)');
@@ -34,12 +38,11 @@ const SignOutScreen = ({navigation}: any) => {
    else{
      setError('');
      setLoading(true);
-     register({email, password}, EMAIL_PASSWORD)
-       .then(() => {
-         login({email, password}, EMAIL_PASSWORD);
-       })
+     register({email, password, displayName: name}, EMAIL_PASSWORD, () =>
+       login({email, password}, EMAIL_PASSWORD),
+     )
        .catch(error => {
-         console.log(error.message)
+         console.log(error.message);
          if (error.code === 'auth/email-already-in-use')
            setError('That email address is already in use!');
        })

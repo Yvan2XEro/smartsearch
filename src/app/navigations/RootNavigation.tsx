@@ -13,6 +13,7 @@ import {AuthenticationContext} from '../contexts/AuthContextProvider';
 import auth from '@react-native-firebase/auth';
 import AuthStackNavigation from './AuthStackNavigation';
 import SharedScreen from '../containers/SharedScreen';
+import { updateUserAction } from '../store/loggedUser/actions';
 
 const Drawer = createDrawerNavigator();
 export default function RootNavigation() {
@@ -21,6 +22,7 @@ export default function RootNavigation() {
   React.useEffect(() => {
     dispatch(loadDocsAction());
     dispatch(loadResultsAction());
+    dispatch(updateUserAction(user));
   }, []);
 
   const [initializing, setInitializing] = React.useState(true);
