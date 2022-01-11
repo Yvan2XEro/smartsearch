@@ -4,73 +4,92 @@ import { Avatar } from 'react-native-paper';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import firestore from '@react-native-firebase/firestore'
+import { AuthenticationContext } from '../contexts/AuthContextProvider';
 
 const ChatsListScreen = ({ navigation }: any) => {
+
+    const {user} = React.useContext(AuthenticationContext)
+    const [chats, setChats] = React.useState<any[]>([])
+    const fetchChats = () => {
+        const subscriber = firestore().collection('chats')
+        .where("usersRefs", "array-contains", user.uid)
+        .get()
+        .then(querySnapshot=>{
+            setChats(
+              querySnapshot.docs.map(item => ({...item.data(), id: item.id})),
+            );
+        })
+        return subscriber
+    }
+
+    React.useEffect(() =>{
+        const subscriber = fetchChats();
+    }, [])
+
     return (
-        <View>
-            <View style={styles.header}>
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                    }}>
-                    <Entypo
-                        onPress={() => navigation.openDrawer()}
-                        name="menu"
-                        size={30}
-                    />
-                    <View style={{ flex: 0.9, marginLeft: 16 }}>
-                        <Text style={{ fontSize: 17, textTransform: 'uppercase' }}>
-                            Chats
-                        </Text>
-                    </View>
-                    <TouchableOpacity>
-                        <MaterialIcons name="notifications" size={25} />
-                    </TouchableOpacity>
-                </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Ionicons name="ios-search" size={25} />
-                    <TextInput
-                        placeholder="Search for user..."
-                        keyboardType="web-search"
-                    />
-                </View>
+      <View>
+        <View style={styles.header}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <Entypo
+              onPress={() => navigation.openDrawer()}
+              name="menu"
+              size={30}
+            />
+            <View style={{flex: 0.9, marginLeft: 16}}>
+              <Text style={{fontSize: 17, textTransform: 'uppercase'}}>
+                Chats
+              </Text>
             </View>
-            <View style={{ backgroundColor: '#fff' }}>
-                <Text style={{ textTransform: 'uppercase', marginLeft: 10 }}>Online users</Text>
-                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                    <OnlineItem />
-                    <OnlineItem />
-                    <OnlineItem />
-                    <OnlineItem />
-                    <OnlineItem />
-                    <OnlineItem />
-                    <OnlineItem />
-                    <OnlineItem />
-                    <OnlineItem />
-                    <OnlineItem />
-                </ScrollView>
-            </View>
-            <View style={{ backgroundColor: '#fefefe' }}>
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    <ChatItem onPress={() => navigation.navigate("ChatRoom", { chat: { user: { name: "test" } } })} name="Beno Visual" />
-                    <ChatItem onPress={() => navigation.navigate("ChatRoom", { chat: { user: { name: "test" } } })} name="Muriel Blanche" />
-                    <ChatItem onPress={() => navigation.navigate("ChatRoom", { chat: { user: { name: "test" } } })} name="Massa Moooh" />
-                    <ChatItem onPress={() => navigation.navigate("ChatRoom", { chat: { user: { name: "test" } } })} name="Jean Robert" />
-                    <ChatItem onPress={() => navigation.navigate("ChatRoom", { chat: { user: { name: "test" } } })} name="Jean Robert" />
-                    <ChatItem onPress={() => navigation.navigate("ChatRoom", { chat: { user: { name: "test" } } })} name="Jean Robert" />
-                    <ChatItem onPress={() => navigation.navigate("ChatRoom", { chat: { user: { name: "test" } } })} name="Jean Robert" />
-                    <ChatItem onPress={() => navigation.navigate("ChatRoom", { chat: { user: { name: "test" } } })} name="Jean Robert" />
-                    <ChatItem onPress={() => navigation.navigate("ChatRoom", { chat: { user: { name: "test" } } })} name="Jean Robert" />
-                    <ChatItem onPress={() => navigation.navigate("ChatRoom", { chat: { user: { name: "test" } } })} name="Jean Robert" />
-                    <ChatItem onPress={() => navigation.navigate("ChatRoom", { chat: { user: { name: "test" } } })} name="Jean Robert" />
-                    <ChatItem onPress={() => navigation.navigate("ChatRoom", { chat: { user: { name: "test" } } })} name="Jean Robert" />
-                    <ChatItem onPress={() => navigation.navigate("ChatRoom", { chat: { user: { name: "test" } } })} name="Jean Robert" />
-                    <ChatItem onPress={() => navigation.navigate("ChatRoom", { chat: { user: { name: "test" } } })} name="Jean Robert" />
-                    <ChatItem onPress={() => navigation.navigate("ChatRoom", { chat: { user: { name: "test" } } })} name="Jean Robert" />
-                </ScrollView>
-            </View>
+            <TouchableOpacity>
+              <MaterialIcons name="notifications" size={25} />
+            </TouchableOpacity>
+          </View>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Ionicons name="ios-search" size={25} />
+            <TextInput
+              placeholder="Search for user..."
+              keyboardType="web-search"
+            />
+          </View>
         </View>
+        <View style={{backgroundColor: '#fff'}}>
+          <Text style={{textTransform: 'uppercase', marginLeft: 10}}>
+            Online users
+          </Text>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            <OnlineItem />
+            <OnlineItem />
+            <OnlineItem />
+            <OnlineItem />
+            <OnlineItem />
+            <OnlineItem />
+            <OnlineItem />
+            <OnlineItem />
+            <OnlineItem />
+            <OnlineItem />
+          </ScrollView>
+        </View>
+        <View style={{backgroundColor: '#fefefe'}}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {chats.map(chat => (
+              <ChatItem
+                key={chat.id}
+                onPress={() =>
+                  navigation.navigate('ChatRoom', {
+                    chat: {user: {name: 'test'}},
+                  })
+                }
+                name="Jean Robert"
+              />
+            ))}
+          </ScrollView>
+        </View>
+      </View>
     );
 }
 
