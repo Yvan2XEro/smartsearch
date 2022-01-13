@@ -1,6 +1,6 @@
 import { DOCS_KEY } from "../../containers/SavedDocuments";
 import { localStorage } from "../../services";
-import { StoreAction } from "../../type";
+import { StoreAction } from "../../types";
 
 
 export const SAVE_DOC_ACTION = 'SAVE_DOC_ACTION'

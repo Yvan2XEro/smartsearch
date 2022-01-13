@@ -1,5 +1,5 @@
 import { UPDATE_USER_ACTION } from ".";
-import { StoreAction } from "../../type";
+import { StoreAction } from "../../types";
 
 
 export const updateUserAction = (user: any): StoreAction => ({payload:user, type: UPDATE_USER_ACTION})
