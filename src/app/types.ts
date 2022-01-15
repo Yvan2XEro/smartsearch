@@ -4,8 +4,20 @@ export type StoreAction = {
 }
 
 export type User = {
-    id?: string,
+    pk?: string,
     email: string,
     displayName: string,
     createdAt?: string
+    photoURL?: string
+}
+
+export type Message = {
+    id?: string,
+    chatRef?: string,
+    userRef?: string,
+    content: string,
+    createdAt: string,
+    sent?: boolean,
+    received?: boolean,
+    readed?: boolean,
 }

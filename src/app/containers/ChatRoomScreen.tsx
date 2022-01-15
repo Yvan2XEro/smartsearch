@@ -1,40 +1,161 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {GiftedChat, IMessage} from 'react-native-gifted-chat';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {Avatar} from 'react-native-paper';
+import Entypo from 'react-native-vector-icons/Entypo';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import firestore from '@react-native-firebase/firestore';
+import {Message} from '../types';
 import {AuthenticationContext} from '../contexts/AuthContextProvider';
+import moment from 'moment';
 
 const ChatRoomScreen = ({navigation, route}: any) => {
   const {user} = useContext(AuthenticationContext);
   const {chat} = route.params;
-  const [messages, setMessages] = useState([]);
-
-  const handleSend = (message: IMessage[]) => {
-    firestore().collection('chats').doc(Date.now().toString()).set(messages[0]);
+  const [messages, setMessages] = useState<any[]>([]);
+  const [message, setMessage] = useState('');
+  const [inittializing, setInitializing] = useState(true);
+  const isMyMessage = (message: Message): boolean => {
+    return message.userRef === user.uid;
   };
+  const handleSendMessage = async () => {
+    if (message.trim().length > 0) {
+      const data = {
+        userRef: user.uid,
+        chatRef: chat.id,
+        received: false,
+        readed: false,
+        content: message,
+        createdAt: new Date().toISOString(),
+        sent: true,
+      };
+      setMessage('');
+
+      await firestore().collection('messages').add(data);
+    }
+  };
+  const formatDate = (date: string): string =>
+    moment(date).format('DD-MM-YYYY h:mm:ss');
+  const messagesQuery = firestore()
+    .collection('messages')
+    .where('chatRef', '==', chat.id);
   useEffect(() => {
-    const subscriber = firestore()
-      .collection('chats')
-      .onSnapshot(snapshot => {
+    if (!inittializing) {
+      messagesQuery.onSnapshot(snapshot => {
         snapshot.docChanges().forEach(change => {
-          if (change.type == 'added') {
+          if (change.type == 'added' && change.doc.data().chatRef === chat.id) {
             const data: any = {
               ...change.doc.data(),
-              createdAt: change.doc.data().createdAt.toDate(),
+              id: change.doc.id,
+              createdAt: formatDate(change.doc.data().createdAt),
             };
-            setMessages(prevMessages => GiftedChat.append(prevMessages, data));
+            // console.log(messages.length);
+            setMessages([...messages, data]);
           }
         });
       });
-    return subscriber;
+    } else {
+      setInitializing(false);
+      messagesQuery.get().then(docSnapshot => {
+        setMessages(
+          docSnapshot.docs.map(change => ({
+            ...change.data(),
+            id: change.id,
+          })),
+        );
+      });
+    }
   }, []);
   return (
     <View style={{height: '100%'}}>
-      <GiftedChat
-        messages={messages}
-        onSend={messages => handleSend(messages)}
-        user={{_id: user.id}}
-      />
+      <View style={styles.header}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <Ionicons
+            onPress={() => navigation.goBack()}
+            name="arrow-back"
+            size={30}
+          />
+          <View style={{flex: 0.9, marginLeft: 16}}>
+            <Text
+              style={{
+                fontSize: 17,
+                textTransform: 'uppercase',
+                textAlign: 'center',
+              }}>
+              {chat.user.displayName}
+            </Text>
+            <Text style={{textAlign: 'center', fontSize: 12}}>Online</Text>
+          </View>
+          <TouchableOpacity style={{marginLeft: 'auto'}}>
+            <Entypo name="dots-three-vertical" color="gray" size={25} />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View style={{marginTop: 5, paddingBottom: 115}}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {messages.map((m, i) => (
+            <TouchableOpacity
+              style={[
+                styles.item,
+                isMyMessage(m) ? styles.rightItem : styles.leftItem,
+              ]}
+              key={i}>
+              {!isMyMessage(m) && (
+                <Avatar.Image
+                  style={[styles.image, {left: -10}]}
+                  source={{
+                    uri: 'https://cdn.pixabay.com/photo/2017/07/18/23/54/peasants-2517476__340.jpg',
+                  }}
+                  size={30}
+                />
+              )}
+              <View style={styles.text}>
+                <Text style={{color: 'black'}}>{m.content}</Text>
+                <Text style={{fontSize: 8}}>{m.createdAt}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          marginBottom: 0,
+          padding: 3,
+          paddingBottom: 10,
+          backgroundColor: 'white',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          width: '100%',
+        }}>
+        <TextInput
+          value={message}
+          onChangeText={text => setMessage(text)}
+          style={[styles.textInput]}
+          placeholder="Type message..."
+        />
+        <TouchableOpacity
+          style={{flex: 0.15, marginLeft: 5}}
+          onPress={handleSendMessage}>
+          <MaterialCommunityIcons
+            name="send"
+            // color={theme.colors.primary}
+            size={50}
+          />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -62,10 +183,10 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: 'white',
     marginHorizontal: 15,
+    maxWidth: '80%',
     marginBottom: 3,
     borderRadius: 10,
     padding: 5,
-    width: '75%',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

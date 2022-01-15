@@ -17,49 +17,50 @@ import {AuthenticationContext} from '../contexts/AuthContextProvider';
 const ChatsListScreen = ({navigation}: any) => {
   const {user} = React.useContext(AuthenticationContext);
   const [chats, setChats] = React.useState<any[]>([]);
-  const sndChatUser = (chat: any) => {
+  const [buildedChats, setBuildedChats] = React.useState<any[]>([]);
+
+  const sndChatUser = (chat: any): string => {
     return chat.usersRefs[0] == user.uid
       ? chat.usersRefs[1]
       : chat.usersRefs[0];
   };
-  const buildChats = async (chats: any[]) => {
-    const buildedChats: {id: string; user: any}[] = [];
-    chats.forEach(async ({sndChatUser, id}: any) => {
-      const userSnapShot = await firestore()
-        .collection('users')
-        .doc(sndChatUser)
-        .get();
-      console.log('yooo', userSnapShot);
-      buildedChats.push({
-        id,
-        user: {...userSnapShot.data(), id: userSnapShot.id},
+
+  const fetchUsers = async (usersIds: string[]) => {
+    await firestore()
+      .collection('users')
+      .where('pk', 'in', usersIds)
+      .get()
+      .then(querySnapshot => {
+        const users = querySnapshot.docs.map(u => u.data());
+        // console.log('USERS:', users);
+        let bChats: any[] = [];
+        chats.forEach(chat => {
+          const u = users.find(({pk}) => pk == chat.user);
+          bChats.push({...chat, user: u});
+        });
+        console.log(bChats);
+        // console.log(chats);
+        setBuildedChats(bChats);
       });
-    });
-    console.log(buildedChats);
-    return buildedChats;
   };
-  const fetchChats = () => {
+
+  React.useEffect(() => {
     const subscriber = firestore()
       .collection('chats')
       .where('usersRefs', 'array-contains', user.uid)
       .get()
       .then(async querySnapshot => {
+        await fetchUsers(
+          querySnapshot.docs.map(item => sndChatUser(item.data())),
+        );
         setChats(
-          await buildChats(
-            querySnapshot.docs.map(item => ({
-              ...item.data(),
-              id: item.id,
-              sndChatUser: sndChatUser(item.data()),
-            })),
-          ),
+          querySnapshot.docs.map(item => ({
+            ...item.data(),
+            id: item.id,
+            user: sndChatUser(item.data()),
+          })),
         );
       });
-
-    return subscriber;
-  };
-
-  React.useEffect(() => {
-    const subscriber = fetchChats();
   }, []);
 
   return (
@@ -111,15 +112,11 @@ const ChatsListScreen = ({navigation}: any) => {
       </View>
       <View style={{backgroundColor: '#fefefe'}}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {chats.map(chat => (
+          {buildedChats.map((chat, i) => (
             <ChatItem
-              key={chat.id}
-              onPress={() =>
-                navigation.navigate('ChatRoom', {
-                  chat: {user: {name: 'test'}},
-                })
-              }
-              name="Jean Robert"
+              key={i}
+              onPress={() => navigation.navigate('ChatRoom', {chat})}
+              user={chat.user}
             />
           ))}
         </ScrollView>
@@ -153,7 +150,7 @@ const OnlineItem = () => (
   </TouchableOpacity>
 );
 
-const ChatItem = ({name, onPress}: any) => (
+const ChatItem = ({user, onPress}: any) => (
   <TouchableOpacity
     style={{
       marginTop: 10,
@@ -169,11 +166,13 @@ const ChatItem = ({name, onPress}: any) => (
     <View style={{flexDirection: 'row', alignItems: 'center'}}>
       <Avatar.Image
         source={{
-          uri: 'https://cdn.pixabay.com/photo/2017/11/10/05/48/user-2935527__340.png',
+          uri: user.photoURL
+            ? user.photoURL
+            : 'https://cdn.pixabay.com/photo/2017/11/10/05/48/user-2935527__340.png',
         }}
         size={50}
       />
-      <Text style={{marginLeft: 20, fontSize: 17}}>{name}</Text>
+      <Text style={{marginLeft: 20, fontSize: 17}}>{user.displayName}</Text>
     </View>
   </TouchableOpacity>
 );
