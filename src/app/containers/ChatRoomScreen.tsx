@@ -10,7 +10,7 @@ import {
 import {Avatar} from 'react-native-paper';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import firestore from '@react-native-firebase/firestore';
 import {Message} from '../types';
 import {AuthenticationContext} from '../contexts/AuthContextProvider';
@@ -19,6 +19,9 @@ import moment from 'moment';
 const ChatRoomScreen = ({navigation, route}: any) => {
   const {user} = useContext(AuthenticationContext);
   const {chat} = route.params;
+  const avatarUrl = chat.user.photoURL
+    ? chat.user.photoURL
+    : 'https://cdn.pixabay.com/photo/2017/07/18/23/54/peasants-2517476__340.jpg';
   const [messages, setMessages] = useState<any[]>([]);
   const [message, setMessage] = useState('');
   const [inittializing, setInitializing] = useState(true);
@@ -41,8 +44,16 @@ const ChatRoomScreen = ({navigation, route}: any) => {
       await firestore().collection('messages').add(data);
     }
   };
-  const formatDate = (date: string): string =>
-    moment(date).format('DD-MM-YYYY h:mm:ss');
+  const formatDate = (date: string): string => {
+    return moment(date).format('DD-MM-YYYY h:mm:ss');
+  };
+
+  const compareMsg = (a: any, b: any) => {
+    if (new Date(a.createdAt) < new Date(b.createdAt)) return -1;
+
+    if (new Date(a.createdAt) > new Date(b.createdAt)) return 1;
+    return 0;
+  };
   const messagesQuery = firestore()
     .collection('messages')
     .where('chatRef', '==', chat.id);
@@ -56,7 +67,6 @@ const ChatRoomScreen = ({navigation, route}: any) => {
               id: change.doc.id,
               createdAt: formatDate(change.doc.data().createdAt),
             };
-            // console.log(messages.length);
             setMessages([...messages, data]);
           }
         });
@@ -104,7 +114,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
       </View>
       <View style={{marginTop: 5, paddingBottom: 115}}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {messages.map((m, i) => (
+          {messages.sort(compareMsg).map((m, i) => (
             <TouchableOpacity
               style={[
                 styles.item,
@@ -115,7 +125,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
                 <Avatar.Image
                   style={[styles.image, {left: -10}]}
                   source={{
-                    uri: 'https://cdn.pixabay.com/photo/2017/07/18/23/54/peasants-2517476__340.jpg',
+                    uri: avatarUrl,
                   }}
                   size={30}
                 />
@@ -149,10 +159,11 @@ const ChatRoomScreen = ({navigation, route}: any) => {
         <TouchableOpacity
           style={{flex: 0.15, marginLeft: 5}}
           onPress={handleSendMessage}>
-          <MaterialCommunityIcons
-            name="send"
+          <FontAwesome
+            style={{alignSelf: 'center', marginTop: 5}}
+            name="send-o"
             // color={theme.colors.primary}
-            size={50}
+            size={40}
           />
         </TouchableOpacity>
       </View>

@@ -14,11 +14,13 @@ const DocItem = ({
   onPress,
   onSave,
   onDelete,
+  onRecomand
 }: {
   doc: any;
   onPress: any;
   onSave?: any;
   onDelete?: any;
+  onRecomand?: any
 }) => {
   return (
     <View style={styles.doc}>
@@ -70,7 +72,7 @@ const DocItem = ({
                 <Text style={{color: 'red'}}>Delete</Text>
               </MenuOption>
             )}
-            <MenuOption onSelect={() => {}} disabled={true} text="Recommand" />
+            {onRecomand&&<MenuOption onSelect={onRecomand} text="Recommand" />}
           </MenuOptions>
         </Menu>
       </View>

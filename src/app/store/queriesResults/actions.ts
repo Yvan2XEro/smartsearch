@@ -14,8 +14,10 @@ export const saveNewQueryResultAction = ({ results, buildedQuery }: any) => asyn
         createdAt: moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss'),
         data: results,
     }
-            pushSearchResultsIfNotExists(queries, data);
-            await localStorage.set('queries', JSON.stringify(queries));
+    if (pushSearchResultsIfNotExists(queries, data)){
+        console.log("EN COURS...")
+        await localStorage.set('queries', JSON.stringify(queries));
+    }
     return dispatch({
         type: SAVE_NEW_RESULT_ACTION,
         payload: data

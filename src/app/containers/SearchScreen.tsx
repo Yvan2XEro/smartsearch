@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import { saveDocAction } from '../store/docs/actions';
 import AppSnackbar, { appSnackbarStyles } from '../components/AppSnackbar';
 import { saveNewQueryResultAction } from '../store/queriesResults/actions';
+import RecModal from '../components/RecModal';
 
 const SearchScreen = ({
   onDataChange,
@@ -29,6 +30,9 @@ const SearchScreen = ({
   const [isLoading, setLoading] = useState(false);
   const [showSaveQueryButton, setShowSaveQueryButton] = useState(false);
   const [buildedQuery, setbuildedQuery] = useState('');
+  
+  // Pour la modale de recommandation
+  const [recomandedDoc, setRecomandedDoc] = useState(null);
 
   // Pour la popup de notification!
   const [showSnackbar, setShowSnackbar] = useState(false);
@@ -141,11 +145,12 @@ const SearchScreen = ({
       {data && (
         <FlatList
           data={data}
-          keyExtractor={({ title }, index) => title + index}
-          renderItem={({ item }) => (
+          keyExtractor={({title}, index) => title + index}
+          renderItem={({item}) => (
             <DocItem
               doc={item}
               onSave={() => onSaveDoc(item)}
+              onRecomand={()=>setRecomandedDoc(item)}
               onPress={() => {
                 navigation.navigate(
                   'SearchStack' as never,
@@ -182,6 +187,9 @@ const SearchScreen = ({
         onDismiss={() => setShowSnackbar(false)}
         message={snackbarMessage}
       />
+      {recomandedDoc && (
+        <RecModal doc={recomandedDoc} onDismiss={() => setRecomandedDoc(null)} onSubmit={()=>{}} />
+      )}
     </SafeAreaView>
   );
 };
