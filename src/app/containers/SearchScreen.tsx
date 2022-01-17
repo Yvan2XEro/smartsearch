@@ -188,7 +188,7 @@ const SearchScreen = ({
         message={snackbarMessage}
       />
       {recomandedDoc && (
-        <RecModal doc={recomandedDoc} onDismiss={() => setRecomandedDoc(null)} onSubmit={()=>{}} />
+        <RecModal doc={recomandedDoc} onDismiss={() => setRecomandedDoc(null)} />
       )}
     </SafeAreaView>
   );

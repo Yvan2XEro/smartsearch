@@ -53,7 +53,7 @@ const AuthContextProvider = ({children}:any) => {
             return auth().signInWithCredential(googleCredential)
             .then(async({user})=>{
               const u = {
-                id: user.uid,
+                pk: user.uid,
                 email: user.email || '',
                 displayName: user.displayName || '',
                 createdAt: new Date().toISOString(),
@@ -72,7 +72,7 @@ const AuthContextProvider = ({children}:any) => {
                   dispatch(updateUserAction({...reduxUser, displayName}));
                 })
                 await writeUser(user.uid, {
-                  id: user.uid,
+                  pk: user.uid,
                   email: user.email || '',
                   displayName,
                   createdAt: new Date().toISOString(),

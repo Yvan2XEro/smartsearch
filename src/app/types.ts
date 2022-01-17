@@ -21,3 +21,11 @@ export type Message = {
     received?: boolean,
     readed?: boolean,
 }
+
+export type Recommandation = {
+    id?: string,
+    userDestRef?: string,
+    userSenderRef?: string,
+    crearedAt?: string,
+    document: any
+}
