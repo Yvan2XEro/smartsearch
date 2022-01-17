@@ -110,7 +110,7 @@ const SearchBlock: React.FC<IProps> = ({
             onSubmitEditing={handleSumitQuery}
             style={styles.searchBar}
           />
-          {fastInputQuery != '' && (
+          {fastInputQuery != '' ? (
             <TouchableOpacity onPress={() => setFastInputQuery('')}>
               <MaterialCommunityIcons
                 style={{marginTop: 10, marginRight: 20}}
@@ -118,15 +118,17 @@ const SearchBlock: React.FC<IProps> = ({
                 size={25}
               />
             </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={[styles.searchBarBtn, {marginRight: 10}]}
+              onPress={() => setShowFiltersBlock(!showFiltersBlock)}>
+              <MaterialCommunityIcons
+                size={25}
+                name={showFiltersBlock ? 'filter-menu' : 'filter-menu-outline'}
+              />
+            </TouchableOpacity>
           )}
-          <TouchableOpacity
-            style={styles.searchBarBtn}
-            onPress={() => setShowFiltersBlock(!showFiltersBlock)}>
-            <MaterialCommunityIcons
-              size={25}
-              name={showFiltersBlock ? 'filter-menu' : 'filter-menu-outline'}
-            />
-          </TouchableOpacity>
+
           <Menu style={{alignSelf: 'center'}}>
             <MenuTrigger>
               <Entypo name="dots-three-vertical" color="gray" size={25} />
@@ -160,7 +162,7 @@ const SearchBlock: React.FC<IProps> = ({
           </Menu>
         </View>
         <ScrollView style={styles.inputs}>
-          {showFiltersBlock && (
+          {showFiltersBlock && fastInputQuery == '' && (
             <KeyboardAvoidingView
               style={{marginBottom: 100}}
               behavior={undefined}
@@ -282,7 +284,7 @@ const SearchBlock: React.FC<IProps> = ({
               <Button
                 style={[styles.input, styles.sumitBtn]}
                 onPress={handleSumitQuery}>
-                  Search
+                Search
                 {/* <MaterialIcons name="search" color="white" size={20} /> */}
               </Button>
             </KeyboardAvoidingView>
