@@ -150,7 +150,7 @@ const SearchScreen = ({
             <DocItem
               doc={item}
               onSave={() => onSaveDoc(item)}
-              onRecomand={()=>setRecomandedDoc(item)}
+              onRecomand={() => setRecomandedDoc(item)}
               onPress={() => {
                 navigation.navigate(
                   'SearchStack' as never,
@@ -188,7 +188,18 @@ const SearchScreen = ({
         message={snackbarMessage}
       />
       {recomandedDoc && (
-        <RecModal doc={recomandedDoc} onDismiss={() => setRecomandedDoc(null)} />
+        <RecModal
+          doc={recomandedDoc}
+          onDismiss={() => setRecomandedDoc(null)}
+          onFinish={(succes:boolean)=>{
+            setShowSnackbar(true);
+            if (succes)
+              setSnackbarMessage("SUCCESS!");
+            else
+              setSnackbarMessage("An error occcured!")
+            setRecomandedDoc(null);
+          }}
+        />
       )}
     </SafeAreaView>
   );

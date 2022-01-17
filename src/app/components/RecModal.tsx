@@ -8,59 +8,65 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import { User } from '../types';
 import firestore from '@react-native-firebase/firestore';
-import { AuthenticationContext } from '../contexts/AuthContextProvider';
-import auth from '@react-native-firebase/auth';
 import { useSelector } from 'react-redux';
 import AppSnackbar, { appSnackbarStyles } from './AppSnackbar';
 
 const RecModal = ({
   doc,
   onDismiss,
+  onFinish,
 }: {
   doc: Document | null;
   onDismiss: any;
+  onFinish:(success: boolean)=>void;
 }) => {
-
-  const [fetchedUsers, setFetchedUsers] = React.useState<User[]>([])
-  const [selectedUsers, setSelectedUsers] = React.useState<User[]>([])
-  const [input, setInput] = React.useState('')
-  const [loading, setLoading] = React.useState(false)
+  const [fetchedUsers, setFetchedUsers] = React.useState<User[]>([]);
+  const [selectedUsers, setSelectedUsers] = React.useState<User[]>([]);
+  const [input, setInput] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
 
   const [showSnackbar, setShowSnackbar] = React.useState(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState('');
+  const [success, setSucess] = React.useState(true);
 
-
-  const query = firestore().collection('users')
+  const query = firestore().collection('users');
   const user = useSelector(({loggedUser}: any) => loggedUser);
 
   const handleFetch = (text: string) => {
-    query.where('email', '==', text).get().then(snapshot=>{
-      setFetchedUsers(
-        snapshot.docs.map<User>(item => ({
-          ...item.data(),
-          displayName: item.data().displayName,
-          email: item.data().email
-        })),
-      );
-    });
-  }
+    query
+      .where('email', '==', text)
+      .get()
+      .then(snapshot => {
+        setFetchedUsers(
+          snapshot.docs.map<User>(item => ({
+            ...item.data(),
+            displayName: item.data().displayName,
+            email: item.data().email,
+          })),
+        );
+      });
+  };
 
-  const handleRecomandation = async() => {
-    Promise.resolve(
+  const handleRecomandation = async () => {
+    await Promise.resolve(
       selectedUsers.forEach(async u => {
         if (!!u.pk)
-          await firestore().collection('recommandations').add({
-            userDestRef: u.pk,
-            userSenderRef: user.uid,
-            crearedAt: new Date().toISOString(),
-            document: doc,
-          }).then(()=>{
-            setShowSnackbar(true)
-            setSnackbarMessage("SUCCESS!!")
-          });
+          await firestore()
+            .collection('recommandations')
+            .add({
+              userDestRef: u.pk,
+              userSenderRef: user.uid,
+              crearedAt: new Date().toISOString(),
+              document: doc,
+            })
+            .then(() => setSucess(true))
+            .catch(() => setSucess(false));
       }),
-    ).finally(() => setLoading(false));
-  }
+    ).finally(() => {
+      setLoading(false);
+      onFinish(success);
+    });
+  };
 
   return (
     <Portal>
