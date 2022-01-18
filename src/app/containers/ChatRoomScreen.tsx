@@ -54,6 +54,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
     if (new Date(a.createdAt) > new Date(b.createdAt)) return 1;
     return 0;
   };
+  
   const messagesQuery = firestore()
     .collection('messages')
     .where('chatRef', '==', chat.id);
