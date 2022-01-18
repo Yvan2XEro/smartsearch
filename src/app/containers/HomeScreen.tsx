@@ -19,8 +19,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
   const user = useSelector(({loggedUser}: any) => loggedUser);
   const [recommandations, setRecommandations] = React.useState<Recommandation[]>([])
   const recommandationsQuery = firestore().collection('recommandations');
-
-  React.useEffect(() =>{
+  React.useLayoutEffect(() =>{
     recommandationsQuery.where('userDestRef', '==', user.uid)
     .get().then(recSnapshots=>{
       setRecommandations(
@@ -30,6 +29,14 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
       );
     });
   },[])
+
+  const handleDelete = (rec: Recommandation) => {
+    recommandationsQuery.doc(rec.id).delete().then(()=>{
+      setRecommandations(recommandations.filter(r=>r!=rec))
+    }).catch(err=>{
+      console.log(err)
+    });
+  }
 
   return (
     <Tabs
@@ -94,7 +101,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
 
                         <MenuOptions>
                           <MenuOption onSelect={() => {}} text="Details" />
-                            <MenuOption onSelect={()=>{}}>
+                            <MenuOption onSelect={()=>handleDelete(item)}>
                               <Text style={{color: 'red'}}>Delete</Text>
                             </MenuOption>
                         </MenuOptions>

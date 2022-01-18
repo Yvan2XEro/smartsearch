@@ -78,7 +78,7 @@ const RecModal = ({
           height: '100%',
         }}
         visible={!!doc}
-        dismissable={false}
+        // dismissable={false}
         onDismiss={onDismiss}>
         <Text style={{fontSize: 25}}>Recomand doc</Text>
         <View style={{borderWidth: 0.3, borderRadius: 10, overflow: 'hidden'}}>
