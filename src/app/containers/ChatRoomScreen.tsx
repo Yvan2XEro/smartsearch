@@ -65,7 +65,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
         snapshot.docs.map(change => ({
           ...change.data(),
           id: change.id,
-        })),
+        } as Message)).filter(m=>m.chatRef == chat.id),
       );
     });
   }, []);
@@ -112,7 +112,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
                 <Avatar.Image
                   style={[styles.image, {left: -10}]}
                   source={{
-                    uri: avatarUrl,
+                    uri: chatSnduser.photoUrl,
                   }}
                   size={30}
                 />
