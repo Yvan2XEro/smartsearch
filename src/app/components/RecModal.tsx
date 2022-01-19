@@ -1,15 +1,30 @@
-import * as React from 'react'
-import { Dimensions, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
-import {ActivityIndicator, Avatar, Button, Card, Modal, Portal, Text} from 'react-native-paper';
-import { Document } from '../models/Document';
+import * as React from 'react';
+import {
+  Dimensions,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {
+  ActivityIndicator,
+  Avatar,
+  Button,
+  Card,
+  Modal,
+  Portal,
+  Text,
+} from 'react-native-paper';
+import {Document} from '../models/Document';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import { User } from '../types';
+import {User} from '../types';
 import firestore from '@react-native-firebase/firestore';
-import { useSelector } from 'react-redux';
-import AppSnackbar, { appSnackbarStyles } from './AppSnackbar';
+import {useSelector} from 'react-redux';
+import AppSnackbar, {appSnackbarStyles} from './AppSnackbar';
 
 const RecModal = ({
   doc,
@@ -18,7 +33,7 @@ const RecModal = ({
 }: {
   doc: Document | null;
   onDismiss: any;
-  onFinish:(success: boolean)=>void;
+  onFinish: (success: boolean) => void;
 }) => {
   const [fetchedUsers, setFetchedUsers] = React.useState<User[]>([]);
   const [selectedUsers, setSelectedUsers] = React.useState<User[]>([]);
@@ -33,20 +48,20 @@ const RecModal = ({
   const user = useSelector(({loggedUser}: any) => loggedUser);
 
   const handleFetch = (text: string) => {
-        if (text.length > 0)
-          query
-            .startAt(text)
-            .endAt(text + '~')
-            .get()
-            .then(snapshot => {
-              setFetchedUsers(
-                snapshot.docs.map<User>(item => ({
-                  ...item.data(),
-                  displayName: item.data().displayName,
-                  email: item.data().email,
-                })),
-              );
-            });
+    if (text.length > 0)
+      query
+        .startAt(text)
+        .endAt(text + '~')
+        .get()
+        .then(snapshot => {
+          setFetchedUsers(
+            snapshot.docs.map<User>(item => ({
+              ...item.data(),
+              displayName: item.data().displayName,
+              email: item.data().email,
+            })),
+          );
+        });
   };
 
   const handleRecomandation = async () => {
@@ -94,11 +109,7 @@ const RecModal = ({
               onChangeText={handleFetch}
               placeholder="Search users(email) or groups..."
             />
-            <Ionicons
-              style={{marginRight: 10}}
-              name="ios-search"
-              size={23}
-            />
+            <Ionicons style={{marginRight: 10}} name="ios-search" size={23} />
           </View>
           <ScrollView
             style={{
@@ -189,9 +200,15 @@ const RecModal = ({
   );
 };
 
-export default RecModal
+export default RecModal;
 
-const ProfileBlockItem = ({user, onDelete}: {user: User; onDelete:()=>void}) => {
+const ProfileBlockItem = ({
+  user,
+  onDelete,
+}: {
+  user: User;
+  onDelete: () => void;
+}) => {
   return (
     <Card style={{marginTop: 10, padding: 3, position: 'relative'}}>
       <TouchableOpacity style={{marginLeft: 'auto'}} onPress={onDelete}>
@@ -212,7 +229,13 @@ const ProfileBlockItem = ({user, onDelete}: {user: User; onDelete:()=>void}) => 
   );
 };
 
-const ProfileListItem = ({user, onSelect}: {user: User; onSelect:()=>void}) => {
+const ProfileListItem = ({
+  user,
+  onSelect,
+}: {
+  user: User;
+  onSelect: () => void;
+}) => {
   return (
     <View
       style={{
@@ -246,4 +269,4 @@ const ProfileListItem = ({user, onSelect}: {user: User; onSelect:()=>void}) => {
   );
 };
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

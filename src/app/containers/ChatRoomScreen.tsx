@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -13,21 +13,20 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import firestore from '@react-native-firebase/firestore';
 import {Message} from '../types';
-import {AuthenticationContext} from '../contexts/AuthContextProvider';
 import moment from 'moment';
-import { useSelector } from 'react-redux';
-import { loggedUserSelector } from '../store/loggedUser/selectors';
+import {useSelector} from 'react-redux';
+import {loggedUserSelector} from '../store/loggedUser/selectors';
 
 const ChatRoomScreen = ({navigation, route}: any) => {
   const user = useSelector(loggedUserSelector);
   const {chat} = route.params;
   const chatSnduser =
     chat.users[0].pk === user.pk ? chat.users[1] : chat.users[0];
-  console.log(chat)
-  const avatarUrl =  'https://cdn.pixabay.com/photo/2017/07/18/23/54/peasants-2517476__340.jpg';
+  console.log(chat);
+  const avatarUrl =
+    'https://cdn.pixabay.com/photo/2017/07/18/23/54/peasants-2517476__340.jpg';
   const [messages, setMessages] = useState<any[]>([]);
   const [message, setMessage] = useState('');
-  const [inittializing, setInitializing] = useState(true);
   const isMyMessage = (message: Message): boolean => {
     return message.userRef === user.pk;
   };
@@ -57,22 +56,20 @@ const ChatRoomScreen = ({navigation, route}: any) => {
     if (new Date(a.createdAt) > new Date(b.createdAt)) return 1;
     return 0;
   };
-  
+
   const messagesQuery = firestore()
     .collection('messages')
     .where('chatRef', '==', chat.id);
   useEffect(() => {
-      messagesQuery.onSnapshot(snapshot => {
-        setMessages(
-          snapshot.docs.map(change => ({
-            ...change.data(),
-            id: change.id,
-          })),
-        );
-        
-      });
+    messagesQuery.onSnapshot(snapshot => {
+      setMessages(
+        snapshot.docs.map(change => ({
+          ...change.data(),
+          id: change.id,
+        })),
+      );
+    });
   }, []);
-
 
   return (
     <View style={{height: '100%'}}>
