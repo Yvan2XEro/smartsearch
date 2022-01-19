@@ -29,22 +29,23 @@ const RecModal = ({
   const [snackbarMessage, setSnackbarMessage] = React.useState('');
   const [success, setSucess] = React.useState(true);
 
-  const query = firestore().collection('users');
+  const query = firestore().collection('users').orderBy('email');
   const user = useSelector(({loggedUser}: any) => loggedUser);
 
   const handleFetch = (text: string) => {
     query
-      .where('email', '==', text)
-      .get()
-      .then(snapshot => {
-        setFetchedUsers(
-          snapshot.docs.map<User>(item => ({
-            ...item.data(),
-            displayName: item.data().displayName,
-            email: item.data().email,
-          })),
-        );
-      });
+        .startAt(text)
+        .endAt(text + '~')
+        .get()
+        .then(snapshot => {
+          setFetchedUsers(
+            snapshot.docs.map<User>(item => ({
+              ...item.data(),
+              displayName: item.data().displayName,
+              email: item.data().email,
+            })),
+          );
+        });
   };
 
   const handleRecomandation = async () => {
@@ -89,13 +90,10 @@ const RecModal = ({
               justifyContent: 'space-between',
             }}>
             <TextInput
-              value={input}
-              onChangeText={text => setInput(text)}
-              onSubmitEditing={() => handleFetch(input)}
+              onChangeText={handleFetch}
               placeholder="Search users(email) or groups..."
             />
             <Ionicons
-              onPress={() => handleFetch(input)}
               style={{marginRight: 10}}
               name="ios-search"
               size={23}
@@ -202,7 +200,7 @@ const ProfileBlockItem = ({user, onDelete}: {user: User; onDelete:()=>void}) => 
         style={{alignSelf: 'center'}}
         size={30}
         source={{
-          uri: user.photoURL,
+          uri: user.photoUrl,
         }}
       />
       <Text style={{fontSize: 12, textAlign: 'center'}}>
@@ -227,7 +225,7 @@ const ProfileListItem = ({user, onSelect}: {user: User; onSelect:()=>void}) => {
         <Avatar.Image
           size={30}
           source={{
-            uri: user.photoURL,
+            uri: user.photoUrl,
           }}
         />
         <View style={{marginLeft: 5}}>

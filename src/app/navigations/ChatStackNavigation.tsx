@@ -4,6 +4,7 @@ import { View, Text } from 'react-native'
 import AppHeader from '../components/AppHeader'
 import ChatRoomScreen from '../containers/ChatRoomScreen'
 import ChatsListScreen from '../containers/ChatsListScreen'
+import SearchUserScreen from '../containers/SearchUserScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -26,6 +27,13 @@ const ChatStackNavigation = () => {
         component={ChatRoomScreen}
         options={{
           title: 'Chat Room',
+        }}
+      />
+      <Stack.Screen
+        name="SearchUser"
+        component={SearchUserScreen}
+        options={{
+          title: 'Search for user',
         }}
       />
     </Stack.Navigator>

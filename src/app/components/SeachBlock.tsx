@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -41,9 +41,9 @@ const SearchBlock: React.FC<IProps> = ({
   onSelectItem,
   navigation,
 }) => {
-  const [showFiltersBlock, setShowFiltersBlock] = useState(false);
-  const [fastInputQuery, setFastInputQuery] = useState(value);
-  const [params, setParams] = useState({
+  const [showFiltersBlock, setShowFiltersBlock] = React.useState(false);
+  const [fastInputQuery, setFastInputQuery] = React.useState(value);
+  const [params, setParams] = React.useState({
     title: '',
     publicationName: '',
     topicalCollection: '',
@@ -58,7 +58,7 @@ const SearchBlock: React.FC<IProps> = ({
     keyWords: '',
   });
 
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = React.useState(false);
 
   const handleSumitQuery = () => {
     Keyboard.dismiss();
@@ -78,6 +78,11 @@ const SearchBlock: React.FC<IProps> = ({
     } else return fastInputQuery;
     return q;
   };
+
+  const inputRef= React.useRef<RnTextInput>(null);
+  React.useLayoutEffect(() => {
+    inputRef.current?.focus();
+  }, [inputRef.current]);
 
   return (
     <View>
@@ -102,10 +107,11 @@ const SearchBlock: React.FC<IProps> = ({
             style={{marginTop: 10}}
           />
           <RnTextInput
+            ref={inputRef}
             placeholder="Fast Search Here..."
             onChangeText={text => setFastInputQuery(text)}
             value={fastInputQuery}
-            autoFocus={true}
+            // autoFocus={true}
             onTouchCancel={() => setShowFiltersBlock(false)}
             onSubmitEditing={handleSumitQuery}
             style={styles.searchBar}

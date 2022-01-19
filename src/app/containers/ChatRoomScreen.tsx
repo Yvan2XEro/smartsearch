@@ -19,9 +19,10 @@ import moment from 'moment';
 const ChatRoomScreen = ({navigation, route}: any) => {
   const {user} = useContext(AuthenticationContext);
   const {chat} = route.params;
-  const avatarUrl = chat.user.photoURL
-    ? chat.user.photoURL
-    : 'https://cdn.pixabay.com/photo/2017/07/18/23/54/peasants-2517476__340.jpg';
+  const chatSnduser =
+    chat.users[0].pk === user.uid ? chat.users[1] : chat.users[0];
+  console.log(chat)
+  const avatarUrl =  'https://cdn.pixabay.com/photo/2017/07/18/23/54/peasants-2517476__340.jpg';
   const [messages, setMessages] = useState<any[]>([]);
   const [message, setMessage] = useState('');
   const [inittializing, setInitializing] = useState(true);
@@ -59,31 +60,18 @@ const ChatRoomScreen = ({navigation, route}: any) => {
     .collection('messages')
     .where('chatRef', '==', chat.id);
   useEffect(() => {
-    if (!inittializing) {
       messagesQuery.onSnapshot(snapshot => {
-        snapshot.docChanges().forEach(change => {
-          if (change.type == 'added' && change.doc.data().chatRef === chat.id) {
-            const data: any = {
-              ...change.doc.data(),
-              id: change.doc.id,
-              createdAt: formatDate(change.doc.data().createdAt),
-            };
-            setMessages([...messages, data]);
-          }
-        });
-      });
-    } else {
-      setInitializing(false);
-      messagesQuery.get().then(docSnapshot => {
         setMessages(
-          docSnapshot.docs.map(change => ({
+          snapshot.docs.map(change => ({
             ...change.data(),
             id: change.id,
           })),
         );
+        
       });
-    }
   }, []);
+
+
   return (
     <View style={{height: '100%'}}>
       <View style={styles.header}>
@@ -104,7 +92,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
                 textTransform: 'uppercase',
                 textAlign: 'center',
               }}>
-              {chat.user.displayName}
+              {chatSnduser.displayName}
             </Text>
             <Text style={{textAlign: 'center', fontSize: 12}}>Online</Text>
           </View>

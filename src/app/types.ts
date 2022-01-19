@@ -8,7 +8,7 @@ export type User = {
     email: string,
     displayName: string,
     createdAt?: string
-    photoURL?: string
+    photoUrl?: string
 }
 
 export type Message = {

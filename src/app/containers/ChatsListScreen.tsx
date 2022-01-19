@@ -3,7 +3,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -17,49 +16,14 @@ import {AuthenticationContext} from '../contexts/AuthContextProvider';
 const ChatsListScreen = ({navigation}: any) => {
   const {user} = React.useContext(AuthenticationContext);
   const [chats, setChats] = React.useState<any[]>([]);
-  const [buildedChats, setBuildedChats] = React.useState<any[]>([]);
-
-  const sndChatUser = (chat: any): string => {
-    return chat.usersRefs[0] == user.uid
-      ? chat.usersRefs[1]
-      : chat.usersRefs[0];
-  };
-
-  const fetchUsers = async (usersIds: string[]) => {
-    await firestore()
-      .collection('users')
-      .where('pk', 'in', usersIds)
-      .get()
-      .then(querySnapshot => {
-        const users = querySnapshot.docs.map(u => u.data());
-        // console.log('USERS:', users);
-        let bChats: any[] = [];
-        chats.forEach(chat => {
-          const u = users.find(({pk}) => pk == chat.user);
-          bChats.push({...chat, user: u});
-        });
-        console.log(bChats);
-        // console.log(chats);
-        setBuildedChats(bChats);
-      });
-  };
 
   React.useEffect(() => {
     const subscriber = firestore()
       .collection('chats')
       .where('usersRefs', 'array-contains', user.uid)
       .get()
-      .then(async querySnapshot => {
-        await fetchUsers(
-          querySnapshot.docs.map(item => sndChatUser(item.data())),
-        );
-        setChats(
-          querySnapshot.docs.map(item => ({
-            ...item.data(),
-            id: item.id,
-            user: sndChatUser(item.data()),
-          })),
-        );
+      .then(snapshot=>{
+        setChats(snapshot.docs.map(item=>({...item.data(), id: item.id})))
       });
   }, []);
 
@@ -85,13 +49,16 @@ const ChatsListScreen = ({navigation}: any) => {
             <MaterialIcons name="notifications" size={25} />
           </TouchableOpacity>
         </View>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <TouchableOpacity
+          style={{flexDirection: 'row', alignItems: 'center'}}
+          onPress={() => navigation.replace('SearchUser')}>
           <Ionicons name="ios-search" size={25} />
-          <TextInput
-            placeholder="Search for user..."
-            keyboardType="web-search"
-          />
-        </View>
+          <View>
+            <Text style={{marginLeft: 10, marginVertical: 10}}>
+              Search for user...
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
       <View style={{backgroundColor: '#fff'}}>
         <Text style={{textTransform: 'uppercase', marginLeft: 10}}>
@@ -112,11 +79,13 @@ const ChatsListScreen = ({navigation}: any) => {
       </View>
       <View style={{backgroundColor: '#fefefe'}}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {buildedChats.map((chat, i) => (
+          {chats.map((chat, i) => (
             <ChatItem
               key={i}
               onPress={() => navigation.navigate('ChatRoom', {chat})}
-              user={chat.user}
+              user={
+                chat.users[0].pk === user.uid ? chat.users[1] : chat.users[0]
+              }
             />
           ))}
         </ScrollView>
