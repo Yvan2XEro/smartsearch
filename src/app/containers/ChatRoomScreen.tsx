@@ -79,7 +79,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
             alignItems: 'center',
           }}>
           <Ionicons
-            onPress={() => navigation.goBack()}
+            onPress={() => navigation.replace('ChatsList')}
             name="arrow-back"
             size={30}
           />
