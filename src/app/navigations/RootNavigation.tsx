@@ -14,6 +14,8 @@ import auth from '@react-native-firebase/auth';
 import AuthStackNavigation from './AuthStackNavigation';
 import SharedScreen from '../containers/SharedScreen';
 import { updateUserAction } from '../store/loggedUser/actions';
+import firestore from '@react-native-firebase/firestore'
+import { User } from '../types';
 
 const Drawer = createDrawerNavigator();
 export default function RootNavigation() {
@@ -22,7 +24,9 @@ export default function RootNavigation() {
   React.useEffect(() => {
     dispatch(loadDocsAction());
     dispatch(loadResultsAction());
-    dispatch(updateUserAction(user));
+    firestore().collection('users').doc(user.uid).get().then(snapshot=>{
+      dispatch(updateUserAction(snapshot.data() as User));
+    });
   }, []);
 
   const [initializing, setInitializing] = React.useState(true);
@@ -31,7 +35,7 @@ export default function RootNavigation() {
   function onAuthStateChanged(user: any) {
     setUser(user);
     if (user)
-      dispatch(updateUserAction(user));
+      // dispatch(updateUserAction(user));
     if (initializing) setInitializing(false);
   }
   React.useEffect(() => {

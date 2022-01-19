@@ -57,7 +57,7 @@ const RecModal = ({
             .collection('recommandations')
             .add({
               userDestRef: u.pk,
-              userSenderRef: user.uid,
+              userSenderRef: user.pk,
               crearedAt: new Date().toISOString(),
               document: doc,
             })

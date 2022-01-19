@@ -25,10 +25,7 @@ const DrawerContent = ({ navigation }: { navigation: any }) => {
         }}>
         <Avatar.Image
           source={{
-            uri: user.photoURL
-              ? user.photoURL
-              : 'https://cdn.pixabay.com/photo/2016/04/01/10/11/avatar-1299805__340.png',
-          }}
+            uri: user.photoUrl }}
           size={50}
           style={{backgroundColor: '#fff'}}
         />

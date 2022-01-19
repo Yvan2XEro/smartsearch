@@ -24,17 +24,17 @@ const SearchUserScreen = ({navigation}:any) => {
     }
     const handleInitChat = async (u:User)=> {
         await chatsQuery
-          .where('usersRefs', 'array-contains-any', [u.pk, user.uid])
+          .where('usersRefs', 'array-contains-any', [u.pk, user.pk])
           .get()
           .then(async snapshot => {
             if (snapshot.docs.length == 0) {
                 await chatsQuery
                   .add({
-                    usersRefs: [user.uid, u.pk],
+                    usersRefs: [user.pk, u.pk],
                     createdAt: new Date().toISOString(),
                     users: [
                       {
-                        pk: user.uid,
+                        pk: user.pk,
                         displayName: user.displayName,
                         email: user.email,
                         photoUrl:
@@ -80,7 +80,7 @@ const SearchUserScreen = ({navigation}:any) => {
           </TouchableOpacity>
         </View>
         <ScrollView>
-          {users.filter(u=>u.pk!=user.uid).map((u, i) => (
+          {users.filter(u=>u.pk!=user.pk).map((u, i) => (
             <TouchableOpacity onPress={()=>handleInitChat(u)} key={i} style={{flexDirection: 'row', alignItems: 'center', paddingHorizontal: 15, borderWidth: 0.3, margin:5, borderRadius: 5}}>
               <Avatar.Image source={{uri: u.photoUrl}} size={30} />
               <View style={{marginLeft: 10}}>

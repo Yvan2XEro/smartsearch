@@ -15,24 +15,26 @@ import firestore from '@react-native-firebase/firestore';
 import {Message} from '../types';
 import {AuthenticationContext} from '../contexts/AuthContextProvider';
 import moment from 'moment';
+import { useSelector } from 'react-redux';
+import { loggedUserSelector } from '../store/loggedUser/selectors';
 
 const ChatRoomScreen = ({navigation, route}: any) => {
-  const {user} = useContext(AuthenticationContext);
+  const {user} = useSelector(loggedUserSelector);
   const {chat} = route.params;
   const chatSnduser =
-    chat.users[0].pk === user.uid ? chat.users[1] : chat.users[0];
+    chat.users[0].pk === user.pk ? chat.users[1] : chat.users[0];
   console.log(chat)
   const avatarUrl =  'https://cdn.pixabay.com/photo/2017/07/18/23/54/peasants-2517476__340.jpg';
   const [messages, setMessages] = useState<any[]>([]);
   const [message, setMessage] = useState('');
   const [inittializing, setInitializing] = useState(true);
   const isMyMessage = (message: Message): boolean => {
-    return message.userRef === user.uid;
+    return message.userRef === user.pk;
   };
   const handleSendMessage = async () => {
     if (message.trim().length > 0) {
       const data = {
-        userRef: user.uid,
+        userRef: user.pk,
         chatRef: chat.id,
         received: false,
         readed: false,

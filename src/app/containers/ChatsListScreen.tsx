@@ -11,21 +11,21 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import firestore from '@react-native-firebase/firestore';
-import {AuthenticationContext} from '../contexts/AuthContextProvider';
+import { useSelector } from 'react-redux';
+import { loggedUserSelector } from '../store/loggedUser/selectors';
 
 const ChatsListScreen = ({navigation}: any) => {
-  const {user} = React.useContext(AuthenticationContext);
+  const user = useSelector(loggedUserSelector);
+
   const [chats, setChats] = React.useState<any[]>([]);
 
   React.useEffect(() => {
     const subscriber = firestore()
       .collection('chats')
-      .where('usersRefs', 'array-contains', user.uid)
-      .get()
-      .then(snapshot=>{
-        setChats(snapshot.docs.map(item=>({...item.data(), id: item.id})))
-      });
-  }, []);
+      .where('usersRefs', 'array-contains', user.pk)
+      .onSnapshot(snapshot=>setChats(snapshot.docs.map(item => ({...item.data(), id: item.id}))))
+      return subscriber
+  }, [user]);
 
   return (
     <View>
@@ -84,7 +84,7 @@ const ChatsListScreen = ({navigation}: any) => {
               key={i}
               onPress={() => navigation.navigate('ChatRoom', {chat})}
               user={
-                chat.users[0].pk === user.uid ? chat.users[1] : chat.users[0]
+                chat.users[0].pk === user.pk ? chat.users[1] : chat.users[0]
               }
             />
           ))}

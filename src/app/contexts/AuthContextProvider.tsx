@@ -44,7 +44,12 @@ const AuthContextProvider = ({children}:any) => {
           if (type !== GOOGLE) {
             const {email, password} = credential;
             setMethod(EMAIL_PASSWORD);
-            return await auth().signInWithEmailAndPassword(email, password);
+            return await auth().signInWithEmailAndPassword(email, password).then(()=>{
+              firestore().collection('users').where('email', '==', email).get().then(snapshot=>{
+                if (snapshot.docs.length>0)
+                  dispatch(updateUserAction(snapshot.docs[0].data() as User));
+              })
+            });
           } else {
             setMethod(GOOGLE);
             const {idToken} = await GoogleSignin.signIn();
@@ -56,9 +61,12 @@ const AuthContextProvider = ({children}:any) => {
                 pk: user.uid,
                 email: user.email || '',
                 displayName: user.displayName || '',
+                photoUrl: user.photoURL || 'https://cdn.pixabay.com/photo/2016/04/01/10/11/avatar-1299805__340.png',
                 createdAt: new Date().toISOString(),
               };
-              await writeUser(user.uid, u)
+              if(!(await firestore().doc('users/'+user.uid).get()).exists){
+                await writeUser(user.uid, u);
+              }
             dispatch(updateUserAction(u));
           });
           }
@@ -68,15 +76,19 @@ const AuthContextProvider = ({children}:any) => {
             const {email, password, displayName} = payload;
             return await auth().createUserWithEmailAndPassword(email, password).then(async({user})=>{
               if(user) {
-                await user.updateProfile({displayName}).then(async()=>{
-                  dispatch(updateUserAction({...reduxUser, displayName}));
-                })
-                await writeUser(user.uid, {
+                const u = {
                   pk: user.uid,
                   email: user.email || '',
                   displayName,
+                  photoUrl:
+                    'https://cdn.pixabay.com/photo/2016/04/01/10/11/avatar-1299805__340.png',
                   createdAt: new Date().toISOString(),
-                });
+                };
+                await user.updateProfile({displayName}).then(async()=>{
+                  dispatch(updateUserAction(u));
+                })
+                
+                await writeUser(user.uid, u);
               }
             });
           }
