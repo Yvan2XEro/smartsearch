@@ -74,7 +74,6 @@ const SearchUserScreen = ({navigation}:any) => {
           />
           <TouchableOpacity style={{marginLeft: 'auto'}}>
             <Ionicons
-              onPress={() => navigation.navigate('Search')}
               name="ios-search"
               size={25}
             />
