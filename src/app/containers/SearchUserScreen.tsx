@@ -13,7 +13,6 @@ const SearchUserScreen = ({ navigation }: any) => {
     const usersQuery = firestore().collection('users').orderBy("email")
     const chatsQuery = firestore().collection('chats');
     const user = useSelector(loggedUserSelector);
-    console.log("[][][]yooo", user)
     useEffect(() => {
         inputRef.current?.focus()
     }, [inputRef.current])

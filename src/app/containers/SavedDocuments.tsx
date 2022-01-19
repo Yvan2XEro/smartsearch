@@ -14,9 +14,7 @@ const SavedDocuments = ({ navigation }: { navigation: any }) => {
 
   const dispatch = useDispatch();
   const onDelete = useCallback(doc => {
-    console.log(docs.length);
     dispatch(deleteDocAction(doc));
-    console.log(docs.length);
     setSnackbarMessage('Deleted');
     setShowSnackbar(true);
   }, []);

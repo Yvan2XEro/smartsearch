@@ -13,6 +13,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import firestore from '@react-native-firebase/firestore';
 import { useSelector } from 'react-redux';
 import { loggedUserSelector } from '../store/loggedUser/selectors';
+import { User } from '../types';
 
 const ChatsListScreen = ({navigation}: any) => {
   const user = useSelector(loggedUserSelector);
@@ -84,7 +85,7 @@ const ChatsListScreen = ({navigation}: any) => {
               key={i}
               onPress={() => navigation.navigate('ChatRoom', {chat})}
               user={
-                chat.users[0].pk === user.pk ? chat.users[1] : chat.users[0]
+                chat.users[0].pk == user.pk ? chat.users[1] as User : chat.users[0] as User
               }
             />
           ))}
@@ -119,7 +120,7 @@ const OnlineItem = () => (
   </TouchableOpacity>
 );
 
-const ChatItem = ({user, onPress}: any) => (
+const ChatItem = ({user, onPress}: {user: User; onPress: any}) => (
   <TouchableOpacity
     style={{
       marginTop: 10,
@@ -133,14 +134,7 @@ const ChatItem = ({user, onPress}: any) => (
     }}
     onPress={onPress}>
     <View style={{flexDirection: 'row', alignItems: 'center'}}>
-      <Avatar.Image
-        source={{
-          uri: user.photoURL
-            ? user.photoURL
-            : 'https://cdn.pixabay.com/photo/2017/11/10/05/48/user-2935527__340.png',
-        }}
-        size={50}
-      />
+      <Avatar.Image source={{uri: user.photoUrl}} size={50} />
       <Text style={{marginLeft: 20, fontSize: 17}}>{user.displayName}</Text>
     </View>
   </TouchableOpacity>

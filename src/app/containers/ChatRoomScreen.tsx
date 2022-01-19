@@ -22,7 +22,6 @@ const ChatRoomScreen = ({navigation, route}: any) => {
   const {chat} = route.params;
   const chatSnduser =
     chat.users[0].pk === user.pk ? chat.users[1] : chat.users[0];
-  console.log(chat);
   const avatarUrl =
     'https://cdn.pixabay.com/photo/2017/07/18/23/54/peasants-2517476__340.jpg';
   const [messages, setMessages] = useState<any[]>([]);

@@ -61,7 +61,7 @@ const AuthContextProvider = ({children}:any) => {
                 pk: user.uid,
                 email: user.email || '',
                 displayName: user.displayName || '',
-                photoUrl: user.photoURL || 'https://cdn.pixabay.com/photo/2016/04/01/10/11/avatar-1299805__340.png',
+                photoUrl: user.photoURL || 'https://cdn.pixabay.com/photo/2017/11/10/05/48/user-2935527__340.png',
                 createdAt: new Date().toISOString(),
               };
               if(!(await firestore().doc('users/'+user.uid).get()).exists){
@@ -81,7 +81,7 @@ const AuthContextProvider = ({children}:any) => {
                   email: user.email || '',
                   displayName,
                   photoUrl:
-                    'https://cdn.pixabay.com/photo/2016/04/01/10/11/avatar-1299805__340.png',
+                    'https://cdn.pixabay.com/photo/2017/11/10/05/48/user-2935527__340.png',
                   createdAt: new Date().toISOString(),
                 };
                 await user.updateProfile({displayName}).then(async()=>{

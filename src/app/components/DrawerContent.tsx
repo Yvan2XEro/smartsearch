@@ -16,6 +16,7 @@ const DrawerContent = ({ navigation }: { navigation: any }) => {
   const user = useSelector(({loggedUser}:any)=>loggedUser);
   return (
     <DrawerContentScrollView>
+      {user && <>
       <View
         style={{
           flexDirection: 'row',
@@ -77,6 +78,7 @@ const DrawerContent = ({ navigation }: { navigation: any }) => {
           onPress={logout}
         />
       </View>
+      </>}
     </DrawerContentScrollView>
   );
 }

@@ -15,7 +15,6 @@ export const saveNewQueryResultAction = ({ results, buildedQuery }: any) => asyn
         data: results,
     }
     if (pushSearchResultsIfNotExists(queries, data)){
-        console.log("EN COURS...")
         await localStorage.set('queries', JSON.stringify(queries));
     }
     return dispatch({
