@@ -33,19 +33,20 @@ const RecModal = ({
   const user = useSelector(({loggedUser}: any) => loggedUser);
 
   const handleFetch = (text: string) => {
-    query
-        .startAt(text)
-        .endAt(text + '~')
-        .get()
-        .then(snapshot => {
-          setFetchedUsers(
-            snapshot.docs.map<User>(item => ({
-              ...item.data(),
-              displayName: item.data().displayName,
-              email: item.data().email,
-            })),
-          );
-        });
+        if (text.length > 0)
+          query
+            .startAt(text)
+            .endAt(text + '~')
+            .get()
+            .then(snapshot => {
+              setFetchedUsers(
+                snapshot.docs.map<User>(item => ({
+                  ...item.data(),
+                  displayName: item.data().displayName,
+                  email: item.data().email,
+                })),
+              );
+            });
   };
 
   const handleRecomandation = async () => {

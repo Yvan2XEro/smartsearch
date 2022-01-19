@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
+import { ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import firestore from '@react-native-firebase/firestore'
 import { User } from '../types';
@@ -17,6 +17,7 @@ const SearchUserScreen = ({navigation}:any) => {
         inputRef.current?.focus()
     }, [inputRef.current])
     const handleSearch = async(text:string) => {
+        if (text.length>0)
         await usersQuery.startAt(text).endAt(text+"~").get().then(snapshot=>{
             setUsers(snapshot.docs.map(item=>({...item.data()} as User)))
         });
@@ -27,7 +28,6 @@ const SearchUserScreen = ({navigation}:any) => {
           .get()
           .then(async snapshot => {
             if (snapshot.docs.length == 0) {
-                // console.log("ICICICIICIC")
                 await chatsQuery
                   .add({
                     usersRefs: [user.uid, u.pk],
@@ -79,7 +79,7 @@ const SearchUserScreen = ({navigation}:any) => {
             />
           </TouchableOpacity>
         </View>
-        <View>
+        <ScrollView>
           {users.filter(u=>u.pk!=user.uid).map((u, i) => (
             <TouchableOpacity onPress={()=>handleInitChat(u)} key={i} style={{flexDirection: 'row', alignItems: 'center', paddingHorizontal: 15, borderWidth: 0.3, margin:5, borderRadius: 5}}>
               <Avatar.Image source={{uri: u.photoUrl}} size={30} />
@@ -90,7 +90,7 @@ const SearchUserScreen = ({navigation}:any) => {
               <Ionicons style={{marginLeft: 'auto'}} color="#000" name="arrow-forward" size={25} />
             </TouchableOpacity>
           ))}
-        </View>
+        </ScrollView>
       </View>
     );
 }
