@@ -19,7 +19,7 @@ import { useSelector } from 'react-redux';
 import { loggedUserSelector } from '../store/loggedUser/selectors';
 
 const ChatRoomScreen = ({navigation, route}: any) => {
-  const {user} = useSelector(loggedUserSelector);
+  const user = useSelector(loggedUserSelector);
   const {chat} = route.params;
   const chatSnduser =
     chat.users[0].pk === user.pk ? chat.users[1] : chat.users[0];

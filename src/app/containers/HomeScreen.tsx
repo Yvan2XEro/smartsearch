@@ -17,7 +17,6 @@ import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-m
 const HomeScreen = ({ navigation }: { navigation: any }) => {
   const savedDocs = useSelector(docsSelector);
   const user = useSelector(({loggedUser}: any) => loggedUser);
-  console.log("yooo",user)
   const [recommandations, setRecommandations] = React.useState<Recommandation[]>([])
   const recommandationsQuery = firestore().collection('recommandations');
   React.useLayoutEffect(() =>{
