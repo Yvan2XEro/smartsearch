@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
-  ScrollView,
+  FlatList,
   StyleSheet,
   Text,
   TextInput,
@@ -42,11 +42,14 @@ const ChatRoomScreen = ({navigation, route}: any) => {
       };
       setMessage('');
 
-      await firestore().collection('messages').add(data);
+      await firestore().collection('messages').add(data).then(()=>{
+        listRef.current?.scrollToEnd()
+      });
     }
   };
+
   const formatDate = (date: string): string => {
-    return moment(date).format('DD-MM-YYYY h:mm:ss');
+    return moment(date).format('DD-MM-YYYY h:mm');
   };
 
   const compareMsg = (a: any, b: any) => {
@@ -69,6 +72,8 @@ const ChatRoomScreen = ({navigation, route}: any) => {
       );
     });
   }, []);
+
+  const listRef = useRef<FlatList>(null)
 
   return (
     <View style={{height: '100%'}}>
@@ -100,15 +105,18 @@ const ChatRoomScreen = ({navigation, route}: any) => {
         </View>
       </View>
       <View style={{marginTop: 5, paddingBottom: 115}}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {messages.sort(compareMsg).map((m, i) => (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          ref={listRef}
+          data={messages.sort(compareMsg)}
+          keyExtractor={({id}, index) => id || '' + index}
+          renderItem={({item}: {item: Message}) => (
             <TouchableOpacity
               style={[
                 styles.item,
-                isMyMessage(m) ? styles.rightItem : styles.leftItem,
-              ]}
-              key={i}>
-              {!isMyMessage(m) && (
+                isMyMessage(item) ? styles.rightItem : styles.leftItem,
+              ]}>
+              {!isMyMessage(item) && (
                 <Avatar.Image
                   style={[styles.image, {left: -10}]}
                   source={{
@@ -118,12 +126,12 @@ const ChatRoomScreen = ({navigation, route}: any) => {
                 />
               )}
               <View style={styles.text}>
-                <Text style={{color: 'black'}}>{m.content}</Text>
-                <Text style={{fontSize: 8}}>{m.createdAt}</Text>
+                <Text style={{color: 'black'}}>{item.content}</Text>
+                <Text style={{fontSize: 8}}>{formatDate(item.createdAt)}</Text>
               </View>
             </TouchableOpacity>
-          ))}
-        </ScrollView>
+          )}
+        />
       </View>
       <View
         style={{

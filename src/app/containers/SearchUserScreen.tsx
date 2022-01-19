@@ -39,15 +39,11 @@ const SearchUserScreen = ({ navigation }: any) => {
                       .then(ref =>
                         ref
                           .get()
-                          .then(chat =>{
-                              console.log(
-                                'yoooooooooooooooooooooooooo',
-                                chat.data(),
-                              );
+                          .then(chat =>
                               navigation.navigate('ChatRoom', {
                                 chat: {...chat.data(), id: chat.id},
-                              });
-                          }),
+                              })
+                          ),
                       );
                 } else {
                     navigation.navigate('ChatRoom', {

@@ -20,8 +20,8 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
   const [recommandations, setRecommandations] = React.useState<Recommandation[]>([])
   const recommandationsQuery = firestore().collection('recommandations');
   React.useLayoutEffect(() =>{
-    recommandationsQuery.where('userDestRef', '==', 'user.pk')
-    .get().then(recSnapshots=>{
+    recommandationsQuery.where('userDestRef', '==', user.pk)
+    .onSnapshot(recSnapshots=>{
       setRecommandations(
         recSnapshots.docs.map(
           item => ({...item.data(), id: item.id} as Recommandation),
