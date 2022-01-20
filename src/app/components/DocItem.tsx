@@ -14,11 +14,13 @@ const DocItem = ({
   onPress,
   onSave,
   onDelete,
+  onCite,
   onRecomand
 }: {
   doc: any;
   onPress: any;
   onSave?: any;
+  onCite?:()=>void,
   onDelete?: any;
   onRecomand?: any
 }) => {
@@ -61,7 +63,10 @@ const DocItem = ({
           </MenuTrigger>
 
           <MenuOptions>
-            <MenuOption onSelect={() => {}} text="Cite" />
+            {onCite && <MenuOption
+              onSelect={onCite}
+              text="Cite"
+            />}
             {onSave && (
               <MenuOption onSelect={onSave}>
                 <Text style={{color: 'red'}}>Save</Text>
@@ -72,7 +77,9 @@ const DocItem = ({
                 <Text style={{color: 'red'}}>Delete</Text>
               </MenuOption>
             )}
-            {onRecomand&&<MenuOption onSelect={onRecomand} text="Recommand" />}
+            {onRecomand && (
+              <MenuOption onSelect={onRecomand} text="Recommand" />
+            )}
           </MenuOptions>
         </Menu>
       </View>

@@ -16,6 +16,7 @@ import { saveDocAction } from '../store/docs/actions';
 import AppSnackbar, { appSnackbarStyles } from '../components/AppSnackbar';
 import { saveNewQueryResultAction } from '../store/queriesResults/actions';
 import RecModal from '../components/RecModal';
+import CiteDialog from '../components/CiteDialog';
 
 const SearchScreen = ({
   onDataChange,
@@ -30,6 +31,7 @@ const SearchScreen = ({
   const [isLoading, setLoading] = useState(false);
   const [showSaveQueryButton, setShowSaveQueryButton] = useState(false);
   const [buildedQuery, setbuildedQuery] = useState('');
+  const [selectedDoi, setSelectedDoi] = useState(null);
   
   // Pour la modale de recommandation
   const [recomandedDoc, setRecomandedDoc] = useState(null);
@@ -151,6 +153,7 @@ const SearchScreen = ({
               doc={item}
               onSave={() => onSaveDoc(item)}
               onRecomand={() => setRecomandedDoc(item)}
+              onCite={() => setSelectedDoi(item.doi)}
               onPress={() => {
                 navigation.navigate(
                   'SearchStack' as never,
@@ -191,16 +194,15 @@ const SearchScreen = ({
         <RecModal
           doc={recomandedDoc}
           onDismiss={() => setRecomandedDoc(null)}
-          onFinish={(succes:boolean)=>{
+          onFinish={(succes: boolean) => {
             setShowSnackbar(true);
-            if (succes)
-              setSnackbarMessage("SUCCESS!");
-            else
-              setSnackbarMessage("An error occcured!")
+            if (succes) setSnackbarMessage('SUCCESS!');
+            else setSnackbarMessage('An error occcured!');
             setRecomandedDoc(null);
           }}
         />
       )}
+      <CiteDialog doi={selectedDoi} onDismiss={() => setSelectedDoi(null)} />
     </SafeAreaView>
   );
 };

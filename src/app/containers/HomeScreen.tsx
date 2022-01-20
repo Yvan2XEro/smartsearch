@@ -20,6 +20,7 @@ import { AuthenticationContext } from '../contexts/AuthContextProvider';
 import RecModal from '../components/RecModal';
 import AppSnackbar, { appSnackbarStyles } from '../components/AppSnackbar';
 import moment from 'moment';
+import CiteDialog from '../components/CiteDialog';
 
 const HomeScreen = ({ navigation }: { navigation: any }) => {
   const savedDocs = useSelector(docsSelector);
@@ -32,6 +33,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
   // Pour la popup de notification!
   const [showSnackbar, setShowSnackbar] = React.useState(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState('');
+  const [selectedDoi, setSelectedDoi] = React.useState(null)
 
   const recommandationsQuery = firestore().collection('recommandations');
   React.useLayoutEffect(() => {
@@ -125,7 +127,14 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
                           </MenuTrigger>
 
                           <MenuOptions>
-                            <MenuOption onSelect={() => setSelectedRec(item)} text="Details" />
+                            <MenuOption
+                              onSelect={() => setSelectedRec(item)}
+                              text="Details"
+                            />
+                            <MenuOption
+                              onSelect={() => setSelectedDoi(item.document.doi)}
+                              text="Cite"
+                            />
                             <MenuOption
                               onSelect={() => setRecomandedDoc(item)}
                               text="Recomand"
@@ -177,9 +186,11 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
         onDismiss={() => setShowSnackbar(false)}
         message={snackbarMessage}
       />
-      {
-        <DetailsRecModal rec={selectedRec} onDismiss={()=>setSelectedRec(null)}/>
-      }
+      <DetailsRecModal
+        rec={selectedRec}
+        onDismiss={() => setSelectedRec(null)}
+      />
+      <CiteDialog doi={selectedDoi} onDismiss={() => setSelectedDoi(null)} />
     </>
   );
 }
