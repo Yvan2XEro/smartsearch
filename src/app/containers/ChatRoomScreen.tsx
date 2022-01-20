@@ -148,6 +148,8 @@ const ChatRoomScreen = ({navigation, route}: any) => {
         <TextInput
           value={message}
           onChangeText={text => setMessage(text)}
+          multiline={true}
+          numberOfLines={2}
           style={[styles.textInput]}
           placeholder="Type message..."
         />
