@@ -13,21 +13,24 @@ import { docsSelector } from '../store/docs/selectors';
 import firestore from '@react-native-firebase/firestore'
 import { Recommandation } from '../types';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
+import { AuthenticationContext } from '../contexts/AuthContextProvider';
 
 const HomeScreen = ({ navigation }: { navigation: any }) => {
   const savedDocs = useSelector(docsSelector);
-  const user = useSelector(({loggedUser}: any) => loggedUser);
+  const reduxUser = useSelector(({loggedUser}: any) => loggedUser);
+  const {user} = React.useContext(AuthenticationContext)
   const [recommandations, setRecommandations] = React.useState<Recommandation[]>([])
   const recommandationsQuery = firestore().collection('recommandations');
   React.useLayoutEffect(() =>{
-    recommandationsQuery.where('userDestRef', '==', user.pk)
-    .onSnapshot(recSnapshots=>{
-      setRecommandations(
-        recSnapshots.docs.map(
-          item => ({...item.data(), id: item.id} as Recommandation),
-        ),
-      );
-    });
+    recommandationsQuery
+      .where('userDestRef', '==', reduxUser?reduxUser.pk:user.uid)
+      .onSnapshot(recSnapshots => {
+        setRecommandations(
+          recSnapshots.docs.map(
+            item => ({...item.data(), id: item.id} as Recommandation),
+          ),
+        );
+      });
   },[])
 
   const handleDelete = (rec: Recommandation) => {

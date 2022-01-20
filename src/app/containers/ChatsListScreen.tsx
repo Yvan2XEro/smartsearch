@@ -128,8 +128,18 @@ const ChatItem = ({user, onPress}: {user: User; onPress: any}) => (
       borderColor: '#000',
       padding: 5,
       backgroundColor: '#fcfcfc',
-      borderRadius: 3,
+      borderBottomLeftRadius: 8,
+      borderTopLeftRadius: 8,
+      borderRadius: 5,
       width: '98%',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 7,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
       alignSelf: 'center',
     }}
     onPress={onPress}>

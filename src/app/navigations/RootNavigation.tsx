@@ -21,16 +21,22 @@ const Drawer = createDrawerNavigator();
 export default function RootNavigation() {
   // Initialiser les states redux
   const dispatch = useDispatch();
+  const {setUser, user} = React.useContext(AuthenticationContext);
   React.useEffect(() => {
     dispatch(loadDocsAction());
     dispatch(loadResultsAction());
-    firestore().collection('users').doc(user.uid).get().then(snapshot=>{
-      dispatch(updateUserAction(snapshot.data() as User));
-    });
+    if (user)
+    firestore()
+      .collection('users')
+      .doc(user.uid)
+      .get()
+      .then(snapshot => {
+        dispatch(updateUserAction(snapshot.data() as User));
+      });
   }, []);
 
+  console.log(user)
   const [initializing, setInitializing] = React.useState(true);
-  const {setUser, user} = React.useContext(AuthenticationContext);
 
   function onAuthStateChanged(user: any) {
     setUser(user);
@@ -79,5 +85,6 @@ export default function RootNavigation() {
       />
     </Drawer.Navigator>
   );
-  else return <AuthStackNavigation/>;
+  else 
+  return <AuthStackNavigation/>;
 }
