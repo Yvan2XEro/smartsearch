@@ -37,16 +37,18 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
 
   const recommandationsQuery = firestore().collection('recommandations');
   React.useLayoutEffect(() => {
-    recommandationsQuery
-      .where('userDestRef', '==', reduxUser ? reduxUser.pk : user.uid)
-      .onSnapshot(recSnapshots => {
-        setRecommandations(
-          recSnapshots.docs.map(
-            item => ({...item.data(), id: item.id} as Recommandation),
-          ),
-        );
-      });
-  }, []);
+    if (!!reduxUser || !!user) {
+      console.log('ICICIICICICICIICICIC', reduxUser);
+      recommandationsQuery
+        .where('userDestRef', '==', reduxUser ? reduxUser.pk : user.uid)
+        .onSnapshot(recSnapshots => {
+          setRecommandations(
+            recSnapshots.docs.map(
+              item => ({...item.data(), id: item.id} as Recommandation),
+            ),
+          );
+        });}
+  }, [user, reduxUser]);
 
   const handleDelete = (rec: Recommandation) => {
     recommandationsQuery

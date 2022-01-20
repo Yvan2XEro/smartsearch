@@ -40,7 +40,7 @@ export default function RootNavigation() {
   function onAuthStateChanged(user: any) {
     setUser(user);
     if (user)
-      dispatch(updateUserAction(user as User));
+      dispatch(updateUserAction({...user, pk: user.uid} as User));
     if (initializing) setInitializing(false);
   }
   React.useEffect(() => {

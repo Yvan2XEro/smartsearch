@@ -21,11 +21,13 @@ const ChatsListScreen = ({navigation}: any) => {
   const [chats, setChats] = React.useState<any[]>([]);
 
   React.useEffect(() => {
+    if (!!user) {
     const subscriber = firestore()
       .collection('chats')
       .where('usersRefs', 'array-contains', user.pk)
       .onSnapshot(snapshot=>setChats(snapshot.docs.map(item => ({...item.data(), id: item.id}))))
       return subscriber
+    }
   }, [user]);
 
   return (
