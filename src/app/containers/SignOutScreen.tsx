@@ -110,8 +110,11 @@ const SignOutScreen = ({navigation}: any) => {
             marginTop: 10,
             alignSelf: 'flex-end',
           }}>
-          <Text>Sign in</Text>
-          <MaterialIcons name="navigate-next" size={20} />
+          <Text style={{textAlign: 'center', fontSize: 12}}>
+            Already have google or other account?{' '}
+            <Text style={{color: '#000'}}>Sign in</Text>
+          </Text>
+          <MaterialIcons name="navigate-next" size={20} color="#000" />
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

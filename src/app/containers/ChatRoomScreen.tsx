@@ -138,11 +138,11 @@ const ChatRoomScreen = ({navigation, route}: any) => {
           position: 'absolute',
           bottom: 0,
           marginBottom: 0,
-          padding: 3,
-          paddingBottom: 10,
-          backgroundColor: 'white',
+          padding: 6,
+          paddingBottom: 5,
+          // backgroundColor: 'gray',
           flexDirection: 'row',
-          justifyContent: 'space-between',
+          justifyContent: 'center',
           width: '100%',
         }}>
         <TextInput

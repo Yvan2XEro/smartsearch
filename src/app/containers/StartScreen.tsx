@@ -32,16 +32,6 @@ const StartScreen = ({navigation}:any) => {
               Register
             </Button>
           </View>
-          <TouchableOpacity
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginTop: 10,
-              alignSelf: 'flex-end',
-            }}>
-            <Text>Pass</Text>
-            <MaterialIcons name="navigate-next" size={20} />
-          </TouchableOpacity>
         </View>
       </View>
     );

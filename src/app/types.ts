@@ -27,5 +27,6 @@ export type Recommandation = {
     userDestRef?: string,
     userSenderRef?: string,
     crearedAt?: string,
+    visible?: boolean,
     document: any
 }

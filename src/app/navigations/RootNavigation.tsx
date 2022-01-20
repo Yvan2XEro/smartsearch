@@ -35,13 +35,12 @@ export default function RootNavigation() {
       });
   }, []);
 
-  console.log(user)
   const [initializing, setInitializing] = React.useState(true);
 
   function onAuthStateChanged(user: any) {
     setUser(user);
     if (user)
-      // dispatch(updateUserAction(user));
+      dispatch(updateUserAction(user as User));
     if (initializing) setInitializing(false);
   }
   React.useEffect(() => {

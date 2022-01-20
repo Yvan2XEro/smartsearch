@@ -82,11 +82,10 @@ const SignInScreen = ({navigation}: any) => {
             <Button
               onPress={() => {
                 setGoogleLoading(true);
-                login({}, GOOGLE)
-                  .catch((err) => {
-                    console.log(err)
-                    setGoogleLoading(false)
-                  });
+                login({}, GOOGLE).catch(err => {
+                  console.log(err);
+                  setGoogleLoading(false);
+                });
               }}
               loading={googleLoading}
               icon={({size}) => (
@@ -98,7 +97,7 @@ const SignInScreen = ({navigation}: any) => {
                 borderRadius: 20,
                 marginTop: 10,
               }}>
-              With google account
+              Fast login With google account
             </Button>
           </View>
         </View>
@@ -110,8 +109,10 @@ const SignInScreen = ({navigation}: any) => {
             marginTop: 10,
             alignSelf: 'flex-end',
           }}>
-          <Text>Register</Text>
-          <MaterialIcons name="navigate-next" size={20} />
+          <Text style={{fontSize: 12}}>
+            Don't have account? <Text style={{color: '#000'}}>Register</Text>
+          </Text>
+          <MaterialIcons name="navigate-next" size={20} color="#000" />
         </TouchableOpacity>
       </View>
     </View>
