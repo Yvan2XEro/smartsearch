@@ -38,7 +38,6 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
   const recommandationsQuery = firestore().collection('recommandations');
   React.useLayoutEffect(() => {
     if (!!reduxUser || !!user) {
-      console.log('ICICIICICICICIICICIC', reduxUser);
       recommandationsQuery
         .where('userDestRef', '==', reduxUser ? reduxUser.pk : user.uid)
         .onSnapshot(recSnapshots => {
