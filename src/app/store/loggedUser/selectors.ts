@@ -1,1 +1,1 @@
-export const loggedUserSelector = ({ loggedUser }: any) => loggedUser
+export const loggedUserSelector = ({loggedUser}: any) => loggedUser;

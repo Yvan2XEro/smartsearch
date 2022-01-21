@@ -1,17 +1,22 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import {
+  Menu,
+  MenuOption,
+  MenuOptions,
+  MenuTrigger,
+} from 'react-native-popup-menu';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 
 const DetailsHeader = ({
   navigation,
   title,
-  onSelectFilterList
+  onSelectFilterList,
 }: {
   navigation: any;
   title: string | undefined;
-  onSelectFilterList:any;
+  onSelectFilterList: any;
 }) => {
   return (
     <View style={styles.header}>
@@ -37,7 +42,7 @@ const DetailsHeader = ({
   );
 };
 
-export default DetailsHeader
+export default DetailsHeader;
 
 const styles = StyleSheet.create({
   header: {

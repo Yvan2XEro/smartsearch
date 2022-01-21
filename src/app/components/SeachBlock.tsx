@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { Button, Text } from 'react-native-paper';
-import { TextInput as RnTextInput } from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
+import {Button, Text} from 'react-native-paper';
+import {TextInput as RnTextInput} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -72,14 +72,17 @@ const SearchBlock: React.FC<IProps> = ({
     if (fastInputQuery == '') {
       const entriesLength = Object.entries(params).length;
       Object.entries(params).forEach(([key, value], i) => {
-        if (key != 'keyWords' && value != '' && value != 0)
+        if (key != 'keyWords' && value != '' && value != 0) {
           q += `${key}:${value}` + (i < entriesLength - 1 ? ' ' : '');
+        }
       });
-    } else return fastInputQuery;
+    } else {
+      return fastInputQuery;
+    }
     return q;
   };
 
-  const inputRef= React.useRef<RnTextInput>(null);
+  const inputRef = React.useRef<RnTextInput>(null);
   React.useLayoutEffect(() => {
     inputRef.current?.focus();
   }, [inputRef.current]);
@@ -310,8 +313,8 @@ const SearchBlock: React.FC<IProps> = ({
   );
 };
 
-const EmptyIcon = () => <View style={{ width: marginLeftInput }} />;
-const marginLeftInput = 30
+const EmptyIcon = () => <View style={{width: marginLeftInput}} />;
+const marginLeftInput = 30;
 
 const styles = StyleSheet.create({
   flexRow: {
@@ -366,7 +369,7 @@ const styles = StyleSheet.create({
   closeButton: {
     height: 16,
     width: 16,
-  }
+  },
 });
 
 export default SearchBlock;

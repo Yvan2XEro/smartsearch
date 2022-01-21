@@ -1,12 +1,12 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import React from 'react'
-import { View, Text } from 'react-native'
-import AppHeader from '../components/AppHeader'
-import ChatRoomScreen from '../containers/ChatRoomScreen'
-import ChatsListScreen from '../containers/ChatsListScreen'
-import SearchUserScreen from '../containers/SearchUserScreen'
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React from 'react';
+import {View, Text} from 'react-native';
+import AppHeader from '../components/AppHeader';
+import ChatRoomScreen from '../containers/ChatRoomScreen';
+import ChatsListScreen from '../containers/ChatsListScreen';
+import SearchUserScreen from '../containers/SearchUserScreen';
 
-const Stack = createNativeStackNavigator()
+const Stack = createNativeStackNavigator();
 
 const ChatStackNavigation = () => {
   return (
@@ -38,6 +38,6 @@ const ChatStackNavigation = () => {
       />
     </Stack.Navigator>
   );
-}
+};
 
-export default ChatStackNavigation
+export default ChatStackNavigation;

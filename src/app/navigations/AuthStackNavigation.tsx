@@ -1,13 +1,11 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import * as React from 'react'
-import SignInScreen from '../containers/SignInScreen'
-import SignOutScreen from '../containers/SignOutScreen'
-import StartScreen from '../containers/StartScreen'
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import * as React from 'react';
+import SignInScreen from '../containers/SignInScreen';
+import SignOutScreen from '../containers/SignOutScreen';
+import StartScreen from '../containers/StartScreen';
 
-
-const Stack = createNativeStackNavigator()
+const Stack = createNativeStackNavigator();
 const AuthStackNavigation = () => {
-   
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Start" component={StartScreen} />
@@ -15,6 +13,6 @@ const AuthStackNavigation = () => {
       <Stack.Screen name="SignIn" component={SignInScreen} />
     </Stack.Navigator>
   );
-}
+};
 
-export default AuthStackNavigation
+export default AuthStackNavigation;

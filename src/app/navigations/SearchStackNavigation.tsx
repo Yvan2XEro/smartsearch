@@ -1,4 +1,4 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import DetailScreen from '../containers/DetailScreen';
 import SearchScreen from '../containers/SearchScreen';

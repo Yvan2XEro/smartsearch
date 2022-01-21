@@ -1,39 +1,41 @@
 import * as React from 'react';
-import { ScrollView, TouchableOpacity, View } from 'react-native';
-import {
-  Card,
-  Portal,
-  Dialog,
-  Text,
-} from 'react-native-paper';
-import {
-  Tabs,
-  TabScreen,
-} from 'react-native-paper-tabs';
+import {ScrollView, TouchableOpacity, View} from 'react-native';
+import {Card, Portal, Dialog, Text} from 'react-native-paper';
+import {Tabs, TabScreen} from 'react-native-paper-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useSelector } from 'react-redux';
-import { docsSelector } from '../store/docs/selectors';
-import firestore from '@react-native-firebase/firestore'
-import { Recommandation, User } from '../types';
-import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
-import { AuthenticationContext } from '../contexts/AuthContextProvider';
+import {useSelector} from 'react-redux';
+import {docsSelector} from '../store/docs/selectors';
+import firestore from '@react-native-firebase/firestore';
+import {Recommandation, User} from '../types';
+import {
+  Menu,
+  MenuOption,
+  MenuOptions,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+import {AuthenticationContext} from '../contexts/AuthContextProvider';
 import RecModal from '../components/RecModal';
-import AppSnackbar, { appSnackbarStyles } from '../components/AppSnackbar';
+import AppSnackbar, {appSnackbarStyles} from '../components/AppSnackbar';
 import moment from 'moment';
 import CiteDialog from '../components/CiteDialog';
 
-const HomeScreen = ({ navigation }: { navigation: any }) => {
+const HomeScreen = ({navigation}: {navigation: any}) => {
   const savedDocs = useSelector(docsSelector);
   const reduxUser = useSelector(({loggedUser}: any) => loggedUser);
   const {user} = React.useContext(AuthenticationContext);
-  const [recommandations, setRecommandations] = React.useState<Recommandation[]>([]);
-  const [recomandedDoc, setRecomandedDoc] = React.useState<Recommandation | null>(null);
-  const [selectedRec, setSelectedRec] = React.useState<Recommandation | null>(null);
+  const [recommandations, setRecommandations] = React.useState<
+    Recommandation[]
+  >([]);
+  const [recomandedDoc, setRecomandedDoc] =
+    React.useState<Recommandation | null>(null);
+  const [selectedRec, setSelectedRec] = React.useState<Recommandation | null>(
+    null,
+  );
 
   // Pour la popup de notification!
   const [showSnackbar, setShowSnackbar] = React.useState(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState('');
-  const [selectedDoi, setSelectedDoi] = React.useState(null)
+  const [selectedDoi, setSelectedDoi] = React.useState(null);
 
   const recommandationsQuery = firestore().collection('recommandations');
   React.useLayoutEffect(() => {
@@ -46,7 +48,8 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
               item => ({...item.data(), id: item.id} as Recommandation),
             ),
           );
-        });}
+        });
+    }
   }, [user, reduxUser]);
 
   const handleDelete = (rec: Recommandation) => {
@@ -152,7 +155,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
                           : item.document.title}
                       </Text>
                     </View>
-                    <Text></Text>
+                    <Text />
                   </Card>
                 </TouchableOpacity>
               ))}
@@ -175,8 +178,11 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
           onDismiss={() => setRecomandedDoc(null)}
           onFinish={(succes: boolean) => {
             setShowSnackbar(true);
-            if (succes) setSnackbarMessage('SUCCESS!');
-            else setSnackbarMessage('An error occcured!');
+            if (succes) {
+              setSnackbarMessage('SUCCESS!');
+            } else {
+              setSnackbarMessage('An error occcured!');
+            }
             setRecomandedDoc(null);
           }}
         />
@@ -194,33 +200,34 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
       <CiteDialog doi={selectedDoi} onDismiss={() => setSelectedDoi(null)} />
     </>
   );
-}
+};
 
-
-const ListDocsArticles = ({ docs, navigation }: any) => {
+const ListDocsArticles = ({docs, navigation}: any) => {
   return (
     <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
-      <View style={{ flexWrap: 'wrap', flexDirection: 'row', marginTop: 10 }}>
+      <View style={{flexWrap: 'wrap', flexDirection: 'row', marginTop: 10}}>
         {docs.map((item: any, i: number) => (
           <TouchableOpacity
-            onPress={() => navigation.navigate(
-              'SearchStack' as never,
-              {
-                screen: 'Details',
-                params: {
-                  document: {
-                    title: item.title,
-                    publicationDate: item.publicationDate,
-                    contentType: item.contentType,
-                    publisher: item.publisher,
-                    abstract: item.abstract,
-                    doi: item.doi,
-                    openaccess: item.openaccess,
-                    authors: item.creators,
-                  } as Document,
-                },
-              } as never,
-            )}
+            onPress={() =>
+              navigation.navigate(
+                'SearchStack' as never,
+                {
+                  screen: 'Details',
+                  params: {
+                    document: {
+                      title: item.title,
+                      publicationDate: item.publicationDate,
+                      contentType: item.contentType,
+                      publisher: item.publisher,
+                      abstract: item.abstract,
+                      doi: item.doi,
+                      openaccess: item.openaccess,
+                      authors: item.creators,
+                    } as Document,
+                  },
+                } as never,
+              )
+            }
             key={i}
             style={{
               borderRadius: 5,
@@ -232,8 +239,8 @@ const ListDocsArticles = ({ docs, navigation }: any) => {
               shadowColor: '#000',
               elevation: 4,
             }}>
-            <Card style={{ height: '100%', padding: 2 }}>
-              <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+            <Card style={{height: '100%', padding: 2}}>
+              <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
                 <MaterialCommunityIcons name="file-document" size={60} />
                 <Text>
                   {item.title.length > 45
@@ -241,7 +248,7 @@ const ListDocsArticles = ({ docs, navigation }: any) => {
                     : item.title}
                 </Text>
               </View>
-              <Text></Text>
+              <Text />
             </Card>
           </TouchableOpacity>
         ))}
@@ -250,34 +257,60 @@ const ListDocsArticles = ({ docs, navigation }: any) => {
   );
 };
 
-const DetailsRecModal = ({rec,onDismiss}:{rec: Recommandation|null, onDismiss:()=>void}) =>{
-  const [u, setU] = React.useState<User|null>(null)
-  const [loading, setLoading] = React.useState<boolean>(false)
-  React.useEffect(()=>{
-    setLoading(true)
-    firestore().collection('users').doc(rec?.userSenderRef).get().then((snapshot)=>{
-      setU({...snapshot.data()} as User);
-      setLoading(false)
-    })
-
-  }, [rec])
+const DetailsRecModal = ({
+  rec,
+  onDismiss,
+}: {
+  rec: Recommandation | null;
+  onDismiss: () => void;
+}) => {
+  const [u, setU] = React.useState<User | null>(null);
+  const [loading, setLoading] = React.useState<boolean>(false);
+  React.useEffect(() => {
+    setLoading(true);
+    firestore()
+      .collection('users')
+      .doc(rec?.userSenderRef)
+      .get()
+      .then(snapshot => {
+        setU({...snapshot.data()} as User);
+        setLoading(false);
+      });
+  }, [rec]);
   return (
     <Portal>
       <Dialog
         style={{backgroundColor: '#fff', padding: 10}}
         visible={!!rec}
         onDismiss={onDismiss}>
-          <Text style={{fontSize: 28, marginBottom: 10}}>Deatils</Text>
+        <Text style={{fontSize: 28, marginBottom: 10}}>Deatils</Text>
         <View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+            }}>
             <Text style={{fontWeight: 'bold'}}>User:</Text>
             {!!u && <Text style={{fontSize: 12}}>{u.displayName}</Text>}
           </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+            }}>
             <Text style={{fontWeight: 'bold'}}>Recomanded At:</Text>
-            <Text style={{fontSize: 12}}>{moment(rec?.crearedAt).format('YYYY-MM-DDDD HH:MM')}</Text>
+            <Text style={{fontSize: 12}}>
+              {moment(rec?.crearedAt).format('YYYY-MM-DDDD HH:MM')}
+            </Text>
           </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+            }}>
             <Text style={{fontWeight: 'bold'}}>Document:</Text>
             <Text style={{fontSize: 12}}>{rec?.document.title}</Text>
           </View>
@@ -285,6 +318,6 @@ const DetailsRecModal = ({rec,onDismiss}:{rec: Recommandation|null, onDismiss:()
       </Dialog>
     </Portal>
   );
-}
+};
 
 export default HomeScreen;

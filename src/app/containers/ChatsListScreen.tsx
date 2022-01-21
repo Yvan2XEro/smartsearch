@@ -11,9 +11,9 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import firestore from '@react-native-firebase/firestore';
-import { useSelector } from 'react-redux';
-import { loggedUserSelector } from '../store/loggedUser/selectors';
-import { User } from '../types';
+import {useSelector} from 'react-redux';
+import {loggedUserSelector} from '../store/loggedUser/selectors';
+import {User} from '../types';
 
 const ChatsListScreen = ({navigation}: any) => {
   const user = useSelector(loggedUserSelector);
@@ -21,12 +21,14 @@ const ChatsListScreen = ({navigation}: any) => {
   const [chats, setChats] = React.useState<any[]>([]);
 
   React.useEffect(() => {
-    if (!!user) {
-    const subscriber = firestore()
-      .collection('chats')
-      .where('usersRefs', 'array-contains', user.pk)
-      .onSnapshot(snapshot=>setChats(snapshot.docs.map(item => ({...item.data(), id: item.id}))))
-      return subscriber
+    if (user) {
+      const subscriber = firestore()
+        .collection('chats')
+        .where('usersRefs', 'array-contains', user.pk)
+        .onSnapshot(snapshot =>
+          setChats(snapshot.docs.map(item => ({...item.data(), id: item.id}))),
+        );
+      return subscriber;
     }
   }, [user]);
 
@@ -87,7 +89,9 @@ const ChatsListScreen = ({navigation}: any) => {
               key={i}
               onPress={() => navigation.navigate('ChatRoom', {chat})}
               user={
-                chat.users[0].pk == user.pk ? chat.users[1] as User : chat.users[0] as User
+                chat.users[0].pk == user.pk
+                  ? (chat.users[1] as User)
+                  : (chat.users[0] as User)
               }
             />
           ))}
@@ -125,16 +129,14 @@ const OnlineItem = () => (
 const ChatItem = ({user, onPress}: {user: User; onPress: any}) => (
   <TouchableOpacity
     style={{
-      marginTop: 10,
+      marginTop: 5,
       borderWidth: 0.1,
       borderColor: '#000',
       padding: 5,
       backgroundColor: '#fcfcfc',
-      borderBottomLeftRadius: 8,
-      borderTopLeftRadius: 8,
-      borderRadius: 5,
       width: '98%',
       shadowColor: '#000',
+      marginBottom: 5,
       shadowOffset: {
         width: 0,
         height: 7,

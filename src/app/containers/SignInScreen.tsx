@@ -4,38 +4,41 @@ import LoginSvg from '../assets/login.svg';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { AuthInput } from './SignOutScreen';
-import { AuthenticationContext, EMAIL_PASSWORD, GOOGLE } from '../contexts/AuthContextProvider';
-import { Button } from 'react-native-paper';
+import {AuthInput} from './SignOutScreen';
+import {
+  AuthenticationContext,
+  EMAIL_PASSWORD,
+  GOOGLE,
+} from '../contexts/AuthContextProvider';
+import {Button} from 'react-native-paper';
 
 const SignInScreen = ({navigation}: any) => {
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [error, setError] = React.useState('');
-    const [googleLoading, setGoogleLoading] = React.useState(false);
-    const [loading, setLoading] = React.useState(false);
-    const {login} = React.useContext(AuthenticationContext);
-    const handleSimpleLogin = () => {
-      setError('');
-      setLoading(true);
-      login({email, password}, EMAIL_PASSWORD)
-        .catch(error => {
-          if (
-            error.code == 'auth/user-not-found' ||
-            error.code == 'auth/wrong-password' ||
-            error.code == 'auth/invalid-email'
-          ) {
-            setPassword('');
-            setError('Bad credentials!');
-          }
-          console.log("yoo",error)
-        })
-        .then(() => {
-          setLoading(false);
-          setGoogleLoading(false);
-        });
-    };
-
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [error, setError] = React.useState('');
+  const [googleLoading, setGoogleLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const {login} = React.useContext(AuthenticationContext);
+  const handleSimpleLogin = () => {
+    setError('');
+    setLoading(true);
+    login({email, password}, EMAIL_PASSWORD)
+      .catch(error => {
+        if (
+          error.code == 'auth/user-not-found' ||
+          error.code == 'auth/wrong-password' ||
+          error.code == 'auth/invalid-email'
+        ) {
+          setPassword('');
+          setError('Bad credentials!');
+        }
+        console.log('yoo', error);
+      })
+      .then(() => {
+        setLoading(false);
+        setGoogleLoading(false);
+      });
+  };
 
   const [isSecureEntry, setIsSecureEntry] = React.useState(true);
   return (
@@ -126,7 +129,7 @@ const styles = StyleSheet.create({
   header: {flex: 0.3},
   footer: {
     backgroundColor: '#fff',
-    flex: .7,
+    flex: 0.7,
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
     padding: 20,

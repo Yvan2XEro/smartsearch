@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -7,14 +7,14 @@ import {
   StyleSheet,
 } from 'react-native';
 import * as base from '../api/constants';
-import { Document } from '../models/Document';
-import { useNavigation } from '@react-navigation/native';
+import {Document} from '../models/Document';
+import {useNavigation} from '@react-navigation/native';
 import SearchBlock from '../components/SeachBlock';
 import DocItem from '../components/DocItem';
-import { useDispatch } from 'react-redux';
-import { saveDocAction } from '../store/docs/actions';
-import AppSnackbar, { appSnackbarStyles } from '../components/AppSnackbar';
-import { saveNewQueryResultAction } from '../store/queriesResults/actions';
+import {useDispatch} from 'react-redux';
+import {saveDocAction} from '../store/docs/actions';
+import AppSnackbar, {appSnackbarStyles} from '../components/AppSnackbar';
+import {saveNewQueryResultAction} from '../store/queriesResults/actions';
 import RecModal from '../components/RecModal';
 import CiteDialog from '../components/CiteDialog';
 
@@ -32,7 +32,7 @@ const SearchScreen = ({
   const [showSaveQueryButton, setShowSaveQueryButton] = useState(false);
   const [buildedQuery, setbuildedQuery] = useState('');
   const [selectedDoi, setSelectedDoi] = useState(null);
-  
+
   // Pour la modale de recommandation
   const [recomandedDoc, setRecomandedDoc] = useState(null);
 
@@ -40,20 +40,19 @@ const SearchScreen = ({
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   // pour enregistrer un resultat
   const onSaveQuery = React.useCallback(() => {
-
     dispatch(
       saveNewQueryResultAction({
         results: data,
-        buildedQuery
+        buildedQuery,
       }),
     );
     setSnackbarMessage('Saved!');
     setShowSnackbar(true);
-  }, [])
+  }, []);
 
   React.useEffect(() => {
     setShowSaveQueryButton(data.length > 0);
@@ -78,13 +77,13 @@ const SearchScreen = ({
       const json1 = await response1.json();
       const json2 = await response2.json();
       const dat =
-        json2['search-results'] && json2['search-results']['entry']
-          ? json2['search-results']['entry'].map((item: any) => {
-            return {
-              title: item['dc:title'],
-              publicationDate: item['prism:coverDate'],
-            };
-          })
+        json2['search-results'] && json2['search-results'].entry
+          ? json2['search-results'].entry.map((item: any) => {
+              return {
+                title: item['dc:title'],
+                publicationDate: item['prism:coverDate'],
+              };
+            })
           : [];
       setData2(dat);
       const values: any[] = [...data, ...json1.records, ...data2];
@@ -196,8 +195,11 @@ const SearchScreen = ({
           onDismiss={() => setRecomandedDoc(null)}
           onFinish={(succes: boolean) => {
             setShowSnackbar(true);
-            if (succes) setSnackbarMessage('SUCCESS!');
-            else setSnackbarMessage('An error occcured!');
+            if (succes) {
+              setSnackbarMessage('SUCCESS!');
+            } else {
+              setSnackbarMessage('An error occcured!');
+            }
             setRecomandedDoc(null);
           }}
         />

@@ -42,9 +42,12 @@ const ChatRoomScreen = ({navigation, route}: any) => {
       };
       setMessage('');
 
-      await firestore().collection('messages').add(data).then(()=>{
-        listRef.current?.scrollToEnd()
-      });
+      await firestore()
+        .collection('messages')
+        .add(data)
+        .then(() => {
+          listRef.current?.scrollToEnd();
+        });
     }
   };
 
@@ -53,9 +56,13 @@ const ChatRoomScreen = ({navigation, route}: any) => {
   };
 
   const compareMsg = (a: any, b: any) => {
-    if (new Date(a.createdAt) < new Date(b.createdAt)) return -1;
+    if (new Date(a.createdAt) < new Date(b.createdAt)) {
+      return -1;
+    }
 
-    if (new Date(a.createdAt) > new Date(b.createdAt)) return 1;
+    if (new Date(a.createdAt) > new Date(b.createdAt)) {
+      return 1;
+    }
     return 0;
   };
 
@@ -65,15 +72,20 @@ const ChatRoomScreen = ({navigation, route}: any) => {
   useEffect(() => {
     messagesQuery.onSnapshot(snapshot => {
       setMessages(
-        snapshot.docs.map(change => ({
-          ...change.data(),
-          id: change.id,
-        } as Message)).filter(m=>m.chatRef == chat.id),
+        snapshot.docs
+          .map(
+            change =>
+              ({
+                ...change.data(),
+                id: change.id,
+              } as Message),
+          )
+          .filter(m => m.chatRef == chat.id),
       );
     });
   }, []);
 
-  const listRef = useRef<FlatList>(null)
+  const listRef = useRef<FlatList>(null);
 
   return (
     <View style={{height: '100%'}}>

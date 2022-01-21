@@ -1,13 +1,13 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React, { useState } from 'react';
-import { Text } from 'react-native-paper';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import React, {useState} from 'react';
+import {Text} from 'react-native-paper';
 import SearchScreen from '../containers/SearchScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AppHeader from '../components/AppHeader';
 import ChatStackNavigation from './ChatStackNavigation';
-import { StyleSheet, View } from 'react-native'
+import {StyleSheet, View} from 'react-native';
 import HomeScreen from '../containers/HomeScreen';
 
 const Tab = createBottomTabNavigator();
@@ -77,7 +77,7 @@ export function AppTabNavigation() {
   );
 }
 
-const tabBarActiveTintColor = 'black'
+const tabBarActiveTintColor = 'black';
 
 const styles = StyleSheet.create({
   tabBarStyle: {

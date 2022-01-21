@@ -15,14 +15,14 @@ const DocItem = ({
   onSave,
   onDelete,
   onCite,
-  onRecomand
+  onRecomand,
 }: {
   doc: any;
   onPress: any;
   onSave?: any;
-  onCite?:()=>void,
+  onCite?: () => void;
   onDelete?: any;
-  onRecomand?: any
+  onRecomand?: any;
 }) => {
   return (
     <View style={styles.doc}>
@@ -63,10 +63,7 @@ const DocItem = ({
           </MenuTrigger>
 
           <MenuOptions>
-            {onCite && <MenuOption
-              onSelect={onCite}
-              text="Cite"
-            />}
+            {onCite && <MenuOption onSelect={onCite} text="Cite" />}
             {onSave && (
               <MenuOption onSelect={onSave}>
                 <Text style={{color: 'red'}}>Save</Text>

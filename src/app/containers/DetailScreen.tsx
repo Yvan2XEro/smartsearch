@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Document } from '../models/Document';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Document} from '../models/Document';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { Paragraph } from 'react-native-paper';
+import {Paragraph} from 'react-native-paper';
 import DetailsHeader from '../components/DetailsHeader';
 import FiltersListModal from '../components/FiltersListModal';
 
-const DetailScreen = ({ route, navigation }: { route: any; navigation: any }) => {
+const DetailScreen = ({route, navigation}: {route: any; navigation: any}) => {
   /* 2. Get the param */
   const document: Document = route.params.document;
   const [visible, setVisible] = React.useState(false);
@@ -36,7 +36,7 @@ const DetailScreen = ({ route, navigation }: { route: any; navigation: any }) =>
                 name="open-book"
                 color="white"
                 size={25}
-                style={{ alignSelf: 'center' }}
+                style={{alignSelf: 'center'}}
               />
               <Text
                 style={{
@@ -51,31 +51,31 @@ const DetailScreen = ({ route, navigation }: { route: any; navigation: any }) =>
           )}
           <View style={styles.row}>
             <Text style={styles.label}>Title: </Text>
-            <View style={{ flex: 1 }}>
+            <View style={{flex: 1}}>
               <Text style={styles.content}>{document.title}</Text>
             </View>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Doi: </Text>
-            <View style={{ flex: 1 }}>
+            <View style={{flex: 1}}>
               <Text style={styles.content}>{document.doi}</Text>
             </View>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Publicate Date: </Text>
-            <View style={{ flex: 1 }}>
+            <View style={{flex: 1}}>
               <Text style={styles.content}>{document.publicationDate}</Text>
             </View>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Publisher: </Text>
-            <View style={{ flex: 1 }}>
+            <View style={{flex: 1}}>
               <Text style={styles.content}>{document.publisher}</Text>
             </View>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Authors: </Text>
-            <View style={{ flex: 1 }}>
+            <View style={{flex: 1}}>
               <Text style={styles.content}>
                 {document.authors?.reduce(
                   (acc, item) => acc + ', ' + item.creator,
@@ -86,13 +86,13 @@ const DetailScreen = ({ route, navigation }: { route: any; navigation: any }) =>
           </View>
           <View style={styles.row}>
             <Text style={styles.label}>Type :</Text>
-            <View style={{ flex: 1 }}>
+            <View style={{flex: 1}}>
               <Text style={styles.content}>{document.contentType}</Text>
             </View>
           </View>
           <View>
             <Text style={styles.label}>Abstract :</Text>
-            <Paragraph style={{ flex: 1 }}>{document.abstract}</Paragraph>
+            <Paragraph style={{flex: 1}}>{document.abstract}</Paragraph>
           </View>
         </ScrollView>
       </View>

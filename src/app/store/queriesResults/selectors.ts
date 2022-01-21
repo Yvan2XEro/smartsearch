@@ -1,2 +1,2 @@
-
-export const allQueriesResults = ({ queriesResults }: {queriesResults: any}) => queriesResults
+export const allQueriesResults = ({queriesResults}: {queriesResults: any}) =>
+  queriesResults;

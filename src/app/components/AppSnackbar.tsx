@@ -1,5 +1,5 @@
-import React from 'react'
-import { Snackbar } from 'react-native-paper';
+import React from 'react';
+import {Snackbar} from 'react-native-paper';
 
 const AppSnackbar = ({
   visible,
@@ -25,4 +25,4 @@ const AppSnackbar = ({
 
 export const appSnackbarStyles = {bottom: 20};
 
-export default AppSnackbar
+export default AppSnackbar;

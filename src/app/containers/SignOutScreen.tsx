@@ -10,13 +10,15 @@ import {
 import ProfileSvg from '../assets/profile.svg';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { AuthenticationContext, EMAIL_PASSWORD } from '../contexts/AuthContextProvider';
-import { emailRegex } from '../services';
-import { Button } from 'react-native-paper';
+import {
+  AuthenticationContext,
+  EMAIL_PASSWORD,
+} from '../contexts/AuthContextProvider';
+import {emailRegex} from '../services';
+import {Button} from 'react-native-paper';
 
 const SignOutScreen = ({navigation}: any) => {
-
-  const [isSecureEntry, setIsSecureEntry] = React.useState(true)
+  const [isSecureEntry, setIsSecureEntry] = React.useState(true);
 
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
@@ -25,30 +27,28 @@ const SignOutScreen = ({navigation}: any) => {
   const [loading, setLoading] = React.useState(false);
 
   const {login, register} = React.useContext(AuthenticationContext);
- const handleSignUp = () => {
-
-  if(name.trim().length<3) {
-    setError("The name is too short!")
-  }
-   else if(!emailRegex.test(email)){
+  const handleSignUp = () => {
+    if (name.trim().length < 3) {
+      setError('The name is too short!');
+    } else if (!emailRegex.test(email)) {
       setError('Invalid email adress!');
-   }else if(password.length<6){
-     setError('Password too short (min 6 characters)');
-   }
-   else{
-     setError('');
-     setLoading(true);
-     register({email, password, displayName: name}, EMAIL_PASSWORD, () =>
-       login({email, password}, EMAIL_PASSWORD),
-     )
-       .catch(error => {
-         console.log(error.message);
-         if (error.code === 'auth/email-already-in-use')
-           setError('That email address is already in use!');
-       })
-       .then(() => setLoading(false));
-   }
- };
+    } else if (password.length < 6) {
+      setError('Password too short (min 6 characters)');
+    } else {
+      setError('');
+      setLoading(true);
+      register({email, password, displayName: name}, EMAIL_PASSWORD, () =>
+        login({email, password}, EMAIL_PASSWORD),
+      )
+        .catch(error => {
+          console.log(error.message);
+          if (error.code === 'auth/email-already-in-use') {
+            setError('That email address is already in use!');
+          }
+        })
+        .then(() => setLoading(false));
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -132,7 +132,7 @@ export const AuthInput = ({
   label: string;
   value?: string;
   icon: any;
-  rigthIcon?:any;
+  rigthIcon?: any;
   onChangeText: any;
   secureTextEntry?: boolean;
 }) => {

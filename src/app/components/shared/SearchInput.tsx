@@ -1,13 +1,13 @@
-import React from 'react'
-import { KeyboardTypeOptions, StyleSheet, Text, View } from 'react-native'
-import { TextInput } from 'react-native';
+import React from 'react';
+import {KeyboardTypeOptions, StyleSheet, Text, View} from 'react-native';
+import {TextInput} from 'react-native';
 
 const SearchInput = ({
   onChangeText,
   keyboardType = 'default',
   label,
-  placeholder="",
-fieldIcon
+  placeholder = '',
+  fieldIcon,
 }: {
   onChangeText: any;
   keyboardType?: KeyboardTypeOptions;
@@ -27,7 +27,9 @@ fieldIcon
           borderWidth: 0.5,
           overflow: 'hidden',
         }}>
-        <View style={{justifyContent: 'center', paddingLeft:5}}>{fieldIcon}</View>
+        <View style={{justifyContent: 'center', paddingLeft: 5}}>
+          {fieldIcon}
+        </View>
         <View style={{width: '100%'}}>
           <TextInput
             style={styles.input}
@@ -42,7 +44,7 @@ fieldIcon
   );
 };
 
-export default SearchInput
+export default SearchInput;
 
 const styles = StyleSheet.create({
   inputWrapper: {

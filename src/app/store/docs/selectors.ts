@@ -1,1 +1,1 @@
-export const docsSelector = ({ docs }: { docs: any }) => docs
+export const docsSelector = ({docs}: {docs: any}) => docs;

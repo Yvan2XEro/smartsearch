@@ -48,7 +48,7 @@ const RecModal = ({
   const user = useSelector(({loggedUser}: any) => loggedUser);
 
   const handleFetch = (text: string) => {
-    if (text.length > 0)
+    if (text.length > 0) {
       query
         .startAt(text)
         .endAt(text + '~')
@@ -62,12 +62,13 @@ const RecModal = ({
             })),
           );
         });
+    }
   };
 
   const handleRecomandation = async () => {
     await Promise.resolve(
       selectedUsers.forEach(async u => {
-        if (!!u.pk)
+        if (u.pk) {
           await firestore()
             .collection('recommandations')
             .add({
@@ -78,6 +79,7 @@ const RecModal = ({
             })
             .then(() => setSucess(true))
             .catch(() => setSucess(false));
+        }
       }),
     ).finally(() => {
       setLoading(false);
@@ -121,7 +123,9 @@ const RecModal = ({
                 key={i}
                 user={user}
                 onSelect={() => {
-                  if (input != '') setInput('');
+                  if (input != '') {
+                    setInput('');
+                  }
                   setSelectedUsers([...selectedUsers, user]);
                   setFetchedUsers(fetchedUsers.filter(u => u != user));
                 }}
