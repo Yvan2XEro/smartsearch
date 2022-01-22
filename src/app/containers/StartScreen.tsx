@@ -1,7 +1,6 @@
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import Knowledge from '../assets/knowledge.svg';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Button} from 'react-native-paper';
 
 const StartScreen = ({navigation}: any) => {
