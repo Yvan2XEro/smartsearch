@@ -9,12 +9,14 @@ import FiltersListModal from '../components/FiltersListModal';
 const DetailScreen = ({route, navigation}: {route: any; navigation: any}) => {
   /* 2. Get the param */
   const document: Document = route.params.document;
+  const backScreen: string|undefined = route.params.backScreen;
   const [visible, setVisible] = React.useState(false);
   return (
     <View>
       <DetailsHeader
         navigation={navigation}
         title="Details"
+        backScreen={backScreen}
         onSelectFilterList={() => setVisible(true)}
       />
       <View

@@ -291,7 +291,7 @@ const DetailsRecModal = ({
               justifyContent: 'space-between',
               flexWrap: 'wrap',
             }}>
-            <Text style={{fontWeight: 'bold'}}>User:</Text>
+            <Text style={{fontWeight: 'bold'}}>By:</Text>
             {!!u && <Text style={{fontSize: 12}}>{u.displayName}</Text>}
           </View>
           <View
@@ -312,7 +312,11 @@ const DetailsRecModal = ({
               flexWrap: 'wrap',
             }}>
             <Text style={{fontWeight: 'bold'}}>Document:</Text>
-            <Text style={{fontSize: 12}}>{rec?.document.title}</Text>
+            <Text style={{fontSize: 12}}>
+              {rec?.document.title.length > 200
+                ? rec?.document.title.substr(0, 200) + '...'
+                : rec?.document.title}
+            </Text>
           </View>
         </View>
       </Dialog>

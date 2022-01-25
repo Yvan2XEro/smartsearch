@@ -12,16 +12,18 @@ import Entypo from 'react-native-vector-icons/Entypo';
 const DetailsHeader = ({
   navigation,
   title,
+  backScreen,
   onSelectFilterList,
 }: {
   navigation: any;
   title: string | undefined;
+  backScreen?:string;
   onSelectFilterList: any;
 }) => {
   return (
     <View style={styles.header}>
       <Ionicons
-        onPress={() => navigation.goBack()}
+        onPress={!!backScreen?navigation.navigate(backScreen):() => navigation.goBack()}
         name="arrow-back"
         size={30}
       />

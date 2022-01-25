@@ -44,7 +44,6 @@ const SearchUserScreen = ({navigation}: any) => {
             .map(item => item.data())
             .find(c => c.usersRefs.indexOf(u.pk) == -1)
         ) {
-          console.log('icicici');
           await chatsQuery
             .add({
               usersRefs: [user.pk, u.pk],
