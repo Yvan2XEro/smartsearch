@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Tabs, TabScreen} from 'react-native-paper-tabs';
 import firestore from '@react-native-firebase/firestore'
 import { useSelector } from 'react-redux';
 import { loggedUserSelector } from '../store/loggedUser/selectors';
 import { Recommandation } from '../types';
-import { Card } from 'react-native-paper';
+import {Card, Text} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 const SharedScreen = ({navigation, route}: any) => {
 
@@ -51,6 +53,7 @@ const SharedScreen = ({navigation, route}: any) => {
               {sendedRec.map((item, i) => (
                 <DocArticle
                   document={item.document}
+                  icon={<FontAwesome name="send-o" size={20} />}
                   key={i}
                   onPress={() =>
                     navigation.navigate(
@@ -86,6 +89,7 @@ const SharedScreen = ({navigation, route}: any) => {
                 <DocArticle
                   document={item.document}
                   key={i}
+                  icon={<Entypo name="download" size={20} />}
                   onPress={() =>
                     navigation.navigate(
                       'SearchStack' as never,
@@ -119,7 +123,14 @@ const SharedScreen = ({navigation, route}: any) => {
 
 export default SharedScreen;
 
-const DocArticle = ({document, onPress}:{document: any, onPress:()=>void})=>{
+const DocArticle = ({
+  document,
+  onPress,
+  icon,
+}: {
+  document: any;
+  onPress: () => void;
+  icon:any}) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -129,7 +140,7 @@ const DocArticle = ({document, onPress}:{document: any, onPress:()=>void})=>{
         marginBottom: 8,
         marginLeft: 8,
         width: '47%',
-        height: 130,
+        height: 170,
         shadowColor: '#000',
         elevation: 4,
       }}>
@@ -142,10 +153,22 @@ const DocArticle = ({document, onPress}:{document: any, onPress:()=>void})=>{
               : document.title}
           </Text>
         </View>
-        <Text />
+        <View style={{bottom: 10, position: 'absolute', width: '100%'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              paddingHorizontal: 5,
+            }}>
+            <Text style={{fontWeight: 'bold', fontSize: 10}}>
+              2020-21-09 08:09
+            </Text>
+            {icon}
+          </View>
+        </View>
       </Card>
     </TouchableOpacity>
   );
-}
+};
 
 const styles = StyleSheet.create({});
