@@ -38,11 +38,13 @@ const SearchUserScreen = ({navigation}: any) => {
       .where('usersRefs', 'array-contains', user.pk)
       .get()
       .then(async snapshot => {
-        console.log(snapshot.docs.length);
+        console.log("iciciciciic", snapshot.docs
+            .map(item => item.data())
+            .find(c => c.usersRefs.indexOf(u.pk)))
         if (
           snapshot.docs
             .map(item => item.data())
-            .find(c => c.usersRefs.indexOf(u.pk) == -1)
+            .find(c => c.usersRefs.indexOf(u.pk) == undefined)
         ) {
           await chatsQuery
             .add({
