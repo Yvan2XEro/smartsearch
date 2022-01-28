@@ -38,12 +38,11 @@ const SearchUserScreen = ({navigation}: any) => {
        .where('usersRefs', 'array-contains', user.pk)
        .get()
        .then(async snapshot => {
-         console.log(snapshot.docs.length);
+         const chat = snapshot.docs
+             .map(item =>({...item.data(), id: item.id} as any))
+             .find(c => c.usersRefs.indexOf(u.pk)!==-1)
          if (
-           snapshot.docs.length === 0 ||
-           snapshot.docs
-             .map(item => item.data())
-             .find(c => c.usersRefs.indexOf(u.pk) === undefined)
+           snapshot.docs.length === 0 || chat === undefined
          ) {
            console.log('icicici');
            await chatsQuery
@@ -60,9 +59,9 @@ const SearchUserScreen = ({navigation}: any) => {
                ),
              );
          } else {
-           console.log('ALORS!', snapshot.docs.length);
+           console.log('ALORS!', chat);
            navigation.navigate('ChatRoom', {
-             chat: {...snapshot.docs[0].data(), id: snapshot.docs[0].id},
+             chat,
            });
          }
        });
