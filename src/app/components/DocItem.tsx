@@ -47,19 +47,18 @@ const DocItem = ({
           }}
         />
       )}
-      <Text onPress={onPress} style={{flex: 1, flexWrap: 'wrap'}}>
+      <Text onPress={onPress} style={{flex: 0.8, flexWrap: 'wrap'}}>
         {(doc as any).title}, {(doc as any).publicationDate}
       </Text>
       <View
         style={{
-          alignSelf: 'flex-start',
-          position: 'absolute',
-          paddingLeft: 15,
-          right: 0,
+          flex: 0.1,
+          alignSelf: 'center',
+          marginLeft: 'auto'
         }}>
         <Menu>
           <MenuTrigger>
-            <Icon name="dots-vertical" color="gray" size={20} />
+            <Icon name="dots-vertical" color="gray" size={30} />
           </MenuTrigger>
 
           <MenuOptions>
@@ -91,7 +90,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     height: 60,
-    padding: 12,
+    paddingVertical: 10,
+    paddingLeft: 8,
     shadowColor: 'rgb(0, 0, 0)',
     shadowOffset: {
       width: 3,
