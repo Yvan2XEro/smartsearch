@@ -33,36 +33,40 @@ const SearchUserScreen = ({navigation}: any) => {
         });
     }
   };
-  const handleInitChat = async (u: User) => {
-    await chatsQuery
-      .where('usersRefs', 'array-contains', user.pk)
-      .get()
-      .then(async snapshot => {
-        if (
-          snapshot.docs
-            .map(item => item.data())
-            .find(c => c.usersRefs.indexOf(u.pk) == undefined)
-        ) {
-          await chatsQuery
-            .add({
-              usersRefs: [user.pk, u.pk],
-              createdAt: new Date().toISOString(),
-              users: [user, u],
-            })
-            .then(ref =>
-              ref.get().then(chat =>
-                navigation.navigate('ChatRoom', {
-                  chat: {...chat.data(), id: chat.id},
-                }),
-              ),
-            );
-        } else {
-          navigation.navigate('ChatRoom', {
-            chat: {...snapshot.docs[0].data(), id: snapshot.docs[0].id},
-          });
-        }
-      });
-  };
+   const handleInitChat = async (u: User) => {
+     await chatsQuery
+       .where('usersRefs', 'array-contains', user.pk)
+       .get()
+       .then(async snapshot => {
+         console.log(snapshot.docs.length);
+         if (
+           snapshot.docs.length === 0 ||
+           snapshot.docs
+             .map(item => item.data())
+             .find(c => c.usersRefs.indexOf(u.pk) === undefined)
+         ) {
+           console.log('icicici');
+           await chatsQuery
+             .add({
+               usersRefs: [user.pk, u.pk],
+               createdAt: new Date().toISOString(),
+               users: [user, u],
+             })
+             .then(ref =>
+               ref.get().then(chat =>
+                 navigation.navigate('ChatRoom', {
+                   chat: {...chat.data(), id: chat.id},
+                 }),
+               ),
+             );
+         } else {
+           console.log('ALORS!', snapshot.docs.length);
+           navigation.navigate('ChatRoom', {
+             chat: {...snapshot.docs[0].data(), id: snapshot.docs[0].id},
+           });
+         }
+       });
+   };
   return (
     <View>
       <View
