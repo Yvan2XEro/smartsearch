@@ -2,15 +2,14 @@ import React, {useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   StyleSheet,
-  Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Avatar} from 'react-native-paper';
+import {Text, Avatar} from 'react-native-paper';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
 import firestore from '@react-native-firebase/firestore';
 import {Message} from '../types';
 import moment from 'moment';
@@ -103,7 +102,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
           <View style={{flex: 0.9, marginLeft: 16}}>
             <Text
               style={{
-                fontSize: 17,
+                fontSize: 15,
                 textTransform: 'uppercase',
                 textAlign: 'center',
               }}>
@@ -116,7 +115,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{marginTop: 5, paddingBottom: 115}}>
+      <View style={{marginTop: 5, marginBottom: 107}}>
         <FlatList
           showsVerticalScrollIndicator={false}
           ref={listRef}
@@ -150,29 +149,29 @@ const ChatRoomScreen = ({navigation, route}: any) => {
           position: 'absolute',
           bottom: 0,
           marginBottom: 0,
-          padding: 6,
           paddingBottom: 5,
-          // backgroundColor: 'gray',
+          paddingHorizontal: 7,
           flexDirection: 'row',
+          backgroundColor: '#fff',
+          borderRadius: 20,
           justifyContent: 'center',
-          width: '100%',
+          width: '95%',
+          alignSelf: 'center',
         }}>
         <TextInput
           value={message}
           onChangeText={text => setMessage(text)}
-          multiline={true}
-          numberOfLines={2}
           style={[styles.textInput]}
           placeholder="Type message..."
         />
         <TouchableOpacity
-          style={{flex: 0.15, marginLeft: 5}}
+          style={{flex: 0.15, marginLeft: 5, justifyContent: 'center'}}
           onPress={handleSendMessage}>
-          <FontAwesome
+          <Feather
             style={{alignSelf: 'center', marginTop: 5}}
-            name="send-o"
-            // color={theme.colors.primary}
-            size={40}
+            name="send"
+            color="#000"
+            size={30}
           />
         </TouchableOpacity>
       </View>
@@ -185,6 +184,7 @@ export default ChatRoomScreen;
 const styles = StyleSheet.create({
   header: {
     paddingLeft: 10,
+    paddingVertical: 5,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -229,8 +229,8 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 0.85,
-    borderWidth: 1,
+    // borderWidth: 1,
     borderRadius: 5,
-    borderColor: 'gray',
+    // borderColor: 'gray',
   },
 });
