@@ -1,37 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Tabs, TabScreen} from 'react-native-paper-tabs';
-import firestore from '@react-native-firebase/firestore'
-import { useSelector } from 'react-redux';
-import { loggedUserSelector } from '../store/loggedUser/selectors';
-import { Recommandation } from '../types';
+import firestore from '@react-native-firebase/firestore';
+import {useSelector} from 'react-redux';
+import {loggedUserSelector} from '../store/loggedUser/selectors';
+import {Recommandation} from '../types';
 import {Card, Text} from 'react-native-paper';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
 
 const SharedScreen = ({navigation, route}: any) => {
-
-  const user = useSelector(loggedUserSelector)
-  const [sendedRec, setSendedRec] = useState<Recommandation[]>([])
+  const user = useSelector(loggedUserSelector);
+  const [sendedRec, setSendedRec] = useState<Recommandation[]>([]);
   const [receivedRec, setReceivedRec] = useState<Recommandation[]>([]);
 
   const sharedQuery = firestore().collection('recommandations');
-  useEffect(() =>{
-    sharedQuery.where('userSenderRef', '==', user.pk)
-    .onSnapshot(snapshot => {
+  useEffect(() => {
+    sharedQuery.where('userSenderRef', '==', user.pk).onSnapshot(snapshot => {
       setSendedRec(
         snapshot.docs.map(
           item => ({...item.data(), id: item.id} as Recommandation),
         ),
       );
-    })
+    });
 
-    sharedQuery.where('userDestRef', '==', user.pk)
-    .onSnapshot(snapshot => {
-      setReceivedRec(snapshot.docs.map(item=>({...item.data(), id: item.id} as Recommandation)))
-    })
-  },[user])
+    sharedQuery.where('userDestRef', '==', user.pk).onSnapshot(snapshot => {
+      setReceivedRec(
+        snapshot.docs.map(
+          item => ({...item.data(), id: item.id} as Recommandation),
+        ),
+      );
+    });
+  }, [user]);
 
   return (
     <View style={{flex: 1}}>
@@ -130,7 +131,8 @@ const DocArticle = ({
 }: {
   document: any;
   onPress: () => void;
-  icon:any}) => {
+  icon: any;
+}) => {
   return (
     <TouchableOpacity
       onPress={onPress}

@@ -33,39 +33,37 @@ const SearchUserScreen = ({navigation}: any) => {
         });
     }
   };
-   const handleInitChat = async (u: User) => {
-     await chatsQuery
-       .where('usersRefs', 'array-contains', user.pk)
-       .get()
-       .then(async snapshot => {
-         const chat = snapshot.docs
-             .map(item =>({...item.data(), id: item.id} as any))
-             .find(c => c.usersRefs.indexOf(u.pk)!==-1)
-         if (
-           snapshot.docs.length === 0 || chat === undefined
-         ) {
-           console.log('icicici');
-           await chatsQuery
-             .add({
-               usersRefs: [user.pk, u.pk],
-               createdAt: new Date().toISOString(),
-               users: [user, u],
-             })
-             .then(ref =>
-               ref.get().then(chat =>
-                 navigation.navigate('ChatRoom', {
-                   chat: {...chat.data(), id: chat.id},
-                 }),
-               ),
-             );
-         } else {
-           console.log('ALORS!', chat);
-           navigation.navigate('ChatRoom', {
-             chat,
-           });
-         }
-       });
-   };
+  const handleInitChat = async (u: User) => {
+    await chatsQuery
+      .where('usersRefs', 'array-contains', user.pk)
+      .get()
+      .then(async snapshot => {
+        const chat = snapshot.docs
+          .map(item => ({...item.data(), id: item.id} as any))
+          .find(c => c.usersRefs.indexOf(u.pk) !== -1);
+        if (snapshot.docs.length === 0 || chat === undefined) {
+          console.log('icicici');
+          await chatsQuery
+            .add({
+              usersRefs: [user.pk, u.pk],
+              createdAt: new Date().toISOString(),
+              users: [user, u],
+            })
+            .then(ref =>
+              ref.get().then(chat =>
+                navigation.navigate('ChatRoom', {
+                  chat: {...chat.data(), id: chat.id},
+                }),
+              ),
+            );
+        } else {
+          console.log('ALORS!', chat);
+          navigation.navigate('ChatRoom', {
+            chat,
+          });
+        }
+      });
+  };
   return (
     <View>
       <View

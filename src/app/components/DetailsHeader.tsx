@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Text} from 'react-native-paper'
+import {Text} from 'react-native-paper';
 import {
   Menu,
   MenuOption,
@@ -18,13 +18,17 @@ const DetailsHeader = ({
 }: {
   navigation: any;
   title: string | undefined;
-  backScreen?:string;
+  backScreen?: string;
   onSelectFilterList: any;
 }) => {
   return (
     <View style={styles.header}>
       <Ionicons
-        onPress={!!backScreen?navigation.navigate(backScreen):() => navigation.goBack()}
+        onPress={
+          backScreen
+            ? navigation.navigate(backScreen)
+            : () => navigation.goBack()
+        }
         name="arrow-back"
         size={30}
       />

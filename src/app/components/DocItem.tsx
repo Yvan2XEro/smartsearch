@@ -54,7 +54,7 @@ const DocItem = ({
         style={{
           flex: 0.1,
           alignSelf: 'center',
-          marginLeft: 'auto'
+          marginLeft: 'auto',
         }}>
         <Menu>
           <MenuTrigger>
