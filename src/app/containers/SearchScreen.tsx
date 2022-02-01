@@ -97,35 +97,6 @@ const SearchScreen = ({
     }
   };
 
-  // const makeSearch = async (query: string, doi?: string) => {
-  //   setLoading(true);
-  //   try {
-  //     const response = await fetch(base.springer_url + `&q=${query}`);
-  //     const json = await response.json();
-  //     setTotal(json?.result[0]?.total ?? 0);
-  //     onDataChange(total);
-  //     setData(json.records);
-  //   } catch (error) {
-  //     Alert.alert(error + '');
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const makeSearch2 = async (req: string, doi?: string) => {
-  //   try {
-  //     const response = await fetch(base.elsevier_url + `&query=${req}`);
-  //     const json = await response.json();
-  //     setTotal(+json['search-results']['opensearch:totalResults']);
-  //     setData2(json['search-results']['entry']);
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setLoading2(false);
-  //   }
-  // };
-
-  const [year, onChangeYear] = React.useState('2015');
   const [query, setQuery] = React.useState('');
 
   return (

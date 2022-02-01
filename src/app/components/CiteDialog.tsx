@@ -10,7 +10,7 @@ import React, {useEffect, useState} from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 // TODO: Utiliser un bon package pour Clipboard
-import Clipboard from '@react-native-clipboard/clipboard';
+// import Clipboard from '@react-native-clipboard/clipboard';
 
 const CiteDialog = ({
   doi,
