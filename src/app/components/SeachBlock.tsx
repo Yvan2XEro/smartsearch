@@ -77,7 +77,7 @@ const SearchBlock: React.FC<IProps> = ({
         }
       });
     } else {
-      return fastInputQuery;
+      return "title:"+fastInputQuery;
     }
     return q;
   };
