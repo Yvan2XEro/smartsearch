@@ -77,9 +77,9 @@ const SearchBlock: React.FC<IProps> = ({
         }
       });
     } else {
-      return "title:"+fastInputQuery;
+      q = "title:"+fastInputQuery;
     }
-    return q;
+    return q
   };
 
   const inputRef = React.useRef<RnTextInput>(null);

@@ -65,36 +65,43 @@ const SearchScreen = ({
     setShowSnackbar(true);
   }, []);
 
-  const aggregateSearch = async (query: string) => {
-    setbuildedQuery(query);
-    setLoading(true);
-    try {
-      const response1 = await fetch(
-        base.springer_url + `&q=${query}` + ' &s=' + currentPage + ' &p=' + 10,
-      );
-      console.log('QUERY: ' + query);
-      const response2 = await fetch(base.elsevier_url + `&query=${query}`);
-      const json1 = await response1.json();
-      const json2 = await response2.json();
-      const dat =
-        json2['search-results'] && json2['search-results'].entry
-          ? json2['search-results'].entry.map((item: any) => {
-              return {
-                title: item['dc:title'],
-                publicationDate: item['prism:coverDate'],
-              };
-            })
-          : [];
-      setData2(dat);
-      const values: any[] = [...data, ...json1.records, ...data2];
-      onDataChange(values.length);
-      setData(values);
-      setCurrentPage(currentPage + 1);
-    } catch (error) {
-      Alert.alert(error + '');
-    } finally {
-      setLoading(false);
-    }
+  const aggregateSearch = async (q: string) => {
+   if(q.length>0) {
+      setbuildedQuery(q);
+      setLoading(true);
+      try {
+        const response1 = await fetch(
+          base.springer_url +
+            `&q=${q}` +
+            ' &s=' +
+            currentPage +
+            ' &p=' +
+            10,
+        );
+        console.log('QUERY: ' + q);
+        const response2 = await fetch(base.elsevier_url + `&query=${q}`);
+        const json1 = await response1.json();
+        const json2 = await response2.json();
+        const dat =
+          json2['search-results'] && json2['search-results'].entry
+            ? json2['search-results'].entry.map((item: any) => {
+                return {
+                  title: item['dc:title'],
+                  publicationDate: item['prism:coverDate'],
+                };
+              })
+            : [];
+        setData2(dat);
+        const values: any[] = [...data, ...json1.records, ...data2];
+        onDataChange(values.length);
+        setData(values);
+        setCurrentPage(currentPage + 1);
+      } catch (error) {
+        Alert.alert(error + '');
+      } finally {
+        setLoading(false);
+      }
+   }
   };
 
   const [query, setQuery] = React.useState('');
@@ -109,8 +116,10 @@ const SearchScreen = ({
         onSubmitInputQuery={() => {
           setData([]);
           setData2([]);
+          console.log('IDIDIDIDI', query);
           aggregateSearch(query);
-        }}
+        }
+      }
         showSaveQueryButton={showSaveQueryButton}
         onSaveQuery={onSaveQuery}
       />
