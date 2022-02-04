@@ -42,6 +42,7 @@ const ListResultsModal = ({
       <Modal
         style={{backgroundColor: '#fff', justifyContent: 'flex-start'}}
         visible={visible}
+        dismissable={false}
         onDismiss={onDismiss}>
         <TouchableOpacity
           onPress={onDismiss}
@@ -75,20 +76,22 @@ const ListResultsModal = ({
         </View>
         {queries.length > 0 ? (
           <ScrollView style={{marginHorizontal: 5}}>
-            {queries.map(({name, searchedAt, data, query}: any, i: number) => (
+            {queries.map(({name, createdAt, data, query}: any, i: number) => (
               <View key={i} style={[styles.item]}>
                 <TouchableOpacity
                   onPress={() => onSelectItem({data, query})}
                   style={styles.row}>
                   <MaterialCommunityIcons name="history" size={35} />
-                  <View style={{marginLeft: 10}}>
-                    <Paragraph>{name}</Paragraph>
-                    <Text style={{fontSize: 10}}>{searchedAt}</Text>
+                  <View style={{marginLeft: 5, flex: 0.9,}}>
+                    <Text>
+                      {name.length > 35 ? name.substr(0, 35) + '...' : name}
+                    </Text>
+                    <Text style={{fontSize: 8}}>
+                      {createdAt}
+                    </Text>
                   </View>
                 </TouchableOpacity>
-                <TouchableOpacity
-                  style={{marginLeft: 25}}
-                  onPress={() => remove(name)}>
+                <TouchableOpacity onPress={() => remove(name)}>
                   <SimpleLineIcons color="black" name="trash" size={25} />
                 </TouchableOpacity>
               </View>

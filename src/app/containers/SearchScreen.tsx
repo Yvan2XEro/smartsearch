@@ -63,7 +63,7 @@ const SearchScreen = ({
     await dispatch(saveDocAction(doc));
     setSnackbarMessage('Doc saved!');
     setShowSnackbar(true);
-  }, []);
+  }, [buildedQuery]);
 
   const aggregateSearch = async (q: string) => {
    if(q.length>0) {
