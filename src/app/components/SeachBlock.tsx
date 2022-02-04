@@ -24,7 +24,7 @@ import SearchInput from './shared/SearchInput';
 
 interface IProps {
   onChangeInputQuery: (query: string) => void;
-  onSubmitInputQuery: () => void;
+  onSubmitInputQuery: (q:string) => void;
   value: string;
   showSaveQueryButton: boolean;
   onSaveQuery: any;
@@ -65,7 +65,7 @@ const SearchBlock: React.FC<IProps> = ({
     const query = buildQueryWithInputFilters();
     onChangeInputQuery(query);
     setShowFiltersBlock(false);
-    onSubmitInputQuery();
+    onSubmitInputQuery(query);
   };
   const buildQueryWithInputFilters = () => {
     let q = '';

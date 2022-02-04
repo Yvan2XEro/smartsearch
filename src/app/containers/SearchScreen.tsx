@@ -113,11 +113,10 @@ const SearchScreen = ({
         onSelectItem={setData}
         onChangeInputQuery={setQuery}
         navigation={navigation}
-        onSubmitInputQuery={() => {
+        onSubmitInputQuery={(q) => {
           setData([]);
           setData2([]);
-          console.log('IDIDIDIDI', query);
-          aggregateSearch(query);
+          aggregateSearch(q);
         }
       }
         showSaveQueryButton={showSaveQueryButton}
