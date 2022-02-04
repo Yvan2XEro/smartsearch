@@ -4,16 +4,18 @@ import {Tabs, TabScreen} from 'react-native-paper-tabs';
 import firestore from '@react-native-firebase/firestore';
 import {useSelector} from 'react-redux';
 import {loggedUserSelector} from '../store/loggedUser/selectors';
-import {Recommandation} from '../types';
-import {Card, Text} from 'react-native-paper';
+import {Recommandation, User} from '../types';
+import {Card, Dialog, Portal, Text} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
+import moment from 'moment';
 
 const SharedScreen = ({navigation, route}: any) => {
   const user = useSelector(loggedUserSelector);
   const [sendedRec, setSendedRec] = useState<Recommandation[]>([]);
   const [receivedRec, setReceivedRec] = useState<Recommandation[]>([]);
+  const [selectedRec, setSelectedRec] = useState<Recommandation|null>(null)
 
   const sharedQuery = firestore().collection('recommandations');
   useEffect(() => {
@@ -56,27 +58,7 @@ const SharedScreen = ({navigation, route}: any) => {
                   document={item.document}
                   icon={<FontAwesome name="send-o" size={20} />}
                   key={i}
-                  onPress={() =>
-                    navigation.navigate(
-                      'SearchStack' as never,
-                      {
-                        screen: 'Details',
-                        params: {
-                          document: {
-                            title: item.document.title,
-                            publicationDate: item.document.publicationDate,
-                            contentType: item.document.contentType,
-                            publisher: item.document.publisher,
-                            abstract: item.document.abstract,
-                            doi: item.document.doi,
-                            openaccess: item.document.openaccess,
-                            authors: item.document.creators,
-                          } as Document,
-                          backScreen: 'SharedScreen',
-                        },
-                      } as never,
-                    )
-                  }
+                  onPress={() => setSelectedRec(item)}
                 />
               ))}
             </View>
@@ -91,33 +73,14 @@ const SharedScreen = ({navigation, route}: any) => {
                   document={item.document}
                   key={i}
                   icon={<Entypo name="download" size={20} />}
-                  onPress={() =>
-                    navigation.navigate(
-                      'SearchStack' as never,
-                      {
-                        screen: 'Details',
-                        params: {
-                          document: {
-                            title: item.document.title,
-                            publicationDate: item.document.publicationDate,
-                            contentType: item.document.contentType,
-                            publisher: item.document.publisher,
-                            abstract: item.document.abstract,
-                            doi: item.document.doi,
-                            openaccess: item.document.openaccess,
-                            authors: item.document.creators,
-                          } as Document,
-                          backScreen: 'SharedScreen',
-                        },
-                      } as never,
-                    )
-                  }
+                  onPress={() => setSelectedRec(item)}
                 />
               ))}
             </View>
           </ScrollView>
         </TabScreen>
       </Tabs>
+      <DetailShared rec={selectedRec} onDismiss={() => setSelectedRec(null)} />
     </View>
   );
 };
@@ -170,6 +133,82 @@ const DocArticle = ({
         </View>
       </Card>
     </TouchableOpacity>
+  );
+};
+
+
+const DetailShared = ({
+  rec,
+  onDismiss,
+}: {
+  rec: Recommandation | null;
+  onDismiss: () => void;
+}) => {
+  const [u, setU] = React.useState<User | null>(null);
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [byMe, setByMe] = React.useState<boolean>(true)
+  const user = useSelector(loggedUserSelector)
+  React.useEffect(() => {
+    setLoading(true);
+    if(!!rec) {
+      setByMe(rec?.userSenderRef===user.pk)
+      firestore()
+        .collection('users')
+        .doc(byMe?rec?.userDestRef:rec.userSenderRef)
+        .get()
+        .then(snapshot => {
+          setU({...snapshot.data()} as User);
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [rec]);
+  return (
+    <Portal>
+      <Dialog
+        style={{backgroundColor: '#fff', padding: 10}}
+        visible={!!rec}
+        onDismiss={()=>{
+          setU(null)
+          onDismiss();
+        }}>
+        <Text style={{fontSize: 28, marginBottom: 10}}>Deatils</Text>
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+            }}>
+            <Text style={{fontWeight: 'bold'}}>{ byMe? "To:": "By:"}</Text>
+            {!!u && <Text style={{fontSize: 12}}>{u.displayName}</Text>}
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+            }}>
+            <Text style={{fontWeight: 'bold'}}>Recomanded At:</Text>
+            <Text style={{fontSize: 12}}>
+              {moment(rec?.crearedAt).format('YYYY-MM-DDDD HH:MM')}
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+            }}>
+            <Text style={{fontWeight: 'bold'}}>Document:</Text>
+            <Text style={{fontSize: 12}}>
+              {rec?.document.title.length > 200
+                ? rec?.document.title.substr(0, 200) + '...'
+                : rec?.document.title}
+            </Text>
+          </View>
+        </View>
+      </Dialog>
+    </Portal>
   );
 };
 
