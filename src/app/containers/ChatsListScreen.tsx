@@ -13,12 +13,13 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import firestore from '@react-native-firebase/firestore';
 import {useSelector} from 'react-redux';
 import {loggedUserSelector} from '../store/loggedUser/selectors';
-import {User} from '../types';
+import {Chat, Message, User} from '../types';
+import moment from 'moment';
 
 const ChatsListScreen = ({navigation}: any) => {
   const user = useSelector(loggedUserSelector);
 
-  const [chats, setChats] = React.useState<any[]>([]);
+  const [chats, setChats] = React.useState<Chat[]>([]);
 
   React.useEffect(() => {
     if (user) {
@@ -26,7 +27,11 @@ const ChatsListScreen = ({navigation}: any) => {
         .collection('chats')
         .where('usersRefs', 'array-contains', user.pk)
         .onSnapshot(snapshot =>
-          setChats(snapshot.docs.map(item => ({...item.data(), id: item.id}))),
+          setChats(
+            snapshot.docs
+              .map(item => ({...item.data(), id: item.id} as Chat))
+              .filter(item => !!item.lastMessage),
+          ),
         );
       return subscriber;
     }
@@ -65,7 +70,7 @@ const ChatsListScreen = ({navigation}: any) => {
           </View>
         </TouchableOpacity>
       </View>
-      <View style={{backgroundColor: '#fff'}}>
+      {/* <View style={{backgroundColor: '#fff'}}>
         <Text style={{textTransform: 'uppercase', marginLeft: 10}}>
           Online users
         </Text>
@@ -81,7 +86,7 @@ const ChatsListScreen = ({navigation}: any) => {
           <OnlineItem />
           <OnlineItem />
         </ScrollView>
-      </View>
+      </View> */}
       <View style={{backgroundColor: '#fefefe'}}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {chats.map((chat, i) => (
@@ -93,6 +98,7 @@ const ChatsListScreen = ({navigation}: any) => {
                   ? (chat.users[1] as User)
                   : (chat.users[0] as User)
               }
+              lastMessage={chat.lastMessage}
             />
           ))}
         </ScrollView>
@@ -126,7 +132,15 @@ const OnlineItem = () => (
   </TouchableOpacity>
 );
 
-const ChatItem = ({user, onPress}: {user: User; onPress: any}) => (
+const ChatItem = ({
+  user,
+  onPress,
+  lastMessage,
+}: {
+  user: User;
+  onPress: any;
+  lastMessage?: Message;
+}) => (
   <TouchableOpacity
     style={{
       marginTop: 5,
@@ -149,7 +163,27 @@ const ChatItem = ({user, onPress}: {user: User; onPress: any}) => (
     onPress={onPress}>
     <View style={{flexDirection: 'row', alignItems: 'center'}}>
       <Avatar.Image source={{uri: user.photoUrl}} size={50} />
-      <Text style={{marginLeft: 20, fontSize: 17}}>{user.displayName}</Text>
+      <View style={{position: 'relative', flex: 1}}>
+        <Text style={{marginLeft: 20, fontSize: 17}}>
+          {user.displayName.length > 20
+            ? user.displayName.substring(0, 17) + '...'
+            : user.displayName}
+        </Text>
+        {lastMessage && (
+          <>
+            <View>
+              <Text style={{fontSize: 9, marginLeft: 20, color: '#000'}}>
+                {lastMessage?.content.length > 30
+                  ? lastMessage?.content.substring(0, 30) + '...'
+                  : lastMessage?.content}
+              </Text>
+            </View>
+            <Text style={{position: 'absolute', right: 0, bottom: 0, fontSize: 9}}>
+              {moment(lastMessage.createdAt).format('DD/MM/YY h:mm')}
+            </Text>
+          </>
+        )}
+      </View>
     </View>
   </TouchableOpacity>
 );

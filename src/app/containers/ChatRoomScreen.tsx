@@ -28,6 +28,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
   const isMyMessage = (message: Message): boolean => {
     return message.userRef === user.pk;
   };
+
   const handleSendMessage = async () => {
     if (message.trim().length > 0) {
       const data = {
@@ -46,6 +47,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
         .add(data)
         .then(() => {
           listRef.current?.scrollToEnd();
+          firestore().collection('chats').doc(chat.id).update({lastMessage:data})
         });
     }
   };

@@ -43,7 +43,7 @@ const SearchBlock: React.FC<IProps> = ({
 }) => {
   const [showFiltersBlock, setShowFiltersBlock] = React.useState(false);
   const [fastInputQuery, setFastInputQuery] = React.useState(value);
-  const [params, setParams] = React.useState({
+  const initialParams = {
     title: '',
     publicationName: '',
     topicalCollection: '',
@@ -56,7 +56,8 @@ const SearchBlock: React.FC<IProps> = ({
     number: 0,
     issuetype: '',
     keyWords: '',
-  });
+  };
+  const [params, setParams] = React.useState(initialParams);
 
   const [showModal, setShowModal] = React.useState(false);
 
@@ -66,6 +67,7 @@ const SearchBlock: React.FC<IProps> = ({
     onChangeInputQuery(query);
     setShowFiltersBlock(false);
     onSubmitInputQuery(query);
+    setParams(initialParams);
   };
   const buildQueryWithInputFilters = () => {
     let q = '';

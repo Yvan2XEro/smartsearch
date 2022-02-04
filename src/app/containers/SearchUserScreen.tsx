@@ -99,11 +99,12 @@ const SearchUserScreen = ({navigation}: any) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 paddingHorizontal: 15,
+                paddingVertical: 3,
                 borderWidth: 0.3,
                 margin: 5,
                 borderRadius: 5,
               }}>
-              <Avatar.Image source={{uri: u.photoUrl}} size={30} />
+              <Avatar.Image source={{uri: u.photoUrl}} size={35} />
               <View style={{marginLeft: 10}}>
                 <Text style={{fontSize: 16}}>{u.displayName}</Text>
                 <Text style={{color: 'gray', fontSize: 10}}>{u.email}</Text>

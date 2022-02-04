@@ -11,6 +11,13 @@ export type User = {
   photoUrl?: string;
 };
 
+export type Chat = {
+  id?: string;
+  lastMessage?: Message;
+  users: any[];
+  usersRef: string[];
+}
+
 export type Message = {
   id?: string;
   chatRef?: string;
