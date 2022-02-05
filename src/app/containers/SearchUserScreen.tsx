@@ -42,7 +42,6 @@ const SearchUserScreen = ({navigation}: any) => {
           .map(item => ({...item.data(), id: item.id} as any))
           .find(c => c.usersRefs.indexOf(u.pk) !== -1);
         if (snapshot.docs.length === 0 || chat === undefined) {
-          console.log('icicici');
           await chatsQuery
             .add({
               usersRefs: [user.pk, u.pk],

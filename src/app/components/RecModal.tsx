@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {
   Dimensions,
+  Keyboard,
   ScrollView,
   StyleSheet,
   TextInput,
@@ -49,6 +50,7 @@ const RecModal = ({
 
   const handleFetch = (text: string) => {
     if (text.length > 0) {
+      // Keyboard.dismiss()
       query
         .startAt(text)
         .endAt(text + '~')
@@ -59,7 +61,9 @@ const RecModal = ({
               ...item.data(),
               displayName: item.data().displayName,
               email: item.data().email,
-            })),
+            } as User)).filter(u=>{
+              return fetchedUsers.indexOf(u)===-1 && selectedUsers.indexOf(u)===-1
+            }),
           );
         });
     }
@@ -118,7 +122,7 @@ const RecModal = ({
               maxHeight: Dimensions.get('window').height / 4,
               backgroundColor: '#E8E8EC',
             }}>
-            {fetchedUsers.map((user, i) => (
+            {fetchedUsers.filter(u=>selectedUsers.indexOf(u)===-1).map((user, i) => (
               <ProfileListItem
                 key={i}
                 user={user}
@@ -126,8 +130,9 @@ const RecModal = ({
                   if (input != '') {
                     setInput('');
                   }
+                  console.log('uuuuuuuuuuuuuuuuu', selectedUsers.indexOf(user));
                   setSelectedUsers([...selectedUsers, user]);
-                  setFetchedUsers(fetchedUsers.filter(u => u != user));
+                  setFetchedUsers(fetchedUsers.filter(u => u.pk !== user.pk));
                 }}
               />
             ))}
@@ -155,7 +160,8 @@ const RecModal = ({
                   key={i}
                   onDelete={() => {
                     setSelectedUsers(selectedUsers.filter(u => u != user));
-                    setFetchedUsers([...fetchedUsers, user]);
+                    if(fetchedUsers.indexOf(user)===-1)
+                      setFetchedUsers([...fetchedUsers, user]);
                   }}
                 />
               ))}

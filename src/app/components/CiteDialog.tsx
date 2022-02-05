@@ -28,7 +28,7 @@ const CiteDialog = ({
   }, [doi]);
   return (
     <Portal>
-      <Dialog visible={!!doi} onDismiss={onDismiss}>
+      <Dialog style={{paddingBottom: 0}} visible={!!doi} onDismiss={onDismiss}>
         <View style={{padding: 10}}>
           <View>
             <Button
@@ -44,14 +44,15 @@ const CiteDialog = ({
               {btnText}
             </Button>
           </View>
-          <ScrollView>
+          <ScrollView
+            style={{height: '80%', borderRadius: 5, borderWidth: 0.3, marginTop: 10, padding: 3}}>
             <Text
-              style={{
-                borderRadius: 5,
-                backgroundColor: '#fdfdfd',
-                borderWidth: 0.3,
-                maxHeight: 350,
-              }}>
+              style={
+                {
+                  // backgroundColor: '#fdfdfd',
+                  // maxHeight: 350,
+                }
+              }>
               {response}
             </Text>
           </ScrollView>
