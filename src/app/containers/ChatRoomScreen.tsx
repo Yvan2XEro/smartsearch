@@ -150,7 +150,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
         style={{
           position: 'absolute',
           bottom: 0,
-          marginBottom: 0,
+          marginBottom: 10,
           paddingBottom: 5,
           paddingHorizontal: 7,
           flexDirection: 'row',
@@ -159,6 +159,14 @@ const ChatRoomScreen = ({navigation, route}: any) => {
           justifyContent: 'center',
           width: '95%',
           alignSelf: 'center',
+          shadowColor: 'rgb(0, 0, 0)',
+          shadowOffset: {
+            width: 3,
+            height: 3,
+          },
+          shadowOpacity: 0.5,
+          shadowRadius: 5,
+          elevation: 2,
         }}>
         <TextInput
           value={message}
