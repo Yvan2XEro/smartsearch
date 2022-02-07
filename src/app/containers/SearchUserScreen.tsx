@@ -12,6 +12,7 @@ import {User} from '../types';
 import {Avatar, Text} from 'react-native-paper';
 import {useSelector} from 'react-redux';
 import {loggedUserSelector} from '../store/loggedUser/selectors';
+import { theme } from '../styles';
 
 const SearchUserScreen = ({navigation}: any) => {
   const [users, setUsers] = React.useState<User[]>([]);
@@ -56,7 +57,6 @@ const SearchUserScreen = ({navigation}: any) => {
               ),
             );
         } else {
-          console.log('ALORS!', chat);
           navigation.navigate('ChatRoom', {
             chat,
           });
@@ -75,6 +75,7 @@ const SearchUserScreen = ({navigation}: any) => {
         <Ionicons
           onPress={() => navigation.replace('ChatsList')}
           name="arrow-back"
+          color={theme.colors.primary}
           size={30}
         />
         <TextInput
@@ -84,7 +85,7 @@ const SearchUserScreen = ({navigation}: any) => {
           placeholder="Search by email..."
         />
         <TouchableOpacity style={{marginLeft: 'auto'}}>
-          <Ionicons name="ios-search" size={25} />
+          <Ionicons name="ios-search" size={25} color={theme.colors.primary} />
         </TouchableOpacity>
       </View>
       <ScrollView>
@@ -100,6 +101,7 @@ const SearchUserScreen = ({navigation}: any) => {
                 paddingHorizontal: 15,
                 paddingVertical: 3,
                 borderWidth: 0.3,
+                borderColor: theme.colors.primary,
                 margin: 5,
                 borderRadius: 5,
               }}>
@@ -110,7 +112,7 @@ const SearchUserScreen = ({navigation}: any) => {
               </View>
               <Ionicons
                 style={{marginLeft: 'auto'}}
-                color="#000"
+                color={theme.colors.primary}
                 name="arrow-forward"
                 size={25}
               />

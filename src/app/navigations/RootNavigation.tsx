@@ -17,6 +17,7 @@ import firestore from '@react-native-firebase/firestore';
 import {User} from '../types';
 import { theme } from '../styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import SettingStackNavigation from './SettingStackNavigation';
 
 const Drawer = createDrawerNavigator();
 export default function RootNavigation() {
@@ -65,13 +66,13 @@ export default function RootNavigation() {
           itemStyle: {marginVertical: 10},
         }}
         screenOptions={{
-          headerStyle:{
+          headerStyle: {
             backgroundColor: theme.colors.primary,
           },
           headerTitleStyle: {
-            color: 'white'
+            color: 'white',
           },
-          headerTintColor: 'white'
+          headerTintColor: 'white',
         }}
         drawerContent={(props: any) => {
           return <DrawerContent {...props} />;
@@ -98,6 +99,14 @@ export default function RootNavigation() {
             headerShown: true,
           }}
           component={SharedScreen}
+        />
+        <Drawer.Screen
+          name="Settings"
+          options={{
+            title: 'SETTINGS',
+            headerShown: true
+          }}
+          component={SettingStackNavigation}
         />
       </Drawer.Navigator>
     );

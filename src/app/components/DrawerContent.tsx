@@ -102,7 +102,7 @@ const DrawerContent = ({navigation}: {navigation: any}) => {
                   color={theme.colors.primary}
                 />
               }
-              onPress={() => navigation.navigate('Home')}
+              onPress={() => navigation.navigate('Settings')}
             />
             <CustomDrawerItem
               label="Help"
@@ -162,7 +162,7 @@ const CustomDrawerItem = ({
       <DrawerItem
         icon={({}) => icon}
         style={{flex: 0.9}}
-        labelStyle={{fontSize: 13, color: theme.colors.primary}}
+        labelStyle={{fontSize: 13, color: theme.colors.primary, fontWeight: 'bold'}}
         label={label}
         onPress={onPress}
       />
