@@ -3,14 +3,12 @@ import {
   Text,
   View,
   ScrollView,
-  Clipboard as Clip,
 } from 'react-native';
 import {Portal, Dialog, Button} from 'react-native-paper';
 import React, {useEffect, useState} from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {AppClipBoard} from '../services'
 
-// TODO: Utiliser un bon package pour Clipboard
-// import Clipboard from '@react-native-clipboard/clipboard';
 
 const CiteDialog = ({
   doi,
@@ -34,8 +32,7 @@ const CiteDialog = ({
             <Button
               mode="contained"
               onPress={() => {
-                Clip.setString(response);
-                // Clipboard.setString(response);
+                AppClipBoard.setString(response);
                 setBtnText('Text copied!');
               }}
               icon={({color, size}) => (

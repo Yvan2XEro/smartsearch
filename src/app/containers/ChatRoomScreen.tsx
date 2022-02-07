@@ -16,6 +16,8 @@ import moment from 'moment';
 import {useSelector} from 'react-redux';
 import {loggedUserSelector} from '../store/loggedUser/selectors';
 import {theme} from '../styles'
+import {SelectableText} from '@astrocoders/react-native-selectable-text';
+import { AppClipBoard } from '../services';
 
 const ChatRoomScreen = ({navigation, route}: any) => {
   const user = useSelector(loggedUserSelector);
@@ -100,7 +102,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
           <Ionicons
             onPress={() => navigation.replace('ChatsList')}
             name="arrow-back"
-            color='white'
+            color="white"
             size={30}
           />
           <View style={{flex: 0.9, marginLeft: 16}}>
@@ -110,15 +112,18 @@ const ChatRoomScreen = ({navigation, route}: any) => {
                 textTransform: 'uppercase',
                 fontWeight: 'bold',
                 color: 'white',
-                letterSpacing: .5,
+                letterSpacing: 0.5,
                 textAlign: 'center',
               }}>
               {chatSnduser.displayName}
             </Text>
-            <Text style={{textAlign: 'center', fontSize: 12, letterSpacing: .5}}>Online</Text>
+            <Text
+              style={{textAlign: 'center', fontSize: 12, letterSpacing: 0.5}}>
+              Online
+            </Text>
           </View>
           <TouchableOpacity style={{marginLeft: 'auto'}}>
-            <Entypo name="dots-three-vertical" color='white' size={25} />
+            <Entypo name="dots-three-vertical" color="white" size={25} />
           </TouchableOpacity>
         </View>
       </View>
@@ -144,7 +149,16 @@ const ChatRoomScreen = ({navigation, route}: any) => {
                 />
               )}
               <View style={styles.text}>
-                <Text style={{color: 'black'}}>{item.content}</Text>
+                <SelectableText
+                  style={{color: 'black'}}
+                  menuItems={['Copy', 'Cut']}
+                  onSelection={({content, eventType})=>{
+                    AppClipBoard.setString(content);
+                    // console.log('ICII', eventType);
+                  }}
+                  value={item.content}
+                />
+                {/* <Text style={{color: 'black'}}>{item.content}</Text> */}
                 <Text style={{fontSize: 8}}>{formatDate(item.createdAt)}</Text>
               </View>
             </TouchableOpacity>
