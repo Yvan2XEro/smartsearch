@@ -1,6 +1,7 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import * as React from 'react';
 import {useDispatch} from 'react-redux';
+import { View } from 'react-native';
 import DrawerContent from '../components/DrawerContent';
 import {loadDocsAction} from '../store/docs/actions';
 import {loadResultsAction} from '../store/queriesResults/actions';
@@ -14,6 +15,8 @@ import SharedScreen from '../containers/SharedScreen';
 import {updateUserAction} from '../store/loggedUser/actions';
 import firestore from '@react-native-firebase/firestore';
 import {User} from '../types';
+import { theme } from '../styles';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 const Drawer = createDrawerNavigator();
 export default function RootNavigation() {
@@ -59,8 +62,16 @@ export default function RootNavigation() {
         initialRouteName="App"
         drawerType="front"
         drawerContentOptions={{
-          activeTintColor: '#e91e63',
           itemStyle: {marginVertical: 10},
+        }}
+        screenOptions={{
+          headerStyle:{
+            backgroundColor: theme.colors.primary,
+          },
+          headerTitleStyle: {
+            color: 'white'
+          },
+          headerTintColor: 'white'
         }}
         drawerContent={(props: any) => {
           return <DrawerContent {...props} />;

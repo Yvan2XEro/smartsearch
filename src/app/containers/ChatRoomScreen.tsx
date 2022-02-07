@@ -15,6 +15,7 @@ import {Message} from '../types';
 import moment from 'moment';
 import {useSelector} from 'react-redux';
 import {loggedUserSelector} from '../store/loggedUser/selectors';
+import {theme} from '../styles'
 
 const ChatRoomScreen = ({navigation, route}: any) => {
   const user = useSelector(loggedUserSelector);
@@ -99,6 +100,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
           <Ionicons
             onPress={() => navigation.replace('ChatsList')}
             name="arrow-back"
+            color='white'
             size={30}
           />
           <View style={{flex: 0.9, marginLeft: 16}}>
@@ -106,18 +108,21 @@ const ChatRoomScreen = ({navigation, route}: any) => {
               style={{
                 fontSize: 15,
                 textTransform: 'uppercase',
+                fontWeight: 'bold',
+                color: 'white',
+                letterSpacing: .5,
                 textAlign: 'center',
               }}>
               {chatSnduser.displayName}
             </Text>
-            <Text style={{textAlign: 'center', fontSize: 12}}>Online</Text>
+            <Text style={{textAlign: 'center', fontSize: 12, letterSpacing: .5}}>Online</Text>
           </View>
           <TouchableOpacity style={{marginLeft: 'auto'}}>
-            <Entypo name="dots-three-vertical" color="gray" size={25} />
+            <Entypo name="dots-three-vertical" color='white' size={25} />
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{marginTop: 5, marginBottom: 107}}>
+      <View style={{marginTop: 5, marginBottom: 116}}>
         <FlatList
           showsVerticalScrollIndicator={false}
           ref={listRef}
@@ -180,7 +185,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
           <Feather
             style={{alignSelf: 'center', marginTop: 5}}
             name="send"
-            color="#000"
+            color={theme.colors.primary}
             size={30}
           />
         </TouchableOpacity>
@@ -203,7 +208,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.primary,
   },
 
   image: {

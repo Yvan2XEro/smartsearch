@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import LoginSvg from '../assets/login.svg';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -10,7 +10,8 @@ import {
   EMAIL_PASSWORD,
   GOOGLE,
 } from '../contexts/AuthContextProvider';
-import {Button} from 'react-native-paper';
+import {Button, Text} from 'react-native-paper';
+import { theme } from '../styles';
 
 const SignInScreen = ({navigation}: any) => {
   const [email, setEmail] = React.useState('');
@@ -32,7 +33,7 @@ const SignInScreen = ({navigation}: any) => {
           setPassword('');
           setError('Bad credentials!');
         }
-        console.log('yoo', error);
+        console.log(error);
       })
       .then(() => {
         setLoading(false);
@@ -52,13 +53,19 @@ const SignInScreen = ({navigation}: any) => {
         </View>
         <View style={{marginTop: 15}}>
           <AuthInput
-            icon={<Entypo name="user" size={30} />}
+            icon={<Entypo name="user" size={30} color={theme.colors.primary} />}
             value={email}
             label="Email"
             onChangeText={(text: string) => setEmail(text)}
           />
           <AuthInput
-            icon={<MaterialIcons name="lock-outline" size={30} />}
+            icon={
+              <MaterialIcons
+                name="lock-outline"
+                size={30}
+                color={theme.colors.primary}
+              />
+            }
             label="Password"
             value={password}
             onChangeText={(text: string) => setPassword(text)}
@@ -66,9 +73,13 @@ const SignInScreen = ({navigation}: any) => {
               <TouchableOpacity
                 onPress={() => setIsSecureEntry(!isSecureEntry)}>
                 {isSecureEntry ? (
-                  <Entypo name="eye" size={30} />
+                  <Entypo name="eye" size={30} color={theme.colors.primary} />
                 ) : (
-                  <Entypo name="eye-with-line" size={30} />
+                  <Entypo
+                    name="eye-with-line"
+                    size={30}
+                    color={theme.colors.primary}
+                  />
                 )}
               </TouchableOpacity>
             }
@@ -79,7 +90,7 @@ const SignInScreen = ({navigation}: any) => {
             <Button
               onPress={handleSimpleLogin}
               loading={loading}
-              style={{backgroundColor: 'gray', borderRadius: 20}}>
+              style={{backgroundColor: theme.colors.primary, borderRadius: 20}}>
               <Text style={{color: '#fff', textAlign: 'center'}}>Login</Text>
             </Button>
             <Button
@@ -94,9 +105,10 @@ const SignInScreen = ({navigation}: any) => {
               icon={({size}) => (
                 <SimpleLineIcons name="social-google" color="red" size={size} />
               )}
+              labelStyle={{color: 'red'}}
               style={{
                 borderWidth: 1,
-                borderColor: 'gray',
+                borderColor: 'red',
                 borderRadius: 20,
                 marginTop: 10,
               }}>
@@ -113,9 +125,14 @@ const SignInScreen = ({navigation}: any) => {
             alignSelf: 'flex-end',
           }}>
           <Text style={{fontSize: 12}}>
-            Don't have account? <Text style={{color: '#000'}}>Register</Text>
+            Don't have account?{' '}
+            <Text style={{color: theme.colors.primary}}>Register</Text>
           </Text>
-          <MaterialIcons name="navigate-next" size={20} color="#000" />
+          <MaterialIcons
+            name="navigate-next"
+            size={20}
+            color={theme.colors.primary}
+          />
         </TouchableOpacity>
       </View>
     </View>
@@ -125,7 +142,7 @@ const SignInScreen = ({navigation}: any) => {
 export default SignInScreen;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: 'gray'},
+  container: {flex: 1, backgroundColor: theme.colors.primary},
   header: {flex: 0.3},
   footer: {
     backgroundColor: '#fff',
@@ -135,5 +152,5 @@ const styles = StyleSheet.create({
     padding: 20,
     overflow: 'hidden',
   },
-  title: {fontWeight: 'bold', fontSize: 25},
+  title: {fontWeight: 'bold', fontSize: 25, color: theme.colors.primary},
 });

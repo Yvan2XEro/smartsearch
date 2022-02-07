@@ -12,6 +12,7 @@ import {Button, Text} from 'react-native-paper';
 import {TextInput as RnTextInput} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   Menu,
@@ -21,6 +22,7 @@ import {
 } from 'react-native-popup-menu';
 import ListResultsModal from './ListResultsModal';
 import SearchInput from './shared/SearchInput';
+import { theme } from '../styles';
 
 interface IProps {
   onChangeInputQuery: (query: string) => void;
@@ -95,7 +97,7 @@ const SearchBlock: React.FC<IProps> = ({
         style={{
           flexDirection: 'column',
           backgroundColor: '#fff',
-          shadowColor: '#000',
+          shadowColor: theme.colors.primary,
           shadowOffset: {
             width: 0,
             height: 2,
@@ -108,6 +110,7 @@ const SearchBlock: React.FC<IProps> = ({
           <MaterialIcons
             onPress={() => navigation.openDrawer()}
             name="apps"
+            color={theme.colors.primary}
             size={marginLeftInput}
             style={{marginTop: 10}}
           />
@@ -126,6 +129,7 @@ const SearchBlock: React.FC<IProps> = ({
               <MaterialCommunityIcons
                 style={{marginTop: 10, marginRight: 20}}
                 name="close-circle"
+                color={theme.colors.primary}
                 size={25}
               />
             </TouchableOpacity>
@@ -135,6 +139,7 @@ const SearchBlock: React.FC<IProps> = ({
               onPress={() => setShowFiltersBlock(!showFiltersBlock)}>
               <MaterialCommunityIcons
                 size={25}
+                color={theme.colors.primary}
                 name={showFiltersBlock ? 'filter-menu' : 'filter-menu-outline'}
               />
             </TouchableOpacity>
@@ -142,7 +147,11 @@ const SearchBlock: React.FC<IProps> = ({
 
           <Menu style={{alignSelf: 'center'}}>
             <MenuTrigger>
-              <Entypo name="dots-three-vertical" color="gray" size={25} />
+              <Entypo
+                name="dots-three-vertical"
+                color={theme.colors.primary}
+                size={25}
+              />
             </MenuTrigger>
             <MenuOptions>
               <MenuOption
@@ -152,6 +161,7 @@ const SearchBlock: React.FC<IProps> = ({
                   <MaterialCommunityIcons
                     style={{marginRight: 3}}
                     size={20}
+                    color={theme.colors.primary}
                     name="content-save-all-outline"
                   />
                   <Text style={!showSaveQueryButton && {color: 'gray'}}>
@@ -164,6 +174,7 @@ const SearchBlock: React.FC<IProps> = ({
                   <MaterialIcons
                     style={{marginRight: 3}}
                     size={20}
+                    color={theme.colors.primary}
                     name="snippet-folder"
                   />
                   <Text>Saved results</Text>
@@ -183,7 +194,13 @@ const SearchBlock: React.FC<IProps> = ({
                 onChangeText={(text: string) =>
                   setParams({...params, title: text})
                 }
-                fieldIcon={<Entypo name="book" size={marginLeftInput} />}
+                fieldIcon={
+                  <Entypo
+                    name="book"
+                    size={marginLeftInput}
+                    color={theme.colors.primary}
+                  />
+                }
               />
               <SearchInput
                 onChangeText={(text: string) =>
@@ -192,6 +209,7 @@ const SearchBlock: React.FC<IProps> = ({
                 fieldIcon={
                   <MaterialIcons
                     name="drive-file-rename-outline"
+                    color={theme.colors.primary}
                     size={marginLeftInput}
                   />
                 }
@@ -202,7 +220,13 @@ const SearchBlock: React.FC<IProps> = ({
                 onChangeText={(text: string) =>
                   setParams({...params, authorName: text})
                 }
-                fieldIcon={<Entypo name="user" size={marginLeftInput - 3} />}
+                fieldIcon={
+                  <Entypo
+                    name="user"
+                    size={marginLeftInput - 3}
+                    color={theme.colors.primary}
+                  />
+                }
               />
               <SearchInput
                 onChangeText={(text: string) =>
@@ -212,6 +236,7 @@ const SearchBlock: React.FC<IProps> = ({
                   <MaterialCommunityIcons
                     name="identifier"
                     size={marginLeftInput}
+                    color={theme.colors.primary}
                   />
                 }
                 label="Doi"
@@ -224,6 +249,7 @@ const SearchBlock: React.FC<IProps> = ({
                   <MaterialCommunityIcons
                     name="bookshelf"
                     size={marginLeftInput}
+                    color={theme.colors.primary}
                   />
                 }
                 label="Topical Collection"
@@ -252,6 +278,7 @@ const SearchBlock: React.FC<IProps> = ({
                 fieldIcon={
                   <MaterialCommunityIcons
                     name="sort-numeric-variant"
+                    color={theme.colors.primary}
                     size={marginLeftInput}
                   />
                 }
@@ -261,7 +288,13 @@ const SearchBlock: React.FC<IProps> = ({
                 onChangeText={(text: string) =>
                   setParams({...params, publisher: text})
                 }
-                fieldIcon={<Entypo name="user" size={marginLeftInput - 3} />}
+                fieldIcon={
+                  <Entypo
+                    name="user"
+                    size={marginLeftInput - 3}
+                    color={theme.colors.primary}
+                  />
+                }
               />
               <SearchInput
                 label="Issue type"
@@ -279,6 +312,7 @@ const SearchBlock: React.FC<IProps> = ({
                 fieldIcon={
                   <MaterialCommunityIcons
                     name="calendar-blank"
+                    color={theme.colors.primary}
                     size={marginLeftInput}
                   />
                 }
@@ -293,6 +327,14 @@ const SearchBlock: React.FC<IProps> = ({
                 placeholder="Ex: security, informatic, network"
               />
               <Button
+                mode="outlined"
+                icon={() => (
+                  <Ionicons
+                    name="ios-search"
+                    color={theme.colors.primary}
+                    size={25}
+                  />
+                )}
                 style={[styles.input, styles.sumitBtn]}
                 onPress={handleSumitQuery}>
                 Search
@@ -356,7 +398,8 @@ const styles = StyleSheet.create({
   },
   sumitBtn: {
     // backgroundColor: '#2B49F7',
-    backgroundColor: 'gray',
+    // backgroundColor: 'gray',
+    borderColor: theme.colors.primary,
     paddingTop: 3,
     marginBottom: 5,
     marginLeft: 'auto',

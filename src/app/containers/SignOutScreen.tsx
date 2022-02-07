@@ -2,7 +2,6 @@ import * as React from 'react';
 import {
   KeyboardAvoidingView,
   StyleSheet,
-  Text,
   TextInput,
   TouchableOpacity,
   View,
@@ -15,7 +14,8 @@ import {
   EMAIL_PASSWORD,
 } from '../contexts/AuthContextProvider';
 import {emailRegex} from '../services';
-import {Button} from 'react-native-paper';
+import {Button, Text} from 'react-native-paper';
+import { theme } from '../styles';
 
 const SignOutScreen = ({navigation}: any) => {
   const [isSecureEntry, setIsSecureEntry] = React.useState(true);
@@ -64,27 +64,43 @@ const SignOutScreen = ({navigation}: any) => {
         </View>
         <View style={{marginTop: 15}}>
           <AuthInput
-            icon={<Entypo name="user" size={30} />}
+            icon={<Entypo name="user" size={30} color={theme.colors.primary} />}
             value={name}
             label="Full name"
             onChangeText={(text: string) => setName(text)}
           />
           <AuthInput
-            icon={<MaterialIcons name="vpn-key" size={30} />}
+            icon={
+              <MaterialIcons
+                name="vpn-key"
+                size={30}
+                color={theme.colors.primary}
+              />
+            }
             label="Email"
             onChangeText={(text: string) => setEmail(text)}
           />
           <AuthInput
-            icon={<MaterialIcons name="lock-outline" size={30} />}
+            icon={
+              <MaterialIcons
+                name="lock-outline"
+                size={30}
+                color={theme.colors.primary}
+              />
+            }
             label="Password"
             onChangeText={(text: string) => setPassword(text)}
             rigthIcon={
               <TouchableOpacity
                 onPress={() => setIsSecureEntry(!isSecureEntry)}>
                 {isSecureEntry ? (
-                  <Entypo name="eye" size={30} />
+                  <Entypo name="eye" size={30} color={theme.colors.primary} />
                 ) : (
-                  <Entypo name="eye-with-line" size={30} />
+                  <Entypo
+                    name="eye-with-line"
+                    size={30}
+                    color={theme.colors.primary}
+                  />
                 )}
               </TouchableOpacity>
             }
@@ -97,7 +113,7 @@ const SignOutScreen = ({navigation}: any) => {
             <Button
               onPress={handleSignUp}
               loading={loading}
-              style={{backgroundColor: 'gray', borderRadius: 20}}>
+              style={{backgroundColor: theme.colors.primary, borderRadius: 20}}>
               <Text style={{color: '#fff', textAlign: 'center'}}>Register</Text>
             </Button>
           </View>
@@ -112,9 +128,13 @@ const SignOutScreen = ({navigation}: any) => {
           }}>
           <Text style={{textAlign: 'center', fontSize: 12}}>
             Already have google or other account?{' '}
-            <Text style={{color: '#000'}}>Sign in</Text>
+            <Text style={{color: theme.colors.primary}}>Sign in</Text>
           </Text>
-          <MaterialIcons name="navigate-next" size={20} color="#000" />
+          <MaterialIcons
+            name="navigate-next"
+            size={20}
+            color={theme.colors.primary}
+          />
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -143,14 +163,14 @@ export const AuthInput = ({
         marginTop: 5,
         alignItems: 'center',
         borderWidth: 0.3,
-        borderColor: 'gray',
+        borderColor: theme.colors.primary,
         borderRadius: 20,
         paddingLeft: 10,
       }}>
       {icon}
       <TextInput
         placeholder={label + '...'}
-        style={{flex: 0.95}}
+        style={{flex: 0.95, letterSpacing: .5}}
         value={value}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
@@ -163,7 +183,7 @@ export const AuthInput = ({
 export default SignOutScreen;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: 'gray'},
+  container: {flex: 1, backgroundColor: theme.colors.primary},
   header: {flex: 0.3},
   footer: {
     backgroundColor: '#fff',
@@ -173,5 +193,5 @@ const styles = StyleSheet.create({
     padding: 20,
     overflow: 'hidden',
   },
-  title: {fontWeight: 'bold', fontSize: 25},
+  title: {fontWeight: 'bold', fontSize: 25,color:theme.colors.primary},
 });

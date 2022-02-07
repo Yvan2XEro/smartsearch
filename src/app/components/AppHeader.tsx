@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { theme } from '../styles';
 
 const AppHeader = ({
   navigation,
@@ -15,21 +16,28 @@ const AppHeader = ({
   return (
     <View style={appHeaderStyles.header}>
       {type !== 'back' ? (
-        <Entypo onPress={() => navigation.openDrawer()} name="menu" size={30} />
+        <Entypo
+          onPress={() => navigation.openDrawer()}
+          color="white"
+          name="menu"
+          size={30}
+        />
       ) : (
         <Ionicons
           onPress={() => navigation.goBack()}
           name="arrow-back"
+          color="white"
           size={30}
         />
       )}
       <View style={{flex: 0.9, marginLeft: 16}}>
-        <Text style={{fontSize: 17, textTransform: 'uppercase'}}>{title}</Text>
+        <Text style={{fontSize: 17, textTransform: 'uppercase', color: 'white', fontWeight: 'bold'}}>{title}</Text>
       </View>
       <TouchableOpacity>
         <Ionicons
           onPress={() => navigation.navigate('Search')}
           name="ios-search"
+          color="white"
           size={25}
         />
       </TouchableOpacity>
@@ -52,7 +60,7 @@ const appHeaderStyles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.primary,
   },
   headerTitle: {
     fontWeight: 'bold',

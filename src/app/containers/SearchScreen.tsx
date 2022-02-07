@@ -17,6 +17,7 @@ import AppSnackbar, {appSnackbarStyles} from '../components/AppSnackbar';
 import {saveNewQueryResultAction} from '../store/queriesResults/actions';
 import RecModal from '../components/RecModal';
 import CiteDialog from '../components/CiteDialog';
+import { theme } from '../styles';
 
 const SearchScreen = ({
   onDataChange,
@@ -161,7 +162,7 @@ const SearchScreen = ({
           }}
         />
       )}
-      {isLoading && <ActivityIndicator />}
+      {isLoading && <ActivityIndicator color={theme.colors.primary} />}
       <AppSnackbar
         style={appSnackbarStyles}
         visible={showSnackbar}

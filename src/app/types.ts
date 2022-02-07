@@ -33,7 +33,7 @@ export type Recommandation = {
   id?: string;
   userDestRef?: string;
   userSenderRef?: string;
-  crearedAt?: string;
+  createdAt: string;
   visible?: boolean;
   document: any;
 };

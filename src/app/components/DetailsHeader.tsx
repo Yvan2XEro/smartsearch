@@ -9,6 +9,7 @@ import {
 } from 'react-native-popup-menu';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import { theme } from '../styles';
 
 const DetailsHeader = ({
   navigation,
@@ -30,14 +31,23 @@ const DetailsHeader = ({
             : () => navigation.goBack()
         }
         name="arrow-back"
+        color="white"
         size={30}
       />
       <View style={{marginLeft: 16}}>
-        <Text style={{fontSize: 17, textTransform: 'uppercase'}}>{title}</Text>
+        <Text
+          style={{
+            fontSize: 17,
+            textTransform: 'uppercase',
+            color: 'white',
+            fontWeight: 'bold',
+          }}>
+          {title}
+        </Text>
       </View>
       <Menu style={{alignSelf: 'center', marginLeft: 'auto'}}>
         <MenuTrigger>
-          <Entypo name="dots-three-vertical" color="gray" size={25} />
+          <Entypo name="dots-three-vertical" color="white" size={25} />
         </MenuTrigger>
         <MenuOptions>
           <MenuOption onSelect={onSelectFilterList} text="Filters" />
@@ -66,7 +76,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.primary,
   },
   headerTitle: {
     fontWeight: 'bold',

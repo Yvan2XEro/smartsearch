@@ -26,6 +26,7 @@ import {User} from '../types';
 import firestore from '@react-native-firebase/firestore';
 import {useSelector} from 'react-redux';
 import AppSnackbar, {appSnackbarStyles} from './AppSnackbar';
+import { theme } from '../styles';
 
 const RecModal = ({
   doc,
@@ -186,7 +187,7 @@ const RecModal = ({
             icon={() => (
               <MaterialCommunityIcons
                 name="arrow-right"
-                color={selectedUsers.length <= 0 ? 'gray' : 'green'}
+                color={selectedUsers.length <= 0 ? 'gray' : theme.colors.primary}
                 size={30}
               />
             )}>

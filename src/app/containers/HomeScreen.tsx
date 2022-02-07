@@ -18,6 +18,7 @@ import RecModal from '../components/RecModal';
 import AppSnackbar, {appSnackbarStyles} from '../components/AppSnackbar';
 import moment from 'moment';
 import CiteDialog from '../components/CiteDialog';
+import { theme } from '../styles';
 
 const HomeScreen = ({navigation}: {navigation: any}) => {
   const savedDocs = useSelector(docsSelector);
@@ -69,8 +70,6 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
       <Tabs
         defaultIndex={0}
         uppercase={false}
-        style={{backgroundColor: '#fff'}}
-        dark={false}
         mode="scrollable"
         showLeadingSpace={true}>
         <TabScreen label="Recomended" icon="alpha-r-circle-outline">
@@ -302,7 +301,7 @@ const DetailsRecModal = ({
             }}>
             <Text style={{fontWeight: 'bold'}}>Recomanded At:</Text>
             <Text style={{fontSize: 12}}>
-              {moment(rec?.crearedAt).format('YYYY-MM-DDDD HH:MM')}
+              {moment(rec?.createdAt).format('YYYY-MM-DDDD HH:MM')}
             </Text>
           </View>
           <View

@@ -2,11 +2,10 @@ import * as React from 'react';
 import {
   ScrollView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Avatar} from 'react-native-paper';
+import {Avatar, Text} from 'react-native-paper';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -15,6 +14,7 @@ import {useSelector} from 'react-redux';
 import {loggedUserSelector} from '../store/loggedUser/selectors';
 import {Chat, Message, User} from '../types';
 import moment from 'moment';
+import { theme } from '../styles';
 
 const ChatsListScreen = ({navigation}: any) => {
   const user = useSelector(loggedUserSelector);
@@ -48,23 +48,29 @@ const ChatsListScreen = ({navigation}: any) => {
           <Entypo
             onPress={() => navigation.openDrawer()}
             name="menu"
+            color="white"
             size={30}
           />
           <View style={{flex: 0.9, marginLeft: 16}}>
-            <Text style={{fontSize: 17, textTransform: 'uppercase'}}>
+            <Text
+              style={{
+                fontSize: 17,
+                textTransform: 'uppercase',
+                color: 'white',
+              }}>
               Chats
             </Text>
           </View>
           <TouchableOpacity>
-            <MaterialIcons name="notifications" size={25} />
+            <MaterialIcons name="notifications" size={25} color="white" />
           </TouchableOpacity>
         </View>
         <TouchableOpacity
           style={{flexDirection: 'row', alignItems: 'center'}}
           onPress={() => navigation.replace('SearchUser')}>
-          <Ionicons name="ios-search" size={25} />
+          <Ionicons name="ios-search" size={25} color="white" />
           <View>
-            <Text style={{marginLeft: 10, marginVertical: 10}}>
+            <Text style={{marginLeft: 10, marginVertical: 10, color: 'white'}}>
               Search for user...
             </Text>
           </View>
@@ -200,7 +206,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.primary,
   },
   headerTitle: {
     fontWeight: 'bold',

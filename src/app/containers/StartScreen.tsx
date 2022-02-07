@@ -1,7 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Knowledge from '../assets/knowledge.svg';
-import {Button} from 'react-native-paper';
+import {Button, Text} from 'react-native-paper';
+import { theme } from '../styles';
 
 const StartScreen = ({navigation}: any) => {
   return (
@@ -12,12 +13,12 @@ const StartScreen = ({navigation}: any) => {
       <View style={styles.footer}>
         <View>
           <Text style={styles.title}>Welcome to Smart Search app!</Text>
-          <Text>You can find any docs here.</Text>
+          <Text style={{letterSpacing: .5}}>You can find any docs here.</Text>
         </View>
         <View style={{marginTop: 15}}>
           <Button
             onPress={() => navigation.navigate('SignIn')}
-            style={{backgroundColor: 'gray', borderRadius: 20}}
+            style={{backgroundColor: theme.colors.primary, borderRadius: 20}}
             labelStyle={{color: '#fff'}}>
             Login
           </Button>
@@ -25,7 +26,7 @@ const StartScreen = ({navigation}: any) => {
             onPress={() => navigation.navigate('SignOut')}
             style={{
               borderWidth: 1,
-              borderColor: 'gray',
+              borderColor: theme.colors.primary,
               borderRadius: 20,
               marginTop: 10,
             }}>
@@ -40,7 +41,7 @@ const StartScreen = ({navigation}: any) => {
 export default StartScreen;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: 'gray'},
+  container: {flex: 1, backgroundColor: theme.colors.primary},
   footer: {
     backgroundColor: '#fff',
     flex: 1.3,
@@ -49,5 +50,9 @@ const styles = StyleSheet.create({
     padding: 20,
     overflow: 'hidden',
   },
-  title: {fontWeight: 'bold', fontSize: 25},
+  title: {
+    fontWeight: 'bold',
+    fontSize: 25,
+    color: theme.colors.primary
+  },
 });

@@ -10,6 +10,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
 import moment from 'moment';
+import { theme } from '../styles';
 
 const SharedScreen = ({navigation, route}: any) => {
   const user = useSelector(loggedUserSelector);
@@ -41,8 +42,6 @@ const SharedScreen = ({navigation, route}: any) => {
       <Tabs
         defaultIndex={0}
         uppercase={true}
-        style={{backgroundColor: '#fff'}}
-        dark={false}
         mode="fixed"
         showLeadingSpace={true}>
         <TabScreen label="Sent">
@@ -56,7 +55,14 @@ const SharedScreen = ({navigation, route}: any) => {
               {sendedRec.map((item, i) => (
                 <DocArticle
                   document={item.document}
-                  icon={<FontAwesome name="send-o" size={20} />}
+                  createdAt={item.createdAt}
+                  icon={
+                    <FontAwesome
+                      name="send-o"
+                      size={20}
+                      color={theme.colors.primary}
+                    />
+                  }
                   key={i}
                   onPress={() => setSelectedRec(item)}
                 />
@@ -71,8 +77,15 @@ const SharedScreen = ({navigation, route}: any) => {
               {receivedRec.map((item, i) => (
                 <DocArticle
                   document={item.document}
+                  createdAt={item.createdAt}
                   key={i}
-                  icon={<Entypo name="download" size={20} />}
+                  icon={
+                    <Entypo
+                      name="download"
+                      size={20}
+                      color={theme.colors.primary}
+                    />
+                  }
                   onPress={() => setSelectedRec(item)}
                 />
               ))}
@@ -89,11 +102,13 @@ export default SharedScreen;
 
 const DocArticle = ({
   document,
+  createdAt,
   onPress,
   icon,
 }: {
   document: any;
   onPress: () => void;
+  createdAt: string;
   icon: any;
 }) => {
   return (
@@ -125,7 +140,8 @@ const DocArticle = ({
               justifyContent: 'space-between',
               paddingHorizontal: 5,
             }}>
-            <Text style={{fontWeight: 'bold', fontSize: 10}}>
+            <Text style={{fontWeight: 'bold', fontSize: 10, color: theme.colors.primary}}>
+
               2020-21-09 08:09
             </Text>
             {icon}
@@ -171,7 +187,7 @@ const DetailShared = ({
           setU(null)
           onDismiss();
         }}>
-        <Text style={{fontSize: 28, marginBottom: 10}}>Deatils</Text>
+        <Text style={{fontSize: 28, marginBottom: 10, color: theme.colors.primary}}>Details</Text>
         <View>
           <View
             style={{
@@ -190,7 +206,7 @@ const DetailShared = ({
             }}>
             <Text style={{fontWeight: 'bold'}}>Recomanded At:</Text>
             <Text style={{fontSize: 12}}>
-              {moment(rec?.crearedAt).format('YYYY-MM-DDDD HH:MM')}
+              {moment(rec?.createdAt).format('YYYY-MM-DDDD HH:MM')}
             </Text>
           </View>
           <View
