@@ -141,8 +141,7 @@ const DocArticle = ({
               paddingHorizontal: 5,
             }}>
             <Text style={{fontWeight: 'bold', fontSize: 10, color: theme.colors.primary}}>
-
-              2020-21-09 08:09
+              {moment(createdAt).format('YYYY-MM-DDDD HH:MM')}
             </Text>
             {icon}
           </View>
