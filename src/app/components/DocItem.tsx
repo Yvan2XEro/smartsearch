@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {Text} from 'react-native-paper'
 import {
   Menu,
   MenuOptions,
@@ -58,7 +59,7 @@ const DocItem = ({
         }}>
         <Menu>
           <MenuTrigger>
-            <Icon name="dots-vertical" color="gray" size={30} />
+            <Icon name="dots-vertical" color="black" size={30} />
           </MenuTrigger>
 
           <MenuOptions>

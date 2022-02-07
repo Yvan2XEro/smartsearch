@@ -154,11 +154,9 @@ const ChatRoomScreen = ({navigation, route}: any) => {
                   menuItems={['Copy', 'Cut']}
                   onSelection={({content, eventType})=>{
                     AppClipBoard.setString(content);
-                    // console.log('ICII', eventType);
                   }}
                   value={item.content}
                 />
-                {/* <Text style={{color: 'black'}}>{item.content}</Text> */}
                 <Text style={{fontSize: 8}}>{formatDate(item.createdAt)}</Text>
               </View>
             </TouchableOpacity>
@@ -258,8 +256,6 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 0.85,
-    // borderWidth: 1,
     borderRadius: 5,
-    // borderColor: 'gray',
   },
 });
