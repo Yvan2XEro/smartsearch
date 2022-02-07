@@ -118,37 +118,38 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
                         }}>
                         <MaterialCommunityIcons
                           name="file-document"
+                          color={theme.colors.primary}
                           size={60}
                         />
                         <Menu>
                           <MenuTrigger>
                             <MaterialCommunityIcons
                               name="dots-vertical"
-                              color="gray"
+                              color="#000"
                               size={25}
                             />
                           </MenuTrigger>
 
                           <MenuOptions>
+                            <MenuOption onSelect={() => setSelectedRec(item)}>
+                              <Text style={{color: theme.colors.text}}>Details</Text>
+                            </MenuOption>
                             <MenuOption
-                              onSelect={() => setSelectedRec(item)}
-                              text="Details"
-                            />
-                            <MenuOption
-                              onSelect={() => setSelectedDoi(item.document.doi)}
-                              text="Cite"
-                            />
-                            <MenuOption
-                              onSelect={() => setRecomandedDoc(item)}
-                              text="Recomand"
-                            />
+                              onSelect={() =>
+                                setSelectedDoi(item.document.doi)
+                              }>
+                              <Text style={{color: theme.colors.text}}>Cite</Text>
+                            </MenuOption>
+                            <MenuOption onSelect={() => setRecomandedDoc(item)}>
+                              <Text style={{color: theme.colors.text}}>Recomand</Text>
+                            </MenuOption>
                             <MenuOption onSelect={() => handleDelete(item)}>
                               <Text style={{color: 'red'}}>Delete</Text>
                             </MenuOption>
                           </MenuOptions>
                         </Menu>
                       </View>
-                      <Text>
+                      <Text style={{color: theme.colors.text}}>
                         {item.document.title.length > 45
                           ? item.document.title.substr(0, 45) + '...'
                           : item.document.title}
@@ -240,8 +241,12 @@ const ListDocsArticles = ({docs, navigation}: any) => {
             }}>
             <Card style={{height: '100%', padding: 2}}>
               <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-                <MaterialCommunityIcons name="file-document" size={60} />
-                <Text>
+                <MaterialCommunityIcons
+                  name="file-document"
+                  size={60}
+                  color={theme.colors.primary}
+                />
+                <Text style={{color: theme.colors.text}}>
                   {item.title.length > 45
                     ? item.title.substr(0, 45) + '...'
                     : item.title}
@@ -282,7 +287,7 @@ const DetailsRecModal = ({
         style={{backgroundColor: '#fff', padding: 10}}
         visible={!!rec}
         onDismiss={onDismiss}>
-        <Text style={{fontSize: 28, marginBottom: 10}}>Deatils</Text>
+        <Text style={{fontSize: 28, marginBottom: 10}}>Details</Text>
         <View>
           <View
             style={{

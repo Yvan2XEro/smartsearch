@@ -51,7 +51,7 @@ const SettingScreen = () => {
 const SettingItem = ({title, description, icon}:{title: string, description: string, icon: any}) => {
   return (
     <TouchableOpacity
-      style={{flexDirection: 'row', alignItems: 'center', padding: 5}}>
+      style={{flexDirection: 'row', alignItems: 'center', padding: 5, borderBottomWidth: .5, borderBottomColor: theme.colors.primary}}>
       <View>{icon}</View>
       <View style={{marginLeft: 10}}>
         <Text style={{fontSize: 20, fontWeight: 'bold', letterSpacing: 0.4}}>

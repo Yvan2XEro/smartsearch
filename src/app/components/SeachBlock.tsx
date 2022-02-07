@@ -122,7 +122,7 @@ const SearchBlock: React.FC<IProps> = ({
             // autoFocus={true}
             onTouchCancel={() => setShowFiltersBlock(false)}
             onSubmitEditing={handleSumitQuery}
-            style={styles.searchBar}
+            style={{flex: 2, color: theme.colors.text}}
           />
           {fastInputQuery != '' ? (
             <TouchableOpacity onPress={() => setFastInputQuery('')}>
@@ -376,9 +376,6 @@ const styles = StyleSheet.create({
     marginBottom: 2,
     paddingRight: 10,
     paddingLeft: 10,
-  },
-  searchBar: {
-    flex: 2,
   },
   inputs: {
     paddingHorizontal: 40,

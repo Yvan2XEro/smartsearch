@@ -152,7 +152,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
                 <SelectableText
                   style={{color: 'black'}}
                   menuItems={['Copy', 'Cut']}
-                  onSelection={({content, eventType})=>{
+                  onSelection={({content, eventType}) => {
                     AppClipBoard.setString(content);
                   }}
                   value={item.content}
@@ -188,7 +188,11 @@ const ChatRoomScreen = ({navigation, route}: any) => {
         <TextInput
           value={message}
           onChangeText={text => setMessage(text)}
-          style={[styles.textInput]}
+          style={{
+            flex: 0.85,
+            borderRadius: 5,
+            color: theme.colors.text
+          }}
           placeholder="Type message..."
         />
         <TouchableOpacity
@@ -253,9 +257,5 @@ const styles = StyleSheet.create({
   text: {
     marginHorizontal: 5,
     marginLeft: 15,
-  },
-  textInput: {
-    flex: 0.85,
-    borderRadius: 5,
-  },
+  }
 });

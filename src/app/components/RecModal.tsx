@@ -104,8 +104,16 @@ const RecModal = ({
         visible={!!doc}
         // dismissable={false}
         onDismiss={onDismiss}>
-        <Text style={{fontSize: 25}}>Recomand doc</Text>
-        <View style={{borderWidth: 0.3, borderRadius: 10, overflow: 'hidden'}}>
+        <Text style={{fontSize: 25, color: theme.colors.primary}}>
+          Recomand doc
+        </Text>
+        <View
+          style={{
+            borderWidth: 0.3,
+            borderRadius: 10,
+            overflow: 'hidden',
+            borderColor: theme.colors.primary,
+          }}>
           <View
             style={{
               flexDirection: 'row',
@@ -114,29 +122,37 @@ const RecModal = ({
             }}>
             <TextInput
               onChangeText={handleFetch}
+              style={{color: theme.colors.text}}
               placeholder="Search users(email) or groups..."
             />
-            <Ionicons style={{marginRight: 10}} name="ios-search" size={23} />
+            <Ionicons
+              style={{marginRight: 10}}
+              name="ios-search"
+              size={23}
+              color={theme.colors.primary}
+            />
           </View>
           <ScrollView
             style={{
               maxHeight: Dimensions.get('window').height / 4,
               backgroundColor: '#E8E8EC',
             }}>
-            {fetchedUsers.filter(u=>selectedUsers.indexOf(u)===-1).map((user, i) => (
-              <ProfileListItem
-                key={i}
-                user={user}
-                onSelect={() => {
-                  if (input != '') {
-                    setInput('');
-                  }
-                  console.log('uuuuuuuuuuuuuuuuu', selectedUsers.indexOf(user));
-                  setSelectedUsers([...selectedUsers, user]);
-                  setFetchedUsers(fetchedUsers.filter(u => u.pk !== user.pk));
-                }}
-              />
-            ))}
+            {fetchedUsers
+              .filter(u => selectedUsers.indexOf(u) === -1)
+              .map((user, i) => (
+                <ProfileListItem
+                  key={i}
+                  user={user}
+                  onSelect={() => {
+                    if (input != '') {
+                      setInput('');
+                    }
+                    console.log(selectedUsers.indexOf(user));
+                    setSelectedUsers([...selectedUsers, user]);
+                    setFetchedUsers(fetchedUsers.filter(u => u.pk !== user.pk));
+                  }}
+                />
+              ))}
           </ScrollView>
         </View>
         {selectedUsers.length > 0 ? (
@@ -161,7 +177,7 @@ const RecModal = ({
                   key={i}
                   onDelete={() => {
                     setSelectedUsers(selectedUsers.filter(u => u != user));
-                    if(fetchedUsers.indexOf(user)===-1)
+                    if (fetchedUsers.indexOf(user) === -1)
                       setFetchedUsers([...fetchedUsers, user]);
                   }}
                 />
@@ -171,7 +187,11 @@ const RecModal = ({
         ) : (
           <View
             style={{flexDirection: 'row', alignItems: 'center', margin: 10}}>
-            <SimpleLineIcons name="exclamation" color="red" size={30} />
+            <SimpleLineIcons
+              name="exclamation"
+              color={theme.colors.error}
+              size={30}
+            />
             <Text style={{marginLeft: 10}}>Please select users or groups!</Text>
           </View>
         )}
@@ -187,7 +207,9 @@ const RecModal = ({
             icon={() => (
               <MaterialCommunityIcons
                 name="arrow-right"
-                color={selectedUsers.length <= 0 ? 'gray' : theme.colors.primary}
+                color={
+                  selectedUsers.length <= 0 ? 'gray' : theme.colors.primary
+                }
                 size={30}
               />
             )}>

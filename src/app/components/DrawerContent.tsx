@@ -82,7 +82,7 @@ const DrawerContent = ({navigation}: {navigation: any}) => {
               }
               onPress={() => navigation.navigate('SharedScreen')}
             />
-            <CustomDrawerItem
+            {/* <CustomDrawerItem
               label="Groups"
               icon={
                 <FontAwesome5
@@ -92,7 +92,7 @@ const DrawerContent = ({navigation}: {navigation: any}) => {
                 />
               }
               onPress={() => navigation.navigate('Home')}
-            />
+            /> */}
             <CustomDrawerItem
               label="Settings"
               icon={
@@ -104,7 +104,7 @@ const DrawerContent = ({navigation}: {navigation: any}) => {
               }
               onPress={() => navigation.navigate('Settings')}
             />
-            <CustomDrawerItem
+            {/* <CustomDrawerItem
               label="Help"
               icon={
                 <MaterialIcons
@@ -114,7 +114,7 @@ const DrawerContent = ({navigation}: {navigation: any}) => {
                 />
               }
               onPress={() => navigation.navigate('Home')}
-            />
+            /> */}
           </View>
           <Divider />
           <View style={{marginTop: 20}}>

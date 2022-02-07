@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {Document} from '../models/Document';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {Paragraph, Text as PaperText} from 'react-native-paper';
+import {Paragraph, Text } from 'react-native-paper';
 import DetailsHeader from '../components/DetailsHeader';
 import FiltersListModal from '../components/FiltersListModal';
 
@@ -52,31 +52,31 @@ const DetailScreen = ({route, navigation}: {route: any; navigation: any}) => {
             </View>
           )}
           <View style={styles.row}>
-            <PaperText style={styles.label}>Title: </PaperText>
+            <Text style={styles.label}>Title: </Text>
             <View style={{flex: 1}}>
               <Text style={styles.content}>{document.title}</Text>
             </View>
           </View>
           <View style={styles.row}>
-            <PaperText style={styles.label}>Doi: </PaperText>
+            <Text style={styles.label}>Doi: </Text>
             <View style={{flex: 1}}>
               <Text style={styles.content}>{document.doi}</Text>
             </View>
           </View>
           <View style={styles.row}>
-            <PaperText style={styles.label}>Publicate Date: </PaperText>
+            <Text style={styles.label}>Publicate Date: </Text>
             <View style={{flex: 1}}>
               <Text style={styles.content}>{document.publicationDate}</Text>
             </View>
           </View>
           <View style={styles.row}>
-            <PaperText style={styles.label}>Publisher: </PaperText>
+            <Text style={styles.label}>Publisher: </Text>
             <View style={{flex: 1}}>
               <Text style={styles.content}>{document.publisher}</Text>
             </View>
           </View>
           <View style={styles.row}>
-            <PaperText style={styles.label}>Authors: </PaperText>
+            <Text style={styles.label}>Authors: </Text>
             <View style={{flex: 1}}>
               <Text style={styles.content}>
                 {document.authors?.reduce(
@@ -87,13 +87,13 @@ const DetailScreen = ({route, navigation}: {route: any; navigation: any}) => {
             </View>
           </View>
           <View style={styles.row}>
-            <PaperText style={styles.label}>Type :</PaperText>
+            <Text style={styles.label}>Type :</Text>
             <View style={{flex: 1}}>
               <Text style={styles.content}>{document.contentType}</Text>
             </View>
           </View>
           <View>
-            <PaperText style={styles.label}>Abstract :</PaperText>
+            <Text style={styles.label}>Abstract :</Text>
             <Paragraph style={{flex: 1}}>{document.abstract}</Paragraph>
           </View>
         </ScrollView>
