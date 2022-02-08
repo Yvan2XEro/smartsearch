@@ -3,6 +3,7 @@ import {Text} from 'react-native-paper'
 import React from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import Octicons from 'react-native-vector-icons/Octicons';
 
 import { theme } from '../styles';
 
@@ -30,7 +31,7 @@ const SettingScreen = () => {
             />
           }
           title="Ergonomy"
-          description="Test de description"
+          description="Modify ergonomic preferences for your app"
         />
         <SettingItem
           icon={
@@ -40,8 +41,15 @@ const SettingScreen = () => {
               color={theme.colors.primary}
             />
           }
-          title="Details docs"
+          title="Displays docs"
           description="Test de description"
+        />
+        <SettingItem
+          icon={
+            <Octicons name="settings" size={35} color={theme.colors.primary} />
+          }
+          title="Favorite keywords"
+          description="Enter keywords for relevant suggestions"
         />
       </ScrollView>
     </View>
@@ -51,13 +59,13 @@ const SettingScreen = () => {
 const SettingItem = ({title, description, icon}:{title: string, description: string, icon: any}) => {
   return (
     <TouchableOpacity
-      style={{flexDirection: 'row', alignItems: 'center', padding: 5, borderBottomWidth: .5, borderBottomColor: theme.colors.primary}}>
+      style={{flexDirection: 'row', alignItems: 'center', padding: 5, borderBottomWidth: .3, borderBottomColor: theme.colors.primary}}>
       <View>{icon}</View>
-      <View style={{marginLeft: 10}}>
-        <Text style={{fontSize: 20, fontWeight: 'bold', letterSpacing: 0.4}}>
+      <View style={{marginLeft: 10, flex: .95}}>
+        <Text style={{fontSize: 18, fontWeight: 'bold', letterSpacing: 0.4}}>
           {title}
         </Text>
-        <Text style={{letterSpacing: 0.3}}>{description}</Text>
+        <Text style={{letterSpacing: 0.3, fontSize: 13, flexWrap: 'wrap'}}>{description}</Text>
       </View>
       <View style={{marginLeft: 'auto'}}>
         <MaterialIcons

@@ -9,6 +9,7 @@ import {
 } from 'react-native-popup-menu';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { theme } from '../styles';
 
 const DocItem = ({
   doc,
@@ -41,6 +42,8 @@ const DocItem = ({
         <MaterialIcons
           name="article"
           size={30}
+          // color={theme.colors.onSurface}
+          color="purple"
           style={{
             marginRight: 10,
             marginLeft: 0,

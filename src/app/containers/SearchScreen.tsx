@@ -66,7 +66,11 @@ const SearchScreen = ({
     setShowSnackbar(true);
   }, [buildedQuery]);
 
-  const aggregateSearch = async (q: string) => {
+  const aggregateSearch = async (q: string, reset:boolean=false) => {
+    if(reset) {
+      setData([])
+      setCurrentPage(1)
+    }
    if(q.length>0) {
       setbuildedQuery(q);
       setLoading(true);
@@ -93,9 +97,12 @@ const SearchScreen = ({
               })
             : [];
         setData2(dat);
-        const values: any[] = [...data, ...json1.records, ...data2];
-        onDataChange(values.length);
-        setData(values);
+        setData(data =>
+          reset
+            ? [...json1.records, ...data2]
+            : [...data, ...json1.records, ...data2],
+        );
+        onDataChange(data.length)
         setCurrentPage(currentPage + 1);
       } catch (error) {
         Alert.alert(error + '');
@@ -117,7 +124,7 @@ const SearchScreen = ({
         onSubmitInputQuery={(q) => {
           setData([]);
           setData2([]);
-          aggregateSearch(q);
+          aggregateSearch(q, true);
         }
       }
         showSaveQueryButton={showSaveQueryButton}
