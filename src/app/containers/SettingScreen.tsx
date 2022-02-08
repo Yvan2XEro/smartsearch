@@ -7,11 +7,12 @@ import Octicons from 'react-native-vector-icons/Octicons';
 
 import { theme } from '../styles';
 
-const SettingScreen = () => {
+const SettingScreen = ({navigation}:any) => {
   return (
     <View>
       <ScrollView>
         <SettingItem
+        onPress={()=>navigation.navigate('KeywordScreen')}
           icon={
             <MaterialCommunityIcons
               name="account"
@@ -23,6 +24,7 @@ const SettingScreen = () => {
           description="Update your profile"
         />
         <SettingItem
+        onPress={()=>navigation.navigate('KeywordScreen')}
           icon={
             <MaterialCommunityIcons
               name="theme-light-dark"
@@ -34,6 +36,7 @@ const SettingScreen = () => {
           description="Modify ergonomic preferences for your app"
         />
         <SettingItem
+        onPress={()=>navigation.navigate('KeywordScreen')}
           icon={
             <MaterialCommunityIcons
               name="clipboard-text-play-outline"
@@ -45,6 +48,7 @@ const SettingScreen = () => {
           description="Test de description"
         />
         <SettingItem
+        onPress={()=>navigation.navigate('KeywordScreen')}
           icon={
             <Octicons name="settings" size={35} color={theme.colors.primary} />
           }
@@ -56,9 +60,10 @@ const SettingScreen = () => {
   );
 };
 
-const SettingItem = ({title, description, icon}:{title: string, description: string, icon: any}) => {
+const SettingItem = ({title, description, icon, onPress}:{title: string, description: string, icon: any, onPress:any}) => {
   return (
     <TouchableOpacity
+      onPress={onPress}
       style={{flexDirection: 'row', alignItems: 'center', padding: 5, borderBottomWidth: .3, borderBottomColor: theme.colors.primary}}>
       <View>{icon}</View>
       <View style={{marginLeft: 10, flex: .95}}>

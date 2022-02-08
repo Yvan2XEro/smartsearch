@@ -16,11 +16,13 @@ const DetailsHeader = ({
   title,
   backScreen,
   onSelectFilterList,
+  displayOptions,
 }: {
   navigation: any;
   title: string | undefined;
   backScreen?: string;
-  onSelectFilterList: any;
+  onSelectFilterList?: any;
+  displayOptions?: boolean;
 }) => {
   return (
     <View style={styles.header}>
@@ -45,23 +47,23 @@ const DetailsHeader = ({
           {title}
         </Text>
       </View>
-      <Menu style={{alignSelf: 'center', marginLeft: 'auto'}}>
+      {!!displayOptions && <Menu style={{alignSelf: 'center', marginLeft: 'auto'}}>
         <MenuTrigger>
           <Entypo name="dots-three-vertical" color="white" size={25} />
         </MenuTrigger>
         <MenuOptions>
-          <MenuOption onSelect={onSelectFilterList} text="Filters" />
+          {!!onSelectFilterList&&<MenuOption onSelect={onSelectFilterList} text="Filters" />}
           <MenuOption text="Saved documents" />
           <MenuOption text="Details settings" />
         </MenuOptions>
-      </Menu>
+      </Menu>}
     </View>
   );
 };
 
 export default DetailsHeader;
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   header: {
     paddingLeft: 16,
     paddingRight: 5,

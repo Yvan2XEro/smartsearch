@@ -16,8 +16,8 @@ import {updateUserAction} from '../store/loggedUser/actions';
 import firestore from '@react-native-firebase/firestore';
 import {User} from '../types';
 import { theme } from '../styles';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import SettingStackNavigation from './SettingStackNavigation';
+import { loadKeywordsAction } from '../store/keywords/actions';
 
 const Drawer = createDrawerNavigator();
 export default function RootNavigation() {
@@ -27,6 +27,7 @@ export default function RootNavigation() {
   React.useEffect(() => {
     dispatch(loadDocsAction());
     dispatch(loadResultsAction());
+    dispatch(loadKeywordsAction());
     if (user) {
       firestore()
         .collection('users')
@@ -104,7 +105,7 @@ export default function RootNavigation() {
           name="Settings"
           options={{
             title: 'SETTINGS',
-            headerShown: true
+            // headerShown: true
           }}
           component={SettingStackNavigation}
         />
