@@ -105,22 +105,31 @@ const ChatRoomScreen = ({navigation, route}: any) => {
             color="white"
             size={30}
           />
-          <View style={{flex: 0.9, marginLeft: 16}}>
-            <Text
-              style={{
-                fontSize: 15,
-                textTransform: 'uppercase',
-                fontWeight: 'bold',
-                color: 'white',
-                letterSpacing: 0.5,
-                textAlign: 'center',
-              }}>
-              {chatSnduser.displayName}
-            </Text>
-            <Text
-              style={{textAlign: 'center', fontSize: 12, letterSpacing: 0.5}}>
-              Online
-            </Text>
+          <View style={{flex: 0.95, flexDirection: 'row', alignItems: 'center'}}>
+            <Avatar.Image
+              style={{marginLeft: 16}}
+              source={{
+                uri: chatSnduser.photoUrl,
+              }}
+              size={30}
+            />
+            <View style={{marginLeft: 20}}>
+              <Text
+                style={{
+                  fontSize: 15,
+                  textTransform: 'uppercase',
+                  fontWeight: 'bold',
+                  color: 'white',
+                  letterSpacing: 0.5,
+                  textAlign: 'center',
+                }}>
+                {chatSnduser.displayName}
+              </Text>
+              <Text
+                style={{textAlign: 'center', fontSize: 12, letterSpacing: 0.5}}>
+                Online
+              </Text>
+            </View>
           </View>
           <TouchableOpacity style={{marginLeft: 'auto'}}>
             <Entypo name="dots-three-vertical" color="white" size={25} />
@@ -139,7 +148,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
                 styles.item,
                 isMyMessage(item) ? styles.rightItem : styles.leftItem,
               ]}>
-              {!isMyMessage(item) && (
+              {/* {!isMyMessage(item) && (
                 <Avatar.Image
                   style={[styles.image, {left: -10}]}
                   source={{
@@ -147,7 +156,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
                   }}
                   size={30}
                 />
-              )}
+              )} */}
               <View style={styles.text}>
                 <SelectableText
                   style={{color: 'black'}}
@@ -191,7 +200,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
           style={{
             flex: 0.85,
             borderRadius: 5,
-            color: theme.colors.text
+            color: theme.colors.text,
           }}
           placeholder="Type message..."
         />
@@ -226,17 +235,13 @@ const styles = StyleSheet.create({
     elevation: 5,
     backgroundColor: theme.colors.primary,
   },
-
-  image: {
-    position: 'absolute',
-    top: -0,
-  },
   item: {
     backgroundColor: 'white',
     marginHorizontal: 15,
     maxWidth: '80%',
     marginBottom: 3,
-    borderRadius: 10,
+    borderBottomEndRadius: 10,
+    borderBottomLeftRadius: 10,
     padding: 5,
     shadowColor: '#000',
     shadowOffset: {
@@ -250,9 +255,11 @@ const styles = StyleSheet.create({
   leftItem: {
     marginRight: 'auto',
     backgroundColor: '#efeef5',
+    borderTopRightRadius: 10,
   },
   rightItem: {
     marginLeft: 'auto',
+    borderTopLeftRadius: 10
   },
   text: {
     marginHorizontal: 5,

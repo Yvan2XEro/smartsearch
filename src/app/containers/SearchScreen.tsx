@@ -69,6 +69,7 @@ const SearchScreen = ({
   const aggregateSearch = async (q: string, reset:boolean=false) => {
     if(reset) {
       setData([])
+      onDataChange(0);
       setCurrentPage(1)
     }
    if(q.length>0) {
