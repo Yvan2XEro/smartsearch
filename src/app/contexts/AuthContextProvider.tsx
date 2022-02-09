@@ -1,10 +1,12 @@
-import React, {createContext, useState} from 'react';
+import React, {createContext, useContext, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useDispatch, useSelector} from 'react-redux';
 import {updateUserAction} from '../store/loggedUser/actions';
 import firestore from '@react-native-firebase/firestore';
 import {User} from '../types';
+import { LoginTypeContext, LOGIN_TYPE_KEY } from './LoginTypeContextProvider';
+import { localStorage } from '../services';
 
 GoogleSignin.configure({
   webClientId:
@@ -26,7 +28,6 @@ export const GOOGLE = 'GOOGLE';
 
 const AuthContextProvider = ({children}: any) => {
   const [user, setUser] = useState(auth().currentUser);
-  const [method, setMethod] = useState<string | null>(null);
   const dispatch = useDispatch();
   const reduxUser = useSelector(({loggedUser}: any) => loggedUser);
 
@@ -36,6 +37,8 @@ const AuthContextProvider = ({children}: any) => {
       .set(user);
   };
 
+  const {setLoginType, loginType} = useContext(LoginTypeContext);
+
   return (
     <AuthenticationContext.Provider
       value={{
@@ -44,7 +47,8 @@ const AuthContextProvider = ({children}: any) => {
         login: async (credential, type = EMAIL_PASSWORD) => {
           if (type !== GOOGLE) {
             const {email, password} = credential;
-            setMethod(EMAIL_PASSWORD);
+            setLoginType(EMAIL_PASSWORD);
+            localStorage.set(LOGIN_TYPE_KEY, EMAIL_PASSWORD);
             return await auth()
               .signInWithEmailAndPassword(email, password)
               .then(() => {
@@ -61,7 +65,8 @@ const AuthContextProvider = ({children}: any) => {
                   });
               });
           } else {
-            setMethod(GOOGLE);
+            setLoginType(GOOGLE);
+            localStorage.set(LOGIN_TYPE_KEY, GOOGLE)
             const {idToken} = await GoogleSignin.signIn();
             const googleCredential =
               auth.GoogleAuthProvider.credential(idToken);
@@ -108,7 +113,6 @@ const AuthContextProvider = ({children}: any) => {
                   await user.updateProfile({displayName}).then(async () => {
                     dispatch(updateUserAction(u));
                   });
-
                   await writeUser(user.uid, u);
                 }
               });
@@ -116,7 +120,7 @@ const AuthContextProvider = ({children}: any) => {
         },
         logout: async () => {
           try {
-            if (method === GOOGLE) {
+            if (loginType === GOOGLE) {
               await GoogleSignin.signOut();
             }
             await auth().signOut();

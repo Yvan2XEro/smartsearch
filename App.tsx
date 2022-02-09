@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {Provider as ReduxProvider} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {MenuProvider} from 'react-native-popup-menu';
@@ -7,25 +7,28 @@ import RootNavigation from './src/app/navigations/RootNavigation';
 import store from './src/app/store';
 import AuthContextProvider from './src/app/contexts/AuthContextProvider';
 import { theme } from './src/app/styles';
+import { StatusBar } from 'react-native';
+import LoginTypeContextProvider from './src/app/contexts/LoginTypeContextProvider';
 
 const App = () => {
   return (
-    <MenuProvider>
-      <ReduxProvider store={store}>
-        <AuthContextProvider>
-          <PaperProvider
-            theme={theme}>
-            <NavigationContainer>
-              <RootNavigation />
-            </NavigationContainer>
-          </PaperProvider>
-        </AuthContextProvider>
-      </ReduxProvider>
-    </MenuProvider>
+    <Fragment>
+      <StatusBar backgroundColor={theme.colors.primary} />
+      <MenuProvider>
+        <ReduxProvider store={store}>
+          <LoginTypeContextProvider>
+            <AuthContextProvider>
+              <PaperProvider theme={theme}>
+                <NavigationContainer>
+                  <RootNavigation />
+                </NavigationContainer>
+              </PaperProvider>
+            </AuthContextProvider>
+          </LoginTypeContextProvider>
+        </ReduxProvider>
+      </MenuProvider>
+    </Fragment>
   );
-};
-export const colors = {
-  violet: '#e91e63',
 };
 
 export default App;

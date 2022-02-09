@@ -12,7 +12,7 @@ const SettingScreen = ({navigation}:any) => {
     <View>
       <ScrollView>
         <SettingItem
-          onPress={() => navigation.navigate('KeywordScreen')}
+          onPress={() => navigation.navigate('ProfileScreen')}
           icon={
             <MaterialCommunityIcons
               name="account"
