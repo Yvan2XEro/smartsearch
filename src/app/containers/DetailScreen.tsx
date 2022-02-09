@@ -5,11 +5,15 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import {Paragraph, Text } from 'react-native-paper';
 import DetailsHeader from '../components/DetailsHeader';
 import FiltersListModal from '../components/FiltersListModal';
+import { useSelector } from 'react-redux';
+import { settingSelector } from '../store/detailSetting/selectors';
+import { DetailSetting } from '../types';
 
 const DetailScreen = ({route, navigation}: {route: any; navigation: any}) => {
   /* 2. Get the param */
   const document: Document = route.params.document;
   const backScreen: string | undefined = route.params.backScreen;
+  const settings = useSelector(settingSelector) as DetailSetting
   const [visible, setVisible] = React.useState(false);
   return (
     <View>
@@ -57,25 +61,25 @@ const DetailScreen = ({route, navigation}: {route: any; navigation: any}) => {
               <Text style={styles.content}>{document.title}</Text>
             </View>
           </View>
-          <View style={styles.row}>
+          {settings.doi && <View style={styles.row}>
             <Text style={styles.label}>Doi: </Text>
             <View style={{flex: 1}}>
               <Text style={styles.content}>{document.doi}</Text>
             </View>
-          </View>
-          <View style={styles.row}>
+          </View>}
+          {settings.publicationDate && <View style={styles.row}>
             <Text style={styles.label}>Publicate Date: </Text>
             <View style={{flex: 1}}>
               <Text style={styles.content}>{document.publicationDate}</Text>
             </View>
-          </View>
-          <View style={styles.row}>
+          </View>}
+          {settings.publisher&&<View style={styles.row}>
             <Text style={styles.label}>Publisher: </Text>
             <View style={{flex: 1}}>
               <Text style={styles.content}>{document.publisher}</Text>
             </View>
-          </View>
-          <View style={styles.row}>
+          </View>}
+          {settings.authors &&<View style={styles.row}>
             <Text style={styles.label}>Authors: </Text>
             <View style={{flex: 1}}>
               <Text style={styles.content}>
@@ -85,13 +89,13 @@ const DetailScreen = ({route, navigation}: {route: any; navigation: any}) => {
                 )}
               </Text>
             </View>
-          </View>
-          <View style={styles.row}>
+          </View>}
+          {settings.contentType &&<View style={styles.row}>
             <Text style={styles.label}>Type :</Text>
             <View style={{flex: 1}}>
               <Text style={styles.content}>{document.contentType}</Text>
             </View>
-          </View>
+          </View>}
           <View>
             <Text style={styles.label}>Abstract :</Text>
             <Paragraph style={{flex: 1}}>{document.abstract}</Paragraph>

@@ -12,7 +12,7 @@ const SettingScreen = ({navigation}:any) => {
     <View>
       <ScrollView>
         <SettingItem
-        onPress={()=>navigation.navigate('KeywordScreen')}
+          onPress={() => navigation.navigate('KeywordScreen')}
           icon={
             <MaterialCommunityIcons
               name="account"
@@ -24,7 +24,7 @@ const SettingScreen = ({navigation}:any) => {
           description="Update your profile"
         />
         <SettingItem
-        onPress={()=>navigation.navigate('KeywordScreen')}
+          onPress={() => navigation.navigate('KeywordScreen')}
           icon={
             <MaterialCommunityIcons
               name="theme-light-dark"
@@ -36,7 +36,7 @@ const SettingScreen = ({navigation}:any) => {
           description="Modify ergonomic preferences for your app"
         />
         <SettingItem
-        onPress={()=>navigation.navigate('KeywordScreen')}
+          onPress={() => navigation.navigate('DetailSettingScreen')}
           icon={
             <MaterialCommunityIcons
               name="clipboard-text-play-outline"
@@ -48,7 +48,7 @@ const SettingScreen = ({navigation}:any) => {
           description="Test de description"
         />
         <SettingItem
-        onPress={()=>navigation.navigate('KeywordScreen')}
+          onPress={() => navigation.navigate('KeywordScreen')}
           icon={
             <Octicons name="settings" size={35} color={theme.colors.primary} />
           }

@@ -37,3 +37,15 @@ export type Recommandation = {
   visible?: boolean;
   document: any;
 };
+
+export type DetailSetting = {
+  title: boolean;
+  publicationDate: boolean;
+  contentType: boolean;
+  authors: boolean;
+  subject: boolean;
+  publisher: boolean;
+  abstract: boolean;
+  doi: boolean;
+  openaccess: boolean;
+}

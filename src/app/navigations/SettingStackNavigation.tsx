@@ -5,6 +5,7 @@ import SettingScreen from '../containers/SettingScreen';
 import KeywordScreen from '../containers/KeywordScreen';
 import AppHeader from '../components/AppHeader';
 import DetailsHeader from '../components/DetailsHeader';
+import DetailSettingScreen from '../containers/DetailSettingScreen';
 
 const Stack = createNativeStackNavigator()
 
@@ -18,7 +19,10 @@ const SettingStackNavigation = () => {
       }} />
       <Stack.Screen name="KeywordScreen" component={KeywordScreen} options={{
         headerShown: false
-        // header:({navigation, options})=><DetailsHeader navigation={navigation} title='KEYWORDS' />
+      }}/>
+      <Stack.Screen name="DetailSettingScreen" component={DetailSettingScreen} options={{
+        headerShown: false,
+        title: "DOCS DISPLAY"
       }}/>
     </Stack.Navigator>
   );

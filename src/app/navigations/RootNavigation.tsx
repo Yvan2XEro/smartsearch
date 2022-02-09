@@ -18,9 +18,11 @@ import {User} from '../types';
 import { theme } from '../styles';
 import SettingStackNavigation from './SettingStackNavigation';
 import { loadKeywordsAction } from '../store/keywords/actions';
+import { loadSettingsAction } from '../store/detailSetting/actions';
 
 const Drawer = createDrawerNavigator();
 export default function RootNavigation() {
+  
   // Initialiser les states redux
   const dispatch = useDispatch();
   const {setUser, user} = React.useContext(AuthenticationContext);
@@ -28,6 +30,7 @@ export default function RootNavigation() {
     dispatch(loadDocsAction());
     dispatch(loadResultsAction());
     dispatch(loadKeywordsAction());
+    dispatch(loadSettingsAction());
     if (user) {
       firestore()
         .collection('users')
@@ -37,7 +40,7 @@ export default function RootNavigation() {
           dispatch(updateUserAction(snapshot.data() as User));
         });
     }
-  }, []);
+  }, [user]);
 
   const [initializing, setInitializing] = React.useState(true);
 
