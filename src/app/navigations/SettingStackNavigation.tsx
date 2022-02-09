@@ -7,6 +7,7 @@ import AppHeader from '../components/AppHeader';
 import DetailsHeader from '../components/DetailsHeader';
 import DetailSettingScreen from '../containers/DetailSettingScreen';
 import ProfileScreen from '../containers/ProfileScreen';
+import ThemeSettingScreen from '../containers/ThemeSettingScreen';
 
 const Stack = createNativeStackNavigator()
 
@@ -23,7 +24,7 @@ const SettingStackNavigation = () => {
         name="SettingScreen"
         component={SettingScreen}
         options={{
-          title: 'SETTING',
+          title: 'SETTINGS',
         }}
       />
       <Stack.Screen
@@ -41,7 +42,12 @@ const SettingStackNavigation = () => {
           title: 'DOCS DISPLAY',
         }}
       />
-      <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{headerShown: false}} />
+      <Stack.Screen
+        name="ProfileScreen"
+        component={ProfileScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen name="ThemeSettingScreen" component={ThemeSettingScreen} options={{headerShown: false}} />
     </Stack.Navigator>
   );
 };

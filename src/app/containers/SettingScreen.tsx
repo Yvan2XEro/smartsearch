@@ -23,8 +23,8 @@ const SettingScreen = ({navigation}:any) => {
           title="Account"
           description="Update your profile"
         />
-        <SettingItem
-          onPress={() => navigation.navigate('KeywordScreen')}
+        {/* <SettingItem
+          onPress={() => navigation.navigate('ThemeSettingScreen')}
           icon={
             <MaterialCommunityIcons
               name="theme-light-dark"
@@ -34,7 +34,7 @@ const SettingScreen = ({navigation}:any) => {
           }
           title="Ergonomy"
           description="Modify ergonomic preferences for your app"
-        />
+        /> */}
         <SettingItem
           onPress={() => navigation.navigate('DetailSettingScreen')}
           icon={

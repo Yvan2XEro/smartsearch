@@ -19,6 +19,8 @@ import AppSnackbar, {appSnackbarStyles} from '../components/AppSnackbar';
 import moment from 'moment';
 import CiteDialog from '../components/CiteDialog';
 import { theme } from '../styles';
+import { keywordsSelector } from '../store/keywords/selectors';
+import * as base from '../api/constants';
 
 const HomeScreen = ({navigation}: {navigation: any}) => {
   const savedDocs = useSelector(docsSelector);
@@ -37,9 +39,10 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
   const [showSnackbar, setShowSnackbar] = React.useState(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState('');
   const [selectedDoi, setSelectedDoi] = React.useState(null);
+  const [loadingYour, setLoadingYour] = React.useState(false);
 
   const recommandationsQuery = firestore().collection('recommandations');
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     if (!!reduxUser || !!user) {
       recommandationsQuery
         .where('userDestRef', '==', reduxUser ? reduxUser.pk : user.uid)
@@ -65,6 +68,36 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
       });
   };
 
+  const keyWords = useSelector(keywordsSelector)
+  const [yourDocs, setYourDocs] = React.useState<any[]>([]);
+  React.useEffect(() => {
+    let w1 = 'sport', w2='geography'
+    if(keyWords.length==1) {
+      w1 = keyWords[0]
+    }
+    if(keyWords.length==2) {
+      w1 = keyWords[0];
+      w2 = keyWords[1];
+    }
+    if(keyWords.length>2) {
+      w1 = keyWords.sort(()=>0.5 - Math.random())[0];
+      while(w1==w2) {
+        w2 = keyWords.sort(() => 0.5 - Math.random())[0];
+      }
+    }
+    (async()=>{
+      let response1 = await fetch(
+        base.springer_url + `&q=keyword:${w1}` + ' &s=' + 1 + ' &p=' + 20,
+      );
+      let response2 = await fetch(
+        base.springer_url + `&q=keyword:${w2}` + ' &s=' + 1 + ' &p=' + 20,
+      );
+        const data1 = await response1.json()
+        const data2 = await response2.json()
+        setYourDocs([...data1.records, ...data2.records])
+      })()
+  }, []);
+
   return (
     <>
       <Tabs
@@ -72,6 +105,13 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
         uppercase={false}
         mode="scrollable"
         showLeadingSpace={true}>
+        <TabScreen label="For you" icon="book">
+          <ListDocsArticles
+            navigation={navigation}
+            docs={yourDocs.sort(() => 0.5 - Math.random()).slice(0, 40)}
+            // docs={savedDocs.map((d: any) => d.data)}
+          />
+        </TabScreen>
         <TabScreen label="Recomended" icon="alpha-r-circle-outline">
           <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
             <View
@@ -132,16 +172,22 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
 
                           <MenuOptions>
                             <MenuOption onSelect={() => setSelectedRec(item)}>
-                              <Text style={{color: theme.colors.text}}>Details</Text>
+                              <Text style={{color: theme.colors.text}}>
+                                Details
+                              </Text>
                             </MenuOption>
                             <MenuOption
                               onSelect={() =>
                                 setSelectedDoi(item.document.doi)
                               }>
-                              <Text style={{color: theme.colors.text}}>Cite</Text>
+                              <Text style={{color: theme.colors.text}}>
+                                Cite
+                              </Text>
                             </MenuOption>
                             <MenuOption onSelect={() => setRecomandedDoc(item)}>
-                              <Text style={{color: theme.colors.text}}>Recomand</Text>
+                              <Text style={{color: theme.colors.text}}>
+                                Recomand
+                              </Text>
                             </MenuOption>
                             <MenuOption onSelect={() => handleDelete(item)}>
                               <Text style={{color: 'red'}}>Delete</Text>
@@ -162,14 +208,11 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
             </View>
           </ScrollView>
         </TabScreen>
-        <TabScreen label="Yours" icon="folder">
+        <TabScreen label="Saved" icon="folder">
           <ListDocsArticles
             navigation={navigation}
             docs={savedDocs.map((d: any) => d.data)}
           />
-        </TabScreen>
-        <TabScreen label="Top" icon="star">
-          <View style={{flex: 1}} />
         </TabScreen>
       </Tabs>
       {recomandedDoc && (

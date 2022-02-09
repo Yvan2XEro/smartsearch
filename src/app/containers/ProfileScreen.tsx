@@ -1,4 +1,4 @@
-import {Dimensions, View, TextInput, KeyboardAvoidingView, ScrollView} from 'react-native';
+import {Dimensions, View, TextInput, KeyboardAvoidingView, ScrollView, TouchableOpacity} from 'react-native';
 import React, { useCallback, useContext, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -14,6 +14,7 @@ import { GOOGLE } from '../contexts/AuthContextProvider';
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth';
 import { updateUserAction } from '../store/loggedUser/actions';
+import { emailRegex } from '../services';
 
 
 const ProfileScreen = ({navigation}:any) => {
@@ -21,29 +22,67 @@ const ProfileScreen = ({navigation}:any) => {
       useSelector(loggedUserSelector) as User ,
     );
     const {loginType} = useContext(LoginTypeContext)
-    console.log(loginType)
-    const [updateGoogle, setUpdateGoogle] = useState(true)
+    const [updateGoogle, setUpdateGoogle] = useState(false)
     const [loading1, setloading1] = useState(false);
     const [loading2, setloading2] = useState(false);
     const [loading3, setloading3] = useState(false);
-    const [error, setError] = useState("")
+    const [error1, setError1] = useState("")
+    const [password, setPassword] = useState({old: '', new: ''});
+    const [error2, setError2] = useState('');
+    const [isSecureEntry, setIsSecureEntry] = useState({old: true, new: true});
     const usersQuery = firestore().collection('users')
     const dispatch = useDispatch()
     const onSubmitUpdateProfile = useCallback(()=>{
         setloading2(true)
         try {
-            usersQuery
-              .doc(user?.pk)
-              .update(user)
-              .then(() => {
-                dispatch(updateUserAction(user));
-              });
+            if (!emailRegex.test(user.email))
+                setError1("Invalid email!")
+            else if (user.displayName.length<3)
+                setError1("The name is too short!")
+            else
+              usersQuery
+                .doc(user?.pk)
+                .update(user)
+                .then(() => {
+                  dispatch(updateUserAction(user));
+                });
         } catch (err) {
             
         }finally {
             setloading2(false)
         }
     },[user])
+    const onSubmitChangePassword = useCallback(()=>{
+        setloading3(true)
+        try {
+            if(password.new.length<6)
+                setError2("The new password is too short!")
+            else if( password.old.length<6)
+                    setError2("The old password is too short!")
+            else{
+                const cu = auth().currentUser;
+                const emailCred = auth.EmailAuthProvider.credential(
+                  cu && cu.email ? cu.email : '',
+                  password.old,
+                );
+                auth()
+                  .currentUser?.reauthenticateWithCredential(emailCred)
+                  .then(() => {
+                    return cu && cu.updatePassword(password.new).then(()=>{
+                        setPassword({old: '', new: ''})
+                        setError2("")
+                    });
+                  })
+                  .catch(error => {
+                    setError2('Failed! Please try egain!');
+                  });
+            }
+        } catch (error) {
+            
+        } finally {
+            setloading3(false)
+        }
+    }, [])
   return (
     <View style={{flex: 1}}>
       <View style={[styles.header, {paddingRight: 20, elevation: 0}]}>
@@ -121,8 +160,8 @@ const ProfileScreen = ({navigation}:any) => {
           <Text style={{fontSize: 18, marginBottom: 5}}>
             Update your profile
           </Text>
-          {error.length > 0 && (
-            <Text style={{color: theme.colors.error}}>{error}</Text>
+          {error1.length > 0 && (
+            <Text style={{color: theme.colors.error}}>{error1}</Text>
           )}
           <CustomTextInput
             onChangeText={text => setUser({...user, email: text})}
@@ -142,15 +181,15 @@ const ProfileScreen = ({navigation}:any) => {
             label="Full name"
             icon={<Entypo name="user" size={25} color={theme.colors.primary} />}
           />
-          {loginType === GOOGLE && (
+          {/* {loginType === GOOGLE && (
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text>Use in my google account</Text>
+              <Text>Update my google account</Text>
               <Switch
                 value={updateGoogle}
                 onValueChange={() => setUpdateGoogle(prev => !prev)}
               />
             </View>
-          )}
+          )} */}
           <Button
             mode="outlined"
             onPress={onSubmitUpdateProfile}
@@ -165,10 +204,36 @@ const ProfileScreen = ({navigation}:any) => {
               <Text style={{fontSize: 18, marginBottom: 5, marginTop: 10}}>
                 Change password
               </Text>
+              {error2.length > 0 && (
+                <Text style={{color: theme.colors.error}}>{error2}</Text>
+              )}
               <CustomTextInput
-                onChangeText={text => {}}
-                value={''}
+                onChangeText={text => setPassword({...password, old: text})}
+                value={password.old}
+                secureTextEntry={isSecureEntry.old}
                 label="Old password"
+                rigthIcon={
+                  <TouchableOpacity
+                    onPress={() =>
+                      setIsSecureEntry({
+                        ...isSecureEntry,
+                        old: !isSecureEntry.old,
+                      })
+                    }>
+                    {isSecureEntry.old ? (
+                      <Entypo
+                        name="eye"
+                        size={30}
+                        color={theme.colors.primary}
+                      />
+                    ) : (
+                      <Entypo
+                        name="eye-with-line"
+                        size={30}
+                        color={theme.colors.primary}
+                      />
+                    )}
+                  </TouchableOpacity>}
                 icon={
                   <MaterialIcons
                     name="vpn-key"
@@ -178,20 +243,46 @@ const ProfileScreen = ({navigation}:any) => {
                 }
               />
               <CustomTextInput
-                onChangeText={text => {}}
-                value={''}
+                onChangeText={text => setPassword({...password, new: text})}
+                value={password.new}
                 label="New password"
+                secureTextEntry={isSecureEntry.new}
                 icon={
                   <MaterialIcons
                     name="vpn-key"
                     size={25}
                     color={theme.colors.primary}
                   />
+                }
+                rigthIcon={
+                  <TouchableOpacity
+                    onPress={() =>
+                      setIsSecureEntry({
+                        ...isSecureEntry,
+                        new: !isSecureEntry.new,
+                      })
+                    }>
+                    {isSecureEntry.new ? (
+                      <Entypo
+                        name="eye"
+                        size={30}
+                        color={theme.colors.primary}
+                      />
+                    ) : (
+                      <Entypo
+                        name="eye-with-line"
+                        size={30}
+                        color={theme.colors.primary}
+                      />
+                    )}
+                  </TouchableOpacity>
                 }
               />
 
               <Button
                 mode="outlined"
+                loading={loading3}
+                onPress={onSubmitChangePassword}
                 icon={() => (
                   <Entypo name="check" size={30} color={theme.colors.primary} />
                 )}>
@@ -207,26 +298,42 @@ const ProfileScreen = ({navigation}:any) => {
 
 export default ProfileScreen;
 
-const CustomTextInput = ({onChangeText, icon, label,value}: {onChangeText: (text: string)=>void, icon: any, label:string,value: string})=>{
-    return (
-      <View
-        style={{
-          borderWidth: 0.3,
-          borderRadius: 10,
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginBottom: 8,
-          backgroundColor: theme.colors.surface,
-          paddingLeft: 5,
-          borderColor: theme.colors.primary,
-        }}>
-        {icon}
-        <TextInput
-          value={value}
-          placeholder={label}
-          onChangeText={onChangeText}
-          style={{width: '100%'}}
-        />
-      </View>
-    );
-}
+const CustomTextInput = ({
+  onChangeText,
+  icon,
+  label,
+  value,
+  secureTextEntry = false,
+  rigthIcon,
+}: {
+  onChangeText: (text: string) => void;
+  icon: any;
+  label: string;
+  value: string;
+  secureTextEntry?: boolean;
+  rigthIcon?:any;
+}) => {
+  return (
+    <View
+      style={{
+        borderWidth: 0.3,
+        borderRadius: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 8,
+        backgroundColor: theme.colors.surface,
+        paddingLeft: 5,
+        borderColor: theme.colors.primary,
+      }}>
+      {icon}
+      <TextInput
+        value={value}
+        placeholder={label}
+        secureTextEntry={secureTextEntry}
+        onChangeText={onChangeText}
+        style={{flex: .94}}
+      />
+      {rigthIcon}
+    </View>
+  );
+};
