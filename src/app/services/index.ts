@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import PushNotification from 'react-native-push-notification';
 // TODO: Utiliser un bon package pour Clipboard
 import {Clipboard} from 'react-native'
 // import Clipboard from '@react-native-clipboard/clipboard';
@@ -50,4 +50,21 @@ export const pushSearchResultsIfNotExists = (array: any[], item: any) => {
 export const AppClipBoard = {
   setString: (text: string) => Clipboard.setString(text),
   getString:()=> Clipboard.getString()
+}
+
+export const Notification = {
+  push: (message: string, title?: string)=>{
+    PushNotification.localNotification({
+      /* Android Only Properties */
+      showWhen: true, // (optional) default: true
+      autoCancel: true, // (optional) default: true
+      largeIconUrl: 'https://www.example.tld/picture.jpg', // (optional) default: undefined
+      smallIcon: 'ic_notification', // (optional) default: "ic_notification" with fallback for "ic_launcher". Use "" for default small icon.
+      bigPictureUrl: 'https://www.example.tld/picture.jpg', // (optional) default: undefined
+      bigLargeIconUrl: 'https://www.example.tld/bigicon.jpg', // (optional) default: undefined
+      color: '#6c63ff', // (optional) default: system default
+      title: title, // (optional)
+      message: message, // (required)
+    });
+  }
 }

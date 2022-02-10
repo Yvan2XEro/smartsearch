@@ -10,6 +10,7 @@ import { theme } from './src/app/styles';
 import { StatusBar } from 'react-native';
 import LoginTypeContextProvider from './src/app/contexts/LoginTypeContextProvider';
 
+
 const App = () => {
   return (
     <Fragment>
