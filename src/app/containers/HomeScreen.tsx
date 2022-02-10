@@ -52,24 +52,18 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
       const s = recommandationsQuery
         .where('userDestRef', '==', reduxUser ? reduxUser.pk : user.uid)
         .onSnapshot(recSnapshots => {
-          setRecommandations(
-            recSnapshots.docs.map(
-              item => ({...item.data(), id: item.id} as Recommandation),
-            ),
-          );
-          if(refetchCount===0)
-              setRefetchCount(p=>p+1)
-          else if (
-            recSnapshots
-              .docChanges()
-              .map(c => c.type)
-              .includes('added')
-          ) {
+          if (refetchCount === 0) setRefetchCount(p => p + 1);
+          else if (recSnapshots.docs.length>recommandations.length) {
             Notification.push(
               'New document was recomended for you!',
               'New recommendations',
             );
           }
+          setRecommandations(
+            recSnapshots.docs.map(
+              item => ({...item.data(), id: item.id} as Recommandation),
+            ),
+          );
         });
       return s;
       } catch (error) {

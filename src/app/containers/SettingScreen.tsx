@@ -21,7 +21,7 @@ const SettingScreen = ({navigation}:any) => {
             />
           }
           title="Account"
-          description="Update your profile"
+          description="Update your profile."
         />
         {/* <SettingItem
           onPress={() => navigation.navigate('ThemeSettingScreen')}
@@ -45,7 +45,7 @@ const SettingScreen = ({navigation}:any) => {
             />
           }
           title="Displays docs"
-          description="Test de description"
+          description="Customize document display."
         />
         <SettingItem
           onPress={() => navigation.navigate('KeywordScreen')}
@@ -53,7 +53,7 @@ const SettingScreen = ({navigation}:any) => {
             <Octicons name="settings" size={35} color={theme.colors.primary} />
           }
           title="Favorite keywords"
-          description="Enter keywords for relevant suggestions"
+          description="Enter keywords for relevant suggestions."
         />
       </ScrollView>
     </View>

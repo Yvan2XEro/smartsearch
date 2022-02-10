@@ -8,10 +8,12 @@ const AppHeader = ({
   navigation,
   title,
   type = 'app',
+  showsSearchIcon=true,
 }: {
   navigation: any;
   title?: string;
   type?: string;
+  showsSearchIcon?:boolean;
 }) => {
   return (
     <View style={appHeaderStyles.header}>
@@ -31,16 +33,24 @@ const AppHeader = ({
         />
       )}
       <View style={{flex: 0.9, marginLeft: 16}}>
-        <Text style={{fontSize: 17, textTransform: 'uppercase', color: 'white', fontWeight: 'bold'}}>{title}</Text>
+        <Text
+          style={{
+            fontSize: 17,
+            textTransform: 'uppercase',
+            color: 'white',
+            fontWeight: 'bold',
+          }}>
+          {title}
+        </Text>
       </View>
-      <TouchableOpacity>
+      {showsSearchIcon===true&&<TouchableOpacity>
         <Ionicons
           onPress={() => navigation.navigate('Search')}
           name="ios-search"
           color="white"
           size={25}
         />
-      </TouchableOpacity>
+      </TouchableOpacity>}
     </View>
   );
 };

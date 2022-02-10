@@ -11,17 +11,17 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import firestore from '@react-native-firebase/firestore';
-import {Message} from '../types';
+import {Chat, Message} from '../types';
 import moment from 'moment';
 import {useSelector} from 'react-redux';
 import {loggedUserSelector} from '../store/loggedUser/selectors';
 import {theme} from '../styles'
 import {SelectableText} from '@astrocoders/react-native-selectable-text';
-import { AppClipBoard } from '../services';
+import { AppClipBoard, Notification } from '../services';
 
 const ChatRoomScreen = ({navigation, route}: any) => {
   const user = useSelector(loggedUserSelector);
-  const {chat} = route.params;
+  const [chat, setChat] = useState(route.params.chat as Chat);
   const chatSnduser =
     chat.users[0].pk === user.pk ? chat.users[1] : chat.users[0];
   const avatarUrl =
@@ -70,11 +70,22 @@ const ChatRoomScreen = ({navigation, route}: any) => {
     return 0;
   };
 
+  useEffect(() =>{
+    return firestore().collection('chats').doc(chat.id).onSnapshot(snapshot=>{
+      setChat({...snapshot.data(), id: snapshot.id}as Chat);
+    })
+  }, [])
+
+  const [refetchCount, setRefetchCount]= useState(0)
   const messagesQuery = firestore()
     .collection('messages')
     .where('chatRef', '==', chat.id);
   useEffect(() => {
-    messagesQuery.onSnapshot(snapshot => {
+    return messagesQuery.onSnapshot(snapshot => {
+      if (refetchCount === 0) setRefetchCount(p => p + 1);
+      else if (snapshot.docs.length > messages.length && chat.lastMessage?.userRef!=user.pk) {
+        Notification.push('You have a new message!', 'Messages');
+      }
       setMessages(
         snapshot.docs
           .map(

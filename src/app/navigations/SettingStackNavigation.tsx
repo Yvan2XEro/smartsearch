@@ -16,7 +16,7 @@ const SettingStackNavigation = () => {
     <Stack.Navigator
       screenOptions={{
         header: ({navigation, route, options}) => (
-          <AppHeader navigation={navigation} title={options.title} />
+          <AppHeader navigation={navigation} title={options.title} showsSearchIcon={false} />
         ),
       }}
       initialRouteName="SettingScreen">
