@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {ScrollView, TouchableOpacity, View} from 'react-native';
-import {Card, Portal, Dialog, Text} from 'react-native-paper';
+import {Card, Portal, Dialog, Text, ActivityIndicator} from 'react-native-paper';
 import {Tabs, TabScreen} from 'react-native-paper-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSelector} from 'react-redux';
@@ -21,6 +21,7 @@ import CiteDialog from '../components/CiteDialog';
 import { theme } from '../styles';
 import { keywordsSelector } from '../store/keywords/selectors';
 import * as base from '../api/constants';
+import { Notification } from '../services';
 
 const HomeScreen = ({navigation}: {navigation: any}) => {
   const savedDocs = useSelector(docsSelector);
@@ -30,7 +31,7 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
     Recommandation[]
   >([]);
   const [recomandedDoc, setRecomandedDoc] =
-    React.useState<Recommandation | null>(null);
+    React.useState<any>(null);
   const [selectedRec, setSelectedRec] = React.useState<Recommandation | null>(
     null,
   );
@@ -39,12 +40,16 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
   const [showSnackbar, setShowSnackbar] = React.useState(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState('');
   const [selectedDoi, setSelectedDoi] = React.useState(null);
-  const [loadingYour, setLoadingYour] = React.useState(false);
-
+  
+  const [recLoading, setRecLoading] = React.useState(false)
   const recommandationsQuery = firestore().collection('recommandations');
+  const [refetchCount, setRefetchCount] = React.useState(0);
   React.useEffect(() => {
     if (!!reduxUser || !!user) {
-      recommandationsQuery
+      try {
+        setRecLoading(true)
+
+      const s = recommandationsQuery
         .where('userDestRef', '==', reduxUser ? reduxUser.pk : user.uid)
         .onSnapshot(recSnapshots => {
           setRecommandations(
@@ -52,7 +57,26 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
               item => ({...item.data(), id: item.id} as Recommandation),
             ),
           );
+          if(refetchCount===0)
+              setRefetchCount(p=>p+1)
+          else if (
+            recSnapshots
+              .docChanges()
+              .map(c => c.type)
+              .includes('added')
+          ) {
+            Notification.push(
+              'New document was recomended for you!',
+              'New recommendations',
+            );
+          }
         });
+      return s;
+      } catch (error) {
+        // TODO: Error
+      }finally{
+        setRecLoading(false);
+      }
     }
   }, [user, reduxUser]);
 
@@ -70,6 +94,7 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
 
   const keyWords = useSelector(keywordsSelector)
   const [yourDocs, setYourDocs] = React.useState<any[]>([]);
+  const [loadingYour, setLoadingYour] = React.useState(false);
   React.useEffect(() => {
     let w1 = 'sport', w2='geography'
     if(keyWords.length==1) {
@@ -86,15 +111,22 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
       }
     }
     (async()=>{
-      let response1 = await fetch(
-        base.springer_url + `&q=keyword:${w1}` + ' &s=' + 1 + ' &p=' + 20,
-      );
-      let response2 = await fetch(
-        base.springer_url + `&q=keyword:${w2}` + ' &s=' + 1 + ' &p=' + 20,
-      );
-        const data1 = await response1.json()
-        const data2 = await response2.json()
-        setYourDocs([...data1.records, ...data2.records])
+      setLoadingYour(true)
+      try {
+        let response1 = await fetch(
+          base.springer_url + `&q=keyword:${w1}` + ' &s=' + 1 + ' &p=' + 20,
+        );
+        let response2 = await fetch(
+          base.springer_url + `&q=keyword:${w2}` + ' &s=' + 1 + ' &p=' + 20,
+        );
+        const data1 = await response1.json();
+        const data2 = await response2.json();
+        setYourDocs([...data1.records, ...data2.records]);
+      } catch (error) {
+        
+      } finally {
+        setLoadingYour(false)
+      }
       })()
   }, []);
 
@@ -106,118 +138,133 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
         mode="scrollable"
         showLeadingSpace={true}>
         <TabScreen label="For you" icon="book">
-          <ListDocsArticles
-            navigation={navigation}
-            docs={yourDocs.sort(() => 0.5 - Math.random()).slice(0, 40)}
-            // docs={savedDocs.map((d: any) => d.data)}
-          />
+          {!loadingYour ? (
+            <ListDocsArticles
+              onSelectDoi={setSelectedDoi}
+              onRecomand={setRecomandedDoc}
+              navigation={navigation}
+              docs={yourDocs.sort(() => 0.5 - Math.random()).slice(0, 40)}
+            />
+          ) : (
+            <ActivityIndicator size="large" />
+          )}
         </TabScreen>
         <TabScreen label="Recomended" icon="alpha-r-circle-outline">
-          <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
-            <View
-              style={{flexWrap: 'wrap', flexDirection: 'row', marginTop: 10}}>
-              {recommandations.map((item, i: number) => (
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate(
-                      'SearchStack' as never,
-                      {
-                        screen: 'Details',
-                        params: {
-                          document: {
-                            title: item.document.title,
-                            publicationDate: item.document.publicationDate,
-                            contentType: item.document.contentType,
-                            publisher: item.document.publisher,
-                            abstract: item.document.abstract,
-                            doi: item.document.doi,
-                            openaccess: item.document.openaccess,
-                            authors: item.document.creators,
-                          } as Document,
-                        },
-                      } as never,
-                    )
-                  }
-                  key={i}
-                  style={{
-                    borderRadius: 5,
-                    overflow: 'hidden',
-                    marginBottom: 8,
-                    marginLeft: 8,
-                    width: '47%',
-                    height: 130,
-                    shadowColor: '#000',
-                    elevation: 4,
-                  }}>
-                  <Card style={{height: '100%', padding: 2}}>
-                    <View>
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}>
-                        <MaterialCommunityIcons
-                          name="file-document"
-                          color={theme.colors.primary}
-                          size={60}
-                        />
-                        <Menu>
-                          <MenuTrigger>
-                            <MaterialCommunityIcons
-                              name="dots-vertical"
-                              color="#000"
-                              size={25}
-                            />
-                          </MenuTrigger>
+          {!recLoading ? (
+            <ScrollView
+              scrollEnabled={true}
+              showsVerticalScrollIndicator={false}>
+              <View
+                style={{flexWrap: 'wrap', flexDirection: 'row', marginTop: 10}}>
+                {recommandations.map((item, i: number) => (
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate(
+                        'SearchStack' as never,
+                        {
+                          screen: 'Details',
+                          params: {
+                            document: {
+                              title: item.document.title,
+                              publicationDate: item.document.publicationDate,
+                              contentType: item.document.contentType,
+                              publisher: item.document.publisher,
+                              abstract: item.document.abstract,
+                              doi: item.document.doi,
+                              openaccess: item.document.openaccess,
+                              authors: item.document.creators,
+                            } as Document,
+                          },
+                        } as never,
+                      )
+                    }
+                    key={i}
+                    style={{
+                      borderRadius: 5,
+                      overflow: 'hidden',
+                      marginBottom: 8,
+                      marginLeft: 8,
+                      width: '47%',
+                      height: 130,
+                      shadowColor: '#000',
+                      elevation: 4,
+                    }}>
+                    <Card style={{height: '100%', padding: 2}}>
+                      <View>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            width: '100%',
+                            justifyContent: 'space-between',
+                          }}>
+                          <MaterialCommunityIcons
+                            name="file-document"
+                            color={theme.colors.primary}
+                            size={60}
+                          />
+                          <Menu>
+                            <MenuTrigger>
+                              <MaterialCommunityIcons
+                                name="dots-vertical"
+                                color="#000"
+                                size={35}
+                              />
+                            </MenuTrigger>
 
-                          <MenuOptions>
-                            <MenuOption onSelect={() => setSelectedRec(item)}>
-                              <Text style={{color: theme.colors.text}}>
-                                Details
-                              </Text>
-                            </MenuOption>
-                            <MenuOption
-                              onSelect={() =>
-                                setSelectedDoi(item.document.doi)
-                              }>
-                              <Text style={{color: theme.colors.text}}>
-                                Cite
-                              </Text>
-                            </MenuOption>
-                            <MenuOption onSelect={() => setRecomandedDoc(item)}>
-                              <Text style={{color: theme.colors.text}}>
-                                Recomand
-                              </Text>
-                            </MenuOption>
-                            <MenuOption onSelect={() => handleDelete(item)}>
-                              <Text style={{color: 'red'}}>Delete</Text>
-                            </MenuOption>
-                          </MenuOptions>
-                        </Menu>
+                            <MenuOptions>
+                              <MenuOption onSelect={() => setSelectedRec(item)}>
+                                <Text style={{color: theme.colors.text}}>
+                                  Details
+                                </Text>
+                              </MenuOption>
+                              <MenuOption
+                                onSelect={() =>
+                                  setSelectedDoi(item.document.doi)
+                                }>
+                                <Text style={{color: theme.colors.text}}>
+                                  Cite
+                                </Text>
+                              </MenuOption>
+                              <MenuOption
+                                onSelect={() => setRecomandedDoc(item.document)}>
+                                <Text style={{color: theme.colors.text}}>
+                                  Recomand
+                                </Text>
+                              </MenuOption>
+                              <MenuOption onSelect={() => handleDelete(item)}>
+                                <Text style={{color: 'red'}}>Delete</Text>
+                              </MenuOption>
+                            </MenuOptions>
+                          </Menu>
+                        </View>
+                        <Text style={{color: theme.colors.text}}>
+                          {item.document.title.length > 45
+                            ? item.document.title.substr(0, 45) + '...'
+                            : item.document.title}
+                        </Text>
                       </View>
-                      <Text style={{color: theme.colors.text}}>
-                        {item.document.title.length > 45
-                          ? item.document.title.substr(0, 45) + '...'
-                          : item.document.title}
-                      </Text>
-                    </View>
-                    <Text />
-                  </Card>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </ScrollView>
+                      <Text />
+                    </Card>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </ScrollView>
+          ) : (
+            <ActivityIndicator size="large" />
+          )}
         </TabScreen>
         <TabScreen label="Saved" icon="folder">
           <ListDocsArticles
             navigation={navigation}
+            onSelectDoi={setSelectedDoi}
+            onRecomand={setRecomandedDoc}
             docs={savedDocs.map((d: any) => d.data)}
           />
         </TabScreen>
       </Tabs>
       {recomandedDoc && (
         <RecModal
-          doc={recomandedDoc.document}
+          doc={recomandedDoc}
           onDismiss={() => setRecomandedDoc(null)}
           onFinish={(succes: boolean) => {
             setShowSnackbar(true);
@@ -245,7 +292,12 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
   );
 };
 
-const ListDocsArticles = ({docs, navigation}: any) => {
+const ListDocsArticles = ({
+  docs,
+  navigation,
+  onSelectDoi,
+  onRecomand,
+}: any) => {
   return (
     <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
       <View style={{flexWrap: 'wrap', flexDirection: 'row', marginTop: 10}}>
@@ -283,12 +335,37 @@ const ListDocsArticles = ({docs, navigation}: any) => {
               elevation: 4,
             }}>
             <Card style={{height: '100%', padding: 2}}>
-              <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  width: '100%',
+                  justifyContent: 'space-between',
+                }}>
                 <MaterialCommunityIcons
                   name="file-document"
                   size={60}
                   color={theme.colors.primary}
                 />
+
+                <Menu>
+                  <MenuTrigger>
+                    <MaterialCommunityIcons
+                      name="dots-vertical"
+                      color="#000"
+                      size={35}
+                    />
+                  </MenuTrigger>
+
+                  <MenuOptions>
+                    <MenuOption onSelect={() => onSelectDoi(item.doi)}>
+                      <Text style={{color: theme.colors.text}}>Cite</Text>
+                    </MenuOption>
+                    <MenuOption onSelect={() => onRecomand(item)}>
+                      <Text style={{color: theme.colors.text}}>Recomand</Text>
+                    </MenuOption>
+                  </MenuOptions>
+                </Menu>
                 <Text style={{color: theme.colors.text}}>
                   {item.title.length > 45
                     ? item.title.substr(0, 45) + '...'

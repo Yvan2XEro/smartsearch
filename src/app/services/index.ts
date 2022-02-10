@@ -58,10 +58,10 @@ export const Notification = {
       /* Android Only Properties */
       showWhen: true, // (optional) default: true
       autoCancel: true, // (optional) default: true
-      largeIconUrl: 'https://www.example.tld/picture.jpg', // (optional) default: undefined
-      smallIcon: 'ic_notification', // (optional) default: "ic_notification" with fallback for "ic_launcher". Use "" for default small icon.
-      bigPictureUrl: 'https://www.example.tld/picture.jpg', // (optional) default: undefined
-      bigLargeIconUrl: 'https://www.example.tld/bigicon.jpg', // (optional) default: undefined
+      // largeIconUrl: 'https://www.example.tld/picture.jpg', // (optional) default: undefined
+      // smallIcon: 'ic_notification', // (optional) default: "ic_notification" with fallback for "ic_launcher". Use "" for default small icon.
+      // bigPictureUrl: 'https://www.example.tld/picture.jpg', // (optional) default: undefined
+      // bigLargeIconUrl: 'https://www.example.tld/bigicon.jpg', // (optional) default: undefined
       color: '#6c63ff', // (optional) default: system default
       title: title, // (optional)
       message: message, // (required)
