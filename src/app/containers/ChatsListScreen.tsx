@@ -20,7 +20,19 @@ const ChatsListScreen = ({navigation}: any) => {
   const user = useSelector(loggedUserSelector);
 
   const [chats, setChats] = React.useState<Chat[]>([]);
+  const compareChats = (a: Chat, b: Chat) => {
+    if (
+      new Date(a?.lastMessage?.createdAt || '') <
+      new Date(b.lastMessage?.createdAt || '')
+    ) {
+      return 1;
+    }
 
+    if (new Date(a.lastMessage?.createdAt||'') > new Date(b.lastMessage?.createdAt||'')) {
+      return -1;
+    }
+    return 0;
+  };
   React.useEffect(() => {
     if (user) {
       const subscriber = firestore()
@@ -95,7 +107,7 @@ const ChatsListScreen = ({navigation}: any) => {
       </View> */}
       <View style={{backgroundColor: '#fefefe'}}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {chats.map((chat, i) => (
+          {chats.sort(compareChats).map((chat, i) => (
             <ChatItem
               key={i}
               onPress={() => navigation.navigate('ChatRoom', {chat})}
