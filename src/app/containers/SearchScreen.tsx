@@ -53,7 +53,7 @@ const SearchScreen = ({
     );
     setSnackbarMessage('Saved!');
     setShowSnackbar(true);
-  }, []);
+  }, [data, buildedQuery]);
 
   React.useEffect(() => {
     setShowSaveQueryButton(data.length > 0);

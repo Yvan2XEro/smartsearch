@@ -9,7 +9,7 @@ import {localStorage, pushSearchResultsIfNotExists} from '../../services';
 const getSavedQueries = async () =>
   JSON.parse(await localStorage.get('queries', JSON.stringify([])));
 export const saveNewQueryResultAction =
-  ({results, buildedQuery}: any) =>
+  ({results, buildedQuery}: {results: any[], buildedQuery: string}) =>
   async (dispatch: any) => {
     let queries = await getSavedQueries();
 
