@@ -81,6 +81,7 @@ const SearchUserScreen = ({navigation}: any) => {
         <TextInput
           ref={inputRef}
           autoFocus={true}
+          style={{ color: theme.colors.text}}
           onChangeText={handleSearch}
           placeholder="Search by email..."
         />
