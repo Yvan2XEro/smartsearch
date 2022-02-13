@@ -120,6 +120,7 @@ const ProfileScreen = ({navigation}:any) => {
               marginTop: 60,
               borderRadius: 10,
               padding: 10,
+              minHeight: Dimensions.get('window').height / 4.5,
               paddingTop: 50,
             }}>
             <Avatar.Image
@@ -154,7 +155,11 @@ const ProfileScreen = ({navigation}:any) => {
           </View>
         </View>
         <KeyboardAvoidingView
-          style={{paddingTop: 100, paddingHorizontal: 30, marginBottom: 50}}
+          style={{
+            paddingTop: Dimensions.get('window').height / 5.5,
+            paddingHorizontal: 30,
+            marginBottom: 50,
+          }}
           behavior={undefined}
           keyboardVerticalOffset={0}>
           <Text style={{fontSize: 18, marginBottom: 5}}>
@@ -233,7 +238,8 @@ const ProfileScreen = ({navigation}:any) => {
                         color={theme.colors.primary}
                       />
                     )}
-                  </TouchableOpacity>}
+                  </TouchableOpacity>
+                }
                 icon={
                   <MaterialIcons
                     name="vpn-key"
@@ -331,7 +337,7 @@ const CustomTextInput = ({
         placeholder={label}
         secureTextEntry={secureTextEntry}
         onChangeText={onChangeText}
-        style={{flex: .94}}
+        style={{flex: 0.94, color: theme.colors.text}}
       />
       {rigthIcon}
     </View>

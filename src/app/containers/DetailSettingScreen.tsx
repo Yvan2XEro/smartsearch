@@ -59,7 +59,7 @@ const ListItem = ({text, onToggle,enabled, disabled=false}:{text:string, onToggl
       <View
         style={{
           flexDirection: 'row',
-          paddingVertical: 3,
+          paddingVertical: 4,
           paddingHorizontal: 10,
           alignItems: 'flex-start',
           borderBottomWidth: 0.3,
@@ -75,6 +75,7 @@ const ListItem = ({text, onToggle,enabled, disabled=false}:{text:string, onToggl
           style={{
             flexWrap: 'wrap',
             fontSize: 19,
+            marginLeft: 5,
             flex: 0.95,
             letterSpacing: 0.5,
           }}>

@@ -54,7 +54,7 @@ const KeywordScreen = ({navigation}:any) => {
           <Text style={{fontSize: 25, letterSpacing: 0.5}}>New keyword</Text>
           <View style={{marginTop: 10}}>
             <TextInput
-              style={{borderWidth: 0.2, borderRadius: 8}}
+              style={{borderWidth: 0.2, borderRadius: 8, color: theme.colors.text}}
               value={keyword}
               onChangeText={text => setKeyword(text)}
               placeholder="Type in keyword..."

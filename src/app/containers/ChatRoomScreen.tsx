@@ -2,11 +2,10 @@ import React, {useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Text, Avatar} from 'react-native-paper';
+import {Text, Avatar, TextInput} from 'react-native-paper';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
@@ -116,9 +115,10 @@ const ChatRoomScreen = ({navigation, route}: any) => {
             color="white"
             size={30}
           />
-          <View style={{flex: 0.95, flexDirection: 'row', alignItems: 'center'}}>
+          <View
+            style={{flex: 0.95, flexDirection: 'row', alignItems: 'center'}}>
             <Avatar.Image
-              style={{marginLeft: 16}}
+              style={{marginLeft: 5}}
               source={{
                 uri: chatSnduser.photoUrl,
               }}
@@ -202,15 +202,22 @@ const ChatRoomScreen = ({navigation, route}: any) => {
             height: 3,
           },
           shadowOpacity: 0.5,
+          overflow: 'hidden',
           shadowRadius: 5,
           elevation: 2,
         }}>
         <TextInput
           value={message}
           onChangeText={text => setMessage(text)}
+          theme={{...theme, colors: {...theme.colors, primary:theme.colors.surface,}}}
+          multiline={true}
+          numberOfLines={2}
           style={{
             flex: 0.85,
+            backgroundColor: theme.colors.surface,
+            maxHeight: 100,
             borderRadius: 5,
+            borderBottomColor: theme.colors.surface,
             color: theme.colors.text,
           }}
           placeholder="Type message..."
