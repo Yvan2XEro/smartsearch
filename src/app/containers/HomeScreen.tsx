@@ -3,6 +3,8 @@ import {ScrollView, TouchableOpacity, View} from 'react-native';
 import {Card, Portal, Dialog, Text, ActivityIndicator} from 'react-native-paper';
 import {Tabs, TabScreen} from 'react-native-paper-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useSelector} from 'react-redux';
 import {docsSelector} from '../store/docs/selectors';
 import firestore from '@react-native-firebase/firestore';
@@ -89,7 +91,10 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
   const keyWords = useSelector(keywordsSelector)
   const [yourDocs, setYourDocs] = React.useState<any[]>([]);
   const [loadingYour, setLoadingYour] = React.useState(false);
+  const [timer, setTimer] = React.useState<any>(null)
+
   React.useEffect(() => {
+
     let w1 = 'sport', w2='geography'
     if(keyWords.length==1) {
       w1 = keyWords[0]
@@ -115,6 +120,7 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
         );
         const data1 = await response1.json();
         const data2 = await response2.json();
+        setTimer(setTimeout(() =>{setClosedHelp(false)}, 3000))
         setYourDocs([...data1.records, ...data2.records]);
       } catch (error) {
         
@@ -123,7 +129,8 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
       }
       })()
   }, []);
-
+  
+  const [closedHelp, setClosedHelp] = React.useState(true);
   return (
     <>
       <Tabs
@@ -133,12 +140,50 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
         showLeadingSpace={true}>
         <TabScreen label="For you" icon="book">
           {!loadingYour ? (
-            <ListDocsArticles
-              onSelectDoi={setSelectedDoi}
-              onRecomand={setRecomandedDoc}
-              navigation={navigation}
-              docs={yourDocs.sort(() => 0.5 - Math.random()).slice(0, 40)}
-            />
+            <>
+              {keyWords.length === 0 && !closedHelp && (
+                <Card
+                  style={{marginHorizontal: 15, padding: 10, marginTop: 10}}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      width: '100%',
+                      justifyContent: 'center',
+                      position: 'relative',
+                    }}>
+                    <Entypo
+                      style={{alignSelf: 'center'}}
+                      name="help-with-circle"
+                      color={theme.colors.primary}
+                      size={30}
+                    />
+                    <TouchableOpacity
+                      style={{right: 10, position: 'absolute'}}
+                      onPress={() => {
+                          setClosedHelp(true)
+                          if(timer){
+                            clearTimeout(timer)}
+                        }}>
+                      <FontAwesome5
+                        name="times"
+                        color={theme.colors.error}
+                        size={25}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <Text style={{fontSize: 17, fontWeight: '600'}}>
+                    For better suggestions, you can customize your own keywords
+                    in the settings.
+                  </Text>
+                </Card>
+              )}
+              <ListDocsArticles
+                onSelectDoi={setSelectedDoi}
+                onRecomand={setRecomandedDoc}
+                navigation={navigation}
+                docs={yourDocs.sort(() => 0.5 - Math.random()).slice(0, 40)}
+              />
+            </>
           ) : (
             <ActivityIndicator size="large" />
           )}
@@ -220,7 +265,9 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
                                 </Text>
                               </MenuOption>
                               <MenuOption
-                                onSelect={() => setRecomandedDoc(item.document)}>
+                                onSelect={() =>
+                                  setRecomandedDoc(item.document)
+                                }>
                                 <Text style={{color: theme.colors.text}}>
                                   Recomand
                                 </Text>
