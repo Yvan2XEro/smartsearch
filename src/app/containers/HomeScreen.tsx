@@ -128,7 +128,7 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
         setLoadingYour(false)
       }
       })()
-  }, []);
+  }, [keyWords]);
   
   const [closedHelp, setClosedHelp] = React.useState(true);
   return (
