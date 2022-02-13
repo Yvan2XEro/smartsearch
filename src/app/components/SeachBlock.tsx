@@ -81,7 +81,7 @@ const SearchBlock: React.FC<IProps> = ({
         }
       });
     } else {
-      q = "title:"+fastInputQuery;
+      q = fastInputQuery.indexOf(':')===-1?"title:"+fastInputQuery: fastInputQuery;
     }
     return q
   };
