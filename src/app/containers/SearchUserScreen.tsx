@@ -82,7 +82,6 @@ const SearchUserScreen = ({navigation}: any) => {
           ref={inputRef}
           style={{color: theme.colors.text}}
           autoFocus={true}
-          style={{ color: theme.colors.text}}
           onChangeText={handleSearch}
           placeholder="Search by email..."
         />
