@@ -40,7 +40,7 @@ const ListResultsModal = ({
   return (
     <Portal>
       <Modal
-        style={{backgroundColor: theme.colors.surface, justifyContent: 'flex-start'}}
+        style={{backgroundColor: theme.colors.surface, justifyContent: 'flex-start', paddingHorizontal: 10}}
         visible={visible}
         dismissable={false}
         onDismiss={onDismiss}>
@@ -81,7 +81,7 @@ const ListResultsModal = ({
                 <TouchableOpacity
                   onPress={() => onSelectItem({data, query})}
                   style={styles.row}>
-                  <MaterialCommunityIcons name="history" size={35} />
+                  <MaterialCommunityIcons color={theme.colors.text} name="history" size={35} />
                   <View style={{marginLeft: 5, flex: 0.9,}}>
                     <Text>
                       {name.length > 35 ? name.substr(0, 35) + '...' : name}
@@ -103,7 +103,7 @@ const ListResultsModal = ({
               name="warning"
               style={{alignSelf: 'center'}}
               size={30}
-              color="red"
+              color={theme.colors.error}
             />
             <Text style={{fontSize: 18, textAlign: 'center'}}>Empty set!</Text>
           </View>
