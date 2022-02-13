@@ -2,11 +2,10 @@ import * as React from 'react';
 import {
   ScrollView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Modal, Paragraph, Portal} from 'react-native-paper';
+import {Modal, Text, Portal} from 'react-native-paper';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
@@ -15,6 +14,7 @@ import AppSnackbar, {appSnackbarStyles} from './AppSnackbar';
 import {useDispatch, useSelector} from 'react-redux';
 import {allQueriesResults} from '../store/queriesResults/selectors';
 import {deleteQueryResultAction} from '../store/queriesResults/actions';
+import { theme } from '../styles';
 
 const ListResultsModal = ({
   visible,
@@ -40,16 +40,16 @@ const ListResultsModal = ({
   return (
     <Portal>
       <Modal
-        style={{backgroundColor: '#fff', justifyContent: 'flex-start'}}
+        style={{backgroundColor: theme.colors.surface, justifyContent: 'flex-start'}}
         visible={visible}
         dismissable={false}
         onDismiss={onDismiss}>
         <TouchableOpacity
           onPress={onDismiss}
           style={{margin: 5, marginBottom: 10}}>
-          <AntDesign name="arrowleft" size={30} />
+          <AntDesign color={theme.colors.text} name="arrowleft" size={30} />
         </TouchableOpacity>
-        <Text style={{fontSize: 20, color: '#000'}}>Saved queries</Text>
+        <Text style={{fontSize: 20, color: theme.colors.text}}>Saved queries</Text>
         <View
           style={[
             styles.item,
@@ -58,20 +58,20 @@ const ListResultsModal = ({
               justifyContent: 'space-between',
               marginVertical: 15,
               marginBottom: 25,
-              backgroundColor: '#fff',
+              backgroundColor: theme.colors.surface,
             },
           ]}>
           <TouchableOpacity style={{alignItems: 'center'}}>
-            <SimpleLineIcons color="black" name="trash" size={30} />
-            <Text style={{color: 'black'}}>Delete</Text>
+            <SimpleLineIcons color={theme.colors.text} name="trash" size={30} />
+            <Text style={{color: theme.colors.text}}>Delete</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{alignItems: 'center'}}>
-            <Feather color="black" name="check-square" size={30} />
-            <Text style={{color: 'black'}}>Select all</Text>
+            <Feather color={theme.colors.text} name="check-square" size={30} />
+            <Text style={{color: theme.colors.text}}>Select all</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{alignItems: 'center'}} onPress={onDismiss}>
-            <MaterialCommunityIcons color="black" name="cancel" size={30} />
-            <Text style={{color: 'black'}}>Cancel</Text>
+            <MaterialCommunityIcons color={theme.colors.text} name="cancel" size={30} />
+            <Text style={{color: theme.colors.text}}>Cancel</Text>
           </TouchableOpacity>
         </View>
         {queries.length > 0 ? (
@@ -92,7 +92,7 @@ const ListResultsModal = ({
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => remove(name)}>
-                  <SimpleLineIcons color="black" name="trash" size={25} />
+                  <SimpleLineIcons color={theme.colors.text} name="trash" size={25} />
                 </TouchableOpacity>
               </View>
             ))}
