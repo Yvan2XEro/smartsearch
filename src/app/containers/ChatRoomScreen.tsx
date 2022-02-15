@@ -15,7 +15,6 @@ import moment from 'moment';
 import {useSelector} from 'react-redux';
 import {loggedUserSelector} from '../store/loggedUser/selectors';
 import {theme} from '../styles'
-import {SelectableText} from '@astrocoders/react-native-selectable-text';
 import { AppClipBoard, Notification } from '../services';
 
 const ChatRoomScreen = ({navigation, route}: any) => {
@@ -159,24 +158,16 @@ const ChatRoomScreen = ({navigation, route}: any) => {
                 styles.item,
                 isMyMessage(item) ? styles.rightItem : styles.leftItem,
               ]}>
-              {/* {!isMyMessage(item) && (
-                <Avatar.Image
-                  style={[styles.image, {left: -10}]}
-                  source={{
-                    uri: chatSnduser.photoUrl,
-                  }}
-                  size={30}
-                />
-              )} */}
               <View style={styles.text}>
-                <SelectableText
+                {/* <SelectableText
                   style={{color: 'black'}}
                   menuItems={['Copy', 'Cut']}
                   onSelection={({content, eventType}) => {
                     AppClipBoard.setString(content);
                   }}
                   value={item.content}
-                />
+                /> */}
+                <Text>{item.content}</Text>
                 <Text style={{fontSize: 8}}>{formatDate(item.createdAt)}</Text>
               </View>
             </TouchableOpacity>
@@ -209,7 +200,10 @@ const ChatRoomScreen = ({navigation, route}: any) => {
         <TextInput
           value={message}
           onChangeText={text => setMessage(text)}
-          theme={{...theme, colors: {...theme.colors, primary:theme.colors.surface,}}}
+          theme={{
+            ...theme,
+            colors: {...theme.colors, primary: theme.colors.surface},
+          }}
           multiline={true}
           numberOfLines={2}
           style={{
