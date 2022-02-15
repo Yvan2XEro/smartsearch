@@ -1,10 +1,9 @@
 import {
   StyleSheet,
-  Text,
   View,
   ScrollView,
 } from 'react-native';
-import {Portal, Dialog, Button} from 'react-native-paper';
+import {Portal,Text, Dialog, Button} from 'react-native-paper';
 import React, {useEffect, useState} from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {AppClipBoard} from '../services'

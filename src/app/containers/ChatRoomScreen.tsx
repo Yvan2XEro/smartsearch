@@ -202,7 +202,11 @@ const ChatRoomScreen = ({navigation, route}: any) => {
           onChangeText={text => setMessage(text)}
           theme={{
             ...theme,
-            colors: {...theme.colors, primary: theme.colors.surface},
+            colors: {
+              ...theme.colors,
+              primary: theme.colors.surface,
+              disabled: theme.colors.surface,
+            },
           }}
           multiline={true}
           numberOfLines={2}

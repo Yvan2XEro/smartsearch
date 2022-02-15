@@ -66,7 +66,11 @@ const DocItem = ({
           </MenuTrigger>
 
           <MenuOptions>
-            {onCite && <MenuOption onSelect={onCite} text="Cite" />}
+            {onCite && (
+              <MenuOption onSelect={onCite} >
+                <Text>Cite</Text>
+              </MenuOption>
+            )}
             {onSave && (
               <MenuOption onSelect={onSave}>
                 <Text style={{color: 'red'}}>Save</Text>
@@ -78,7 +82,9 @@ const DocItem = ({
               </MenuOption>
             )}
             {onRecomand && (
-              <MenuOption onSelect={onRecomand} text="Recommand" />
+              <MenuOption onSelect={onRecomand}>
+                <Text>Recommand</Text>
+              </MenuOption>
             )}
           </MenuOptions>
         </Menu>

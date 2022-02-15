@@ -1,6 +1,8 @@
 import React from 'react';
-import {KeyboardTypeOptions, StyleSheet, Text, View} from 'react-native';
+import {KeyboardTypeOptions, StyleSheet, View} from 'react-native';
+import {Text} from 'react-native-paper';
 import {TextInput} from 'react-native';
+import { theme } from '../../styles';
 
 const SearchInput = ({
   onChangeText,
@@ -32,7 +34,7 @@ const SearchInput = ({
         </View>
         <View style={{width: '100%'}}>
           <TextInput
-            style={styles.input}
+            style={{color: theme.colors.text}}
             onChangeText={onChangeText}
             keyboardType={keyboardType}
             placeholder={placeholder ? placeholder : ''}
@@ -50,8 +52,5 @@ const styles = StyleSheet.create({
   inputWrapper: {
     flexDirection: 'column',
     marginBottom: 10,
-  },
-  input: {
-    borderBottomWidth: 0,
   },
 });
