@@ -1,88 +1,94 @@
-import {Dimensions, View, TextInput, KeyboardAvoidingView, ScrollView, TouchableOpacity} from 'react-native';
-import React, { useCallback, useContext, useState } from 'react';
+import {
+  Dimensions,
+  View,
+  TextInput,
+  KeyboardAvoidingView,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
+import React, {useCallback, useContext, useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { styles } from '../components/DetailsHeader';
-import { theme } from '../styles';
+import {styles} from '../components/DetailsHeader';
+import {theme} from '../styles';
 import {Avatar, Button, Switch, Text} from 'react-native-paper';
-import { useDispatch, useSelector } from 'react-redux';
-import { loggedUserSelector } from '../store/loggedUser/selectors';
-import { User } from '../types';
-import { LoginTypeContext } from '../contexts/LoginTypeContextProvider';
-import { GOOGLE } from '../contexts/AuthContextProvider';
-import firestore from '@react-native-firebase/firestore'
+import {useDispatch, useSelector} from 'react-redux';
+import {loggedUserSelector} from '../store/loggedUser/selectors';
+import {User} from '../types';
+import {LoginTypeContext} from '../contexts/LoginTypeContextProvider';
+import {GOOGLE} from '../contexts/AuthContextProvider';
+import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import { updateUserAction } from '../store/loggedUser/actions';
-import { emailRegex } from '../services';
+import {updateUserAction} from '../store/loggedUser/actions';
+import {emailRegex} from '../services';
 
-
-const ProfileScreen = ({navigation}:any) => {
-    const [user, setUser] = useState(
-      useSelector(loggedUserSelector) as User ,
-    );
-    const {loginType} = useContext(LoginTypeContext)
-    const [updateGoogle, setUpdateGoogle] = useState(false)
-    const [loading1, setloading1] = useState(false);
-    const [loading2, setloading2] = useState(false);
-    const [loading3, setloading3] = useState(false);
-    const [error1, setError1] = useState("")
-    const [password, setPassword] = useState({old: '', new: ''});
-    const [error2, setError2] = useState('');
-    const [isSecureEntry, setIsSecureEntry] = useState({old: true, new: true});
-    const usersQuery = firestore().collection('users')
-    const dispatch = useDispatch()
-    const onSubmitUpdateProfile = useCallback(()=>{
-        setloading2(true)
-        try {
-            if (!emailRegex.test(user.email))
-                setError1("Invalid email!")
-            else if (user.displayName.length<3)
-                setError1("The name is too short!")
-            else
-              usersQuery
-                .doc(user?.pk)
-                .update(user)
-                .then(() => {
-                  dispatch(updateUserAction(user));
-                });
-        } catch (err) {
-            
-        }finally {
-            setloading2(false)
-        }
-    },[user])
-    const onSubmitChangePassword = useCallback(()=>{
-        setloading3(true)
-        try {
-            if(password.new.length<6)
-                setError2("The new password is too short!")
-            else if( password.old.length<6)
-                    setError2("The old password is too short!")
-            else{
-                const cu = auth().currentUser;
-                const emailCred = auth.EmailAuthProvider.credential(
-                  cu && cu.email ? cu.email : '',
-                  password.old,
-                );
-                auth()
-                  .currentUser?.reauthenticateWithCredential(emailCred)
-                  .then(() => {
-                    return cu && cu.updatePassword(password.new).then(()=>{
-                        setPassword({old: '', new: ''})
-                        setError2("")
-                    });
-                  })
-                  .catch(error => {
-                    setError2('Failed! Please try egain!');
-                  });
-            }
-        } catch (error) {
-            
-        } finally {
-            setloading3(false)
-        }
-    }, [])
+const ProfileScreen = ({navigation}: any) => {
+  const [user, setUser] = useState(useSelector(loggedUserSelector) as User);
+  const {loginType} = useContext(LoginTypeContext);
+  const [updateGoogle, setUpdateGoogle] = useState(false);
+  const [loading1, setloading1] = useState(false);
+  const [loading2, setloading2] = useState(false);
+  const [loading3, setloading3] = useState(false);
+  const [error1, setError1] = useState('');
+  const [password, setPassword] = useState({old: '', new: ''});
+  const [error2, setError2] = useState('');
+  const [isSecureEntry, setIsSecureEntry] = useState({old: true, new: true});
+  const usersQuery = firestore().collection('users');
+  const dispatch = useDispatch();
+  const onSubmitUpdateProfile = useCallback(() => {
+    setloading2(true);
+    try {
+      if (!emailRegex.test(user.email)) {
+        setError1('Invalid email!');
+      } else if (user.displayName.length < 3) {
+        setError1('The name is too short!');
+      } else {
+        usersQuery
+          .doc(user?.pk)
+          .update(user)
+          .then(() => {
+            dispatch(updateUserAction(user));
+          });
+      }
+    } catch (err) {
+    } finally {
+      setloading2(false);
+    }
+  }, [user]);
+  const onSubmitChangePassword = useCallback(() => {
+    setloading3(true);
+    try {
+      if (password.new.length < 6) {
+        setError2('The new password is too short!');
+      } else if (password.old.length < 6) {
+        setError2('The old password is too short!');
+      } else {
+        const cu = auth().currentUser;
+        const emailCred = auth.EmailAuthProvider.credential(
+          cu && cu.email ? cu.email : '',
+          password.old,
+        );
+        auth()
+          .currentUser?.reauthenticateWithCredential(emailCred)
+          .then(() => {
+            return (
+              cu &&
+              cu.updatePassword(password.new).then(() => {
+                setPassword({old: '', new: ''});
+                setError2('');
+              })
+            );
+          })
+          .catch(error => {
+            setError2('Failed! Please try egain!');
+          });
+      }
+    } catch (error) {
+    } finally {
+      setloading3(false);
+    }
+  }, []);
   return (
     <View style={{flex: 1}}>
       <View style={[styles.header, {paddingRight: 20, elevation: 0}]}>
@@ -171,7 +177,7 @@ const ProfileScreen = ({navigation}:any) => {
           <CustomTextInput
             onChangeText={text => setUser({...user, email: text})}
             label="Email"
-            value={!!user ? user?.email : ''}
+            value={user ? user?.email : ''}
             icon={
               <MaterialIcons
                 name="vpn-key"
@@ -317,7 +323,7 @@ const CustomTextInput = ({
   label: string;
   value: string;
   secureTextEntry?: boolean;
-  rigthIcon?:any;
+  rigthIcon?: any;
 }) => {
   return (
     <View

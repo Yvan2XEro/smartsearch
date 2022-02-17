@@ -1,1 +1,1 @@
-export const keywordsSelector = ({keywords}: {keywords: string[]}) => keywords
+export const keywordsSelector = ({keywords}: {keywords: string[]}) => keywords;

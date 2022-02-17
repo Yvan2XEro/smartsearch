@@ -1,13 +1,8 @@
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-} from 'react-native';
-import {Portal,Text, Dialog, Button} from 'react-native-paper';
+import {StyleSheet, View, ScrollView} from 'react-native';
+import {Portal, Text, Dialog, Button} from 'react-native-paper';
 import React, {useEffect, useState} from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {AppClipBoard} from '../services'
-
+import {AppClipBoard} from '../services';
 
 const CiteDialog = ({
   doi,
@@ -41,7 +36,13 @@ const CiteDialog = ({
             </Button>
           </View>
           <ScrollView
-            style={{height: '80%', borderRadius: 5, borderWidth: 0.3, marginTop: 10, padding: 3}}>
+            style={{
+              height: '80%',
+              borderRadius: 5,
+              borderWidth: 0.3,
+              marginTop: 10,
+              padding: 3,
+            }}>
             <Text
               style={
                 {

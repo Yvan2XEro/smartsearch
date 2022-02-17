@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import Knowledge from '../assets/knowledge.svg';
 import {Button, Text} from 'react-native-paper';
-import { theme } from '../styles';
+import {theme} from '../styles';
 
 const StartScreen = ({navigation}: any) => {
   return (
@@ -13,7 +13,7 @@ const StartScreen = ({navigation}: any) => {
       <View style={styles.footer}>
         <View>
           <Text style={styles.title}>Welcome to Smart Search app!</Text>
-          <Text style={{letterSpacing: .5}}>You can find any docs here.</Text>
+          <Text style={{letterSpacing: 0.5}}>You can find any docs here.</Text>
         </View>
         <View style={{marginTop: 15}}>
           <Button
@@ -53,6 +53,6 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 25,
-    color: theme.colors.primary
+    color: theme.colors.primary,
   },
 });

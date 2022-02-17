@@ -10,13 +10,13 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
 import moment from 'moment';
-import { theme } from '../styles';
+import {theme} from '../styles';
 
 const SharedScreen = ({navigation, route}: any) => {
   const user = useSelector(loggedUserSelector);
   const [sendedRec, setSendedRec] = useState<Recommandation[]>([]);
   const [receivedRec, setReceivedRec] = useState<Recommandation[]>([]);
-  const [selectedRec, setSelectedRec] = useState<Recommandation|null>(null)
+  const [selectedRec, setSelectedRec] = useState<Recommandation | null>(null);
 
   const sharedQuery = firestore().collection('recommandations');
   useEffect(() => {
@@ -140,7 +140,12 @@ const DocArticle = ({
               justifyContent: 'space-between',
               paddingHorizontal: 5,
             }}>
-            <Text style={{fontWeight: 'bold', fontSize: 10, color: theme.colors.primary}}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                fontSize: 10,
+                color: theme.colors.primary,
+              }}>
               {moment(createdAt).format('YYYY-MM-DDDD HH:MM')}
             </Text>
             {icon}
@@ -151,7 +156,6 @@ const DocArticle = ({
   );
 };
 
-
 const DetailShared = ({
   rec,
   onDismiss,
@@ -161,15 +165,15 @@ const DetailShared = ({
 }) => {
   const [u, setU] = React.useState<User | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
-  const [byMe, setByMe] = React.useState<boolean>(true)
-  const user = useSelector(loggedUserSelector)
+  const [byMe, setByMe] = React.useState<boolean>(true);
+  const user = useSelector(loggedUserSelector);
   React.useEffect(() => {
     setLoading(true);
-    if(!!rec) {
-      setByMe(rec?.userSenderRef===user.pk)
+    if (rec) {
+      setByMe(rec?.userSenderRef === user.pk);
       firestore()
         .collection('users')
-        .doc(byMe?rec?.userDestRef:rec.userSenderRef)
+        .doc(byMe ? rec?.userDestRef : rec.userSenderRef)
         .get()
         .then(snapshot => {
           setU({...snapshot.data()} as User);
@@ -182,11 +186,14 @@ const DetailShared = ({
       <Dialog
         style={{backgroundColor: '#fff', padding: 10}}
         visible={!!rec}
-        onDismiss={()=>{
-          setU(null)
+        onDismiss={() => {
+          setU(null);
           onDismiss();
         }}>
-        <Text style={{fontSize: 28, marginBottom: 10, color: theme.colors.primary}}>Details</Text>
+        <Text
+          style={{fontSize: 28, marginBottom: 10, color: theme.colors.primary}}>
+          Details
+        </Text>
         <View>
           <View
             style={{
@@ -194,7 +201,7 @@ const DetailShared = ({
               justifyContent: 'space-between',
               flexWrap: 'wrap',
             }}>
-            <Text style={{fontWeight: 'bold'}}>{ byMe? "To:": "By:"}</Text>
+            <Text style={{fontWeight: 'bold'}}>{byMe ? 'To:' : 'By:'}</Text>
             {!!u && <Text style={{fontSize: 12}}>{u.displayName}</Text>}
           </View>
           <View

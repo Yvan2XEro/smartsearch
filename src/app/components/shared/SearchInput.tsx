@@ -2,7 +2,7 @@ import React from 'react';
 import {KeyboardTypeOptions, StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-paper';
 import {TextInput} from 'react-native';
-import { theme } from '../../styles';
+import {theme} from '../../styles';
 
 const SearchInput = ({
   onChangeText,

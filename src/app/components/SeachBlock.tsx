@@ -22,11 +22,11 @@ import {
 } from 'react-native-popup-menu';
 import ListResultsModal from './ListResultsModal';
 import SearchInput from './shared/SearchInput';
-import { theme } from '../styles';
+import {theme} from '../styles';
 
 interface IProps {
   onChangeInputQuery: (query: string) => void;
-  onSubmitInputQuery: (q:string) => void;
+  onSubmitInputQuery: (q: string) => void;
   value: string;
   showSaveQueryButton: boolean;
   onSaveQuery: any;
@@ -73,7 +73,7 @@ const SearchBlock: React.FC<IProps> = ({
   };
   const buildQueryWithInputFilters = () => {
     let q = '';
-    if (fastInputQuery == '') {
+    if (fastInputQuery.length < 1) {
       const entriesLength = Object.entries(params).length;
       Object.entries(params).forEach(([key, value], i) => {
         if (key != 'keyWords' && value != '' && value != 0) {
@@ -81,9 +81,12 @@ const SearchBlock: React.FC<IProps> = ({
         }
       });
     } else {
-      q = fastInputQuery.indexOf(':')===-1?"title:"+fastInputQuery: fastInputQuery;
+      q =
+        fastInputQuery.indexOf(':') === -1
+          ? 'title:' + fastInputQuery
+          : fastInputQuery;
     }
-    return q
+    return q;
   };
 
   const inputRef = React.useRef<RnTextInput>(null);
@@ -184,7 +187,7 @@ const SearchBlock: React.FC<IProps> = ({
           </Menu>
         </View>
         <ScrollView style={styles.inputs}>
-          {showFiltersBlock && fastInputQuery == '' && (
+          {showFiltersBlock && fastInputQuery.length < 1 && (
             <KeyboardAvoidingView
               style={{marginBottom: 100}}
               behavior={undefined}

@@ -17,7 +17,7 @@ import AppSnackbar, {appSnackbarStyles} from '../components/AppSnackbar';
 import {saveNewQueryResultAction} from '../store/queriesResults/actions';
 import RecModal from '../components/RecModal';
 import CiteDialog from '../components/CiteDialog';
-import { theme } from '../styles';
+import {theme} from '../styles';
 
 const SearchScreen = ({
   onDataChange,
@@ -60,29 +60,27 @@ const SearchScreen = ({
   }, [data]);
 
   // When want to save doc in localstorage
-  const onSaveDoc = React.useCallback(async (doc: any) => {
-    await dispatch(saveDocAction(doc));
-    setSnackbarMessage('Doc saved!');
-    setShowSnackbar(true);
-  }, [buildedQuery]);
+  const onSaveDoc = React.useCallback(
+    async (doc: any) => {
+      await dispatch(saveDocAction(doc));
+      setSnackbarMessage('Doc saved!');
+      setShowSnackbar(true);
+    },
+    [buildedQuery],
+  );
 
-  const aggregateSearch = async (q: string, reset:boolean=false) => {
-    if(reset) {
-      setData([])
+  const aggregateSearch = async (q: string, reset: boolean = false) => {
+    if (reset) {
+      setData([]);
       onDataChange(0);
-      setCurrentPage(1)
+      setCurrentPage(1);
     }
-   if(q.length>0) {
+    if (q.length > 0) {
       setbuildedQuery(q);
       setLoading(true);
       try {
         const response1 = await fetch(
-          base.springer_url +
-            `&q=${q}` +
-            ' &s=' +
-            currentPage +
-            ' &p=' +
-            10,
+          base.springer_url + `&q=${q}` + ' &s=' + currentPage + ' &p=' + 10,
         );
         console.log('QUERY: ' + q);
         const response2 = await fetch(base.elsevier_url + `&query=${q}`);
@@ -103,14 +101,14 @@ const SearchScreen = ({
             ? [...json1.records, ...data2]
             : [...data, ...json1.records, ...data2],
         );
-        onDataChange(data.length)
+        onDataChange(data.length);
         setCurrentPage(currentPage + 1);
       } catch (error) {
         Alert.alert(error + '');
       } finally {
         setLoading(false);
       }
-   }
+    }
   };
 
   const [query, setQuery] = React.useState('');
@@ -122,12 +120,11 @@ const SearchScreen = ({
         onSelectItem={setData}
         onChangeInputQuery={setQuery}
         navigation={navigation}
-        onSubmitInputQuery={(q) => {
+        onSubmitInputQuery={q => {
           setData([]);
           setData2([]);
           aggregateSearch(q, true);
-        }
-      }
+        }}
         showSaveQueryButton={showSaveQueryButton}
         onSaveQuery={onSaveQuery}
       />

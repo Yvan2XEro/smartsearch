@@ -1,21 +1,27 @@
-import { FlatList, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
-import { Button, Dialog, Portal, Text } from 'react-native-paper';
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { keywordsSelector } from '../store/keywords/selectors';
+import {
+  FlatList,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {Button, Dialog, Portal, Text} from 'react-native-paper';
+import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {keywordsSelector} from '../store/keywords/selectors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { theme } from '../styles';
-import { styles } from '../components/DetailsHeader';
-import { addKeywordAction, deleteKeywordAction } from '../store/keywords/actions';
+import {theme} from '../styles';
+import {styles} from '../components/DetailsHeader';
+import {addKeywordAction, deleteKeywordAction} from '../store/keywords/actions';
 
-const KeywordScreen = ({navigation}:any) => {
-    const [showDialog, setShowDialog] = useState(false);
-    const [keyword, setKeyword] = useState("");
-    const keywords = useSelector(keywordsSelector);
-    const dispatch = useDispatch()
+const KeywordScreen = ({navigation}: any) => {
+  const [showDialog, setShowDialog] = useState(false);
+  const [keyword, setKeyword] = useState('');
+  const keywords = useSelector(keywordsSelector);
+  const dispatch = useDispatch();
   return (
     <View>
       <View style={[styles.header, {paddingRight: 20}]}>
@@ -54,7 +60,11 @@ const KeywordScreen = ({navigation}:any) => {
           <Text style={{fontSize: 25, letterSpacing: 0.5}}>New keyword</Text>
           <View style={{marginTop: 10}}>
             <TextInput
-              style={{borderWidth: 0.2, borderRadius: 8, color: theme.colors.text}}
+              style={{
+                borderWidth: 0.2,
+                borderRadius: 8,
+                color: theme.colors.text,
+              }}
               value={keyword}
               onChangeText={text => setKeyword(text)}
               placeholder="Type in keyword..."
@@ -82,8 +92,8 @@ const KeywordScreen = ({navigation}:any) => {
               onPress={async () => {
                 if (keyword.trim().length > 0) {
                   await dispatch(addKeywordAction(keyword));
-                    setKeyword('');
-                    setShowDialog(false);
+                  setKeyword('');
+                  setShowDialog(false);
                 }
               }}>
               Add
@@ -95,36 +105,36 @@ const KeywordScreen = ({navigation}:any) => {
   );
 };
 
-
-const ListItem = ({word}:{word: string}) =>{
-    const dispatch = useDispatch()
-    return (
-      <View
-        style={{
-          flexDirection: 'row',
-          paddingHorizontal: 20,
-          paddingVertical: 5,
-          alignItems: 'center'
-        }}>
-        <View style={{flexDirection: 'row', }}>
-          <SimpleLineIcons
-            name="arrow-right"
-            size={18}
-            color={theme.colors.primary}
-            style={{alignSelf: 'center'}}
-          />
-          <Text style={{letterSpacing: 0.5, marginLeft: 10}}>{word}</Text>
-        </View>
-        <TouchableOpacity style={{marginLeft: 'auto'}} onPress={async() =>await dispatch(deleteKeywordAction(word))} >
-          <MaterialCommunityIcons
-            name="trash-can-outline"
-            size={30}
-            color={theme.colors.error}
-          />
-        </TouchableOpacity>
+const ListItem = ({word}: {word: string}) => {
+  const dispatch = useDispatch();
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        paddingHorizontal: 20,
+        paddingVertical: 5,
+        alignItems: 'center',
+      }}>
+      <View style={{flexDirection: 'row'}}>
+        <SimpleLineIcons
+          name="arrow-right"
+          size={18}
+          color={theme.colors.primary}
+          style={{alignSelf: 'center'}}
+        />
+        <Text style={{letterSpacing: 0.5, marginLeft: 10}}>{word}</Text>
       </View>
-    );
-}
+      <TouchableOpacity
+        style={{marginLeft: 'auto'}}
+        onPress={async () => await dispatch(deleteKeywordAction(word))}>
+        <MaterialCommunityIcons
+          name="trash-can-outline"
+          size={30}
+          color={theme.colors.error}
+        />
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 export default KeywordScreen;
-

@@ -9,13 +9,13 @@ import AppHeader from '../components/AppHeader';
 import ChatStackNavigation from './ChatStackNavigation';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import HomeScreen from '../containers/HomeScreen';
-import { theme } from '../styles';
+import {theme} from '../styles';
 
 const Tab = createBottomTabNavigator();
 export function AppTabNavigation() {
   const [total, setTotal] = useState(0);
-  const handleDataChange = (total: number) => {
-    setTotal(total);
+  const handleDataChange = (t: number) => {
+    setTotal(t);
   };
   return (
     <Tab.Navigator
@@ -40,7 +40,15 @@ export function AppTabNavigation() {
         options={{
           tabBarLabel: 'Home',
           title: 'SMART SEARCH',
-          tabBarIcon: ({focused, size, color}: {focused: boolean; size: number, color:string}) => {
+          tabBarIcon: ({
+            focused,
+            size,
+            color,
+          }: {
+            focused: boolean;
+            size: number;
+            color: string;
+          }) => {
             return (
               <TabIcon
                 focused={focused}
@@ -59,7 +67,15 @@ export function AppTabNavigation() {
         options={{
           tabBarLabel: 'Search',
           headerShown: false,
-          tabBarIcon: ({focused, size, color}: {focused: boolean; size: number, color:string}) => {
+          tabBarIcon: ({
+            focused,
+            size,
+            color,
+          }: {
+            focused: boolean;
+            size: number;
+            color: string;
+          }) => {
             return (
               <TabIcon
                 focused={focused}
@@ -70,7 +86,7 @@ export function AppTabNavigation() {
               />
             );
           },
-          tabBarBadge: total>0?total:undefined,
+          tabBarBadge: total > 0 ? total : undefined,
         }}
       />
       <Tab.Screen
@@ -79,7 +95,15 @@ export function AppTabNavigation() {
         options={{
           tabBarLabel: 'Chats',
           headerShown: false,
-          tabBarIcon: ({focused, size, color}: {focused: boolean; size: number, color:string}) => {
+          tabBarIcon: ({
+            focused,
+            size,
+            color,
+          }: {
+            focused: boolean;
+            size: number;
+            color: string;
+          }) => {
             return (
               <TabIcon
                 focused={focused}
@@ -106,10 +130,8 @@ const styles = StyleSheet.create({
   },
   focusedStyles: {
     borderTopWidth: 1.5,
-    // borderTopColor: tabBarActiveTintColor,
   },
 });
-
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -118,8 +140,6 @@ const tabStyle = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: 'white',
-    // backgroundColor: 'white',
-    // backgroundColor: '#6c52fd',
     height: '100%',
     display: 'flex',
     width: windowWidth / 3,
@@ -129,8 +149,19 @@ const tabStyle = StyleSheet.create({
   },
 });
 
-
-function TabIcon({focused, name, size, type, color}:{focused: boolean, name: string, size: number, type?:string, color: string}) {
+function TabIcon({
+  focused,
+  name,
+  size,
+  type,
+  color,
+}: {
+  focused: boolean;
+  name: string;
+  size: number;
+  type?: string;
+  color: string;
+}) {
   if (type === 'MaterialCommunityIcons') {
     return (
       <View style={focused ? tabStyle.active : {}}>
@@ -157,5 +188,4 @@ function TabIcon({focused, name, size, type, color}:{focused: boolean, name: str
       <Entypo name={name} color={'#fff'} size={size} />
     </View>
   );
-
 }

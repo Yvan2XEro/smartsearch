@@ -1,6 +1,12 @@
 import * as React from 'react';
 import {ScrollView, TouchableOpacity, View} from 'react-native';
-import {Card, Portal, Dialog, Text, ActivityIndicator} from 'react-native-paper';
+import {
+  Card,
+  Portal,
+  Dialog,
+  Text,
+  ActivityIndicator,
+} from 'react-native-paper';
 import {Tabs, TabScreen} from 'react-native-paper-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -20,10 +26,10 @@ import RecModal from '../components/RecModal';
 import AppSnackbar, {appSnackbarStyles} from '../components/AppSnackbar';
 import moment from 'moment';
 import CiteDialog from '../components/CiteDialog';
-import { theme } from '../styles';
-import { keywordsSelector } from '../store/keywords/selectors';
+import {theme} from '../styles';
+import {keywordsSelector} from '../store/keywords/selectors';
 import * as base from '../api/constants';
-import { Notification } from '../services';
+import {Notification} from '../services';
 
 const HomeScreen = ({navigation}: {navigation: any}) => {
   const savedDocs = useSelector(docsSelector);
@@ -32,8 +38,7 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
   const [recommandations, setRecommandations] = React.useState<
     Recommandation[]
   >([]);
-  const [recomandedDoc, setRecomandedDoc] =
-    React.useState<any>(null);
+  const [recomandedDoc, setRecomandedDoc] = React.useState<any>(null);
   const [selectedRec, setSelectedRec] = React.useState<Recommandation | null>(
     null,
   );
@@ -42,35 +47,36 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
   const [showSnackbar, setShowSnackbar] = React.useState(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState('');
   const [selectedDoi, setSelectedDoi] = React.useState(null);
-  
-  const [recLoading, setRecLoading] = React.useState(false)
+
+  const [recLoading, setRecLoading] = React.useState(false);
   const recommandationsQuery = firestore().collection('recommandations');
   const [refetchCount, setRefetchCount] = React.useState(0);
   React.useEffect(() => {
     if (!!reduxUser || !!user) {
       try {
-        setRecLoading(true)
+        setRecLoading(true);
 
-      const s = recommandationsQuery
-        .where('userDestRef', '==', reduxUser ? reduxUser.pk : user.uid)
-        .onSnapshot(recSnapshots => {
-          if (refetchCount === 0) setRefetchCount(p => p + 1);
-          else if (recSnapshots.docs.length>recommandations.length) {
-            Notification.push(
-              'New document was recomended for you!',
-              'New recommendations',
+        const s = recommandationsQuery
+          .where('userDestRef', '==', reduxUser ? reduxUser.pk : user.uid)
+          .onSnapshot(recSnapshots => {
+            if (refetchCount === 0) {
+              setRefetchCount(p => p + 1);
+            } else if (recSnapshots.docs.length > recommandations.length) {
+              Notification.push(
+                'New document was recomended for you!',
+                'New recommendations',
+              );
+            }
+            setRecommandations(
+              recSnapshots.docs.map(
+                item => ({...item.data(), id: item.id} as Recommandation),
+              ),
             );
-          }
-          setRecommandations(
-            recSnapshots.docs.map(
-              item => ({...item.data(), id: item.id} as Recommandation),
-            ),
-          );
-        });
-      return s;
+          });
+        return s;
       } catch (error) {
         // TODO: Error
-      }finally{
+      } finally {
         setRecLoading(false);
       }
     }
@@ -88,29 +94,28 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
       });
   };
 
-  const keyWords = useSelector(keywordsSelector)
+  const keyWords = useSelector(keywordsSelector);
   const [yourDocs, setYourDocs] = React.useState<any[]>([]);
   const [loadingYour, setLoadingYour] = React.useState(false);
-  const [timer, setTimer] = React.useState<any>(null)
+  const [timer, setTimer] = React.useState<any>(null);
 
   React.useEffect(() => {
-
-    let w1 = 'sport', w2='geography'
-    if(keyWords.length==1) {
-      w1 = keyWords[0]
-    }
-    if(keyWords.length==2) {
+    let w1 = 'sport',
+      w2 = 'geography';
+    if (keyWords.length === 1) {
       w1 = keyWords[0];
+    }
+    if (keyWords.length === 2) {
       w2 = keyWords[1];
     }
-    if(keyWords.length>2) {
-      w1 = keyWords.sort(()=>0.5 - Math.random())[0];
-      while(w1==w2) {
+    if (keyWords.length > 2) {
+      w1 = keyWords.sort(() => 0.5 - Math.random())[0];
+      while (w1 === w2) {
         w2 = keyWords.sort(() => 0.5 - Math.random())[0];
       }
     }
-    (async()=>{
-      setLoadingYour(true)
+    (async () => {
+      setLoadingYour(true);
       try {
         let response1 = await fetch(
           base.springer_url + `&q=keyword:${w1}` + ' &s=' + 1 + ' &p=' + 20,
@@ -120,16 +125,19 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
         );
         const data1 = await response1.json();
         const data2 = await response2.json();
-        setTimer(setTimeout(() =>{setClosedHelp(false)}, 3000))
+        setTimer(
+          setTimeout(() => {
+            setClosedHelp(false);
+          }, 3000),
+        );
         setYourDocs([...data1.records, ...data2.records]);
       } catch (error) {
-        
       } finally {
-        setLoadingYour(false)
+        setLoadingYour(false);
       }
-      })()
+    })();
   }, [keyWords]);
-  
+
   const [closedHelp, setClosedHelp] = React.useState(true);
   return (
     <>
@@ -160,10 +168,11 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
                     <TouchableOpacity
                       style={{right: 10, position: 'absolute'}}
                       onPress={() => {
-                          setClosedHelp(true)
-                          if(timer){
-                            clearTimeout(timer)}
-                        }}>
+                        setClosedHelp(true);
+                        if (timer) {
+                          clearTimeout(timer);
+                        }
+                      }}>
                       <FontAwesome5
                         name="times"
                         color={theme.colors.error}
@@ -333,12 +342,7 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
   );
 };
 
-const ListDocsArticles = ({
-  docs,
-  navigation,
-  onSelectDoi,
-  onRecomand,
-}: any) => {
+const ListDocsArticles = ({docs, navigation, onSelectDoi, onRecomand}: any) => {
   return (
     <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
       <View style={{flexWrap: 'wrap', flexDirection: 'row', marginTop: 10}}>

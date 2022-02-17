@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Text} from 'react-native-paper'
+import {Text} from 'react-native-paper';
 import {
   Menu,
   MenuOptions,
@@ -9,7 +9,7 @@ import {
 } from 'react-native-popup-menu';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { theme } from '../styles';
+import {theme} from '../styles';
 
 const DocItem = ({
   doc,
@@ -67,7 +67,7 @@ const DocItem = ({
 
           <MenuOptions>
             {onCite && (
-              <MenuOption onSelect={onCite} >
+              <MenuOption onSelect={onCite}>
                 <Text>Cite</Text>
               </MenuOption>
             )}

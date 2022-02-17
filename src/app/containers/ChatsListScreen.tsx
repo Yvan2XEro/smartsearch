@@ -1,10 +1,5 @@
 import * as React from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Avatar, Text} from 'react-native-paper';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -14,7 +9,7 @@ import {useSelector} from 'react-redux';
 import {loggedUserSelector} from '../store/loggedUser/selectors';
 import {Chat, Message, User} from '../types';
 import moment from 'moment';
-import { theme } from '../styles';
+import {theme} from '../styles';
 
 const ChatsListScreen = ({navigation}: any) => {
   const user = useSelector(loggedUserSelector);
@@ -28,7 +23,10 @@ const ChatsListScreen = ({navigation}: any) => {
       return 1;
     }
 
-    if (new Date(a.lastMessage?.createdAt||'') > new Date(b.lastMessage?.createdAt||'')) {
+    if (
+      new Date(a.lastMessage?.createdAt || '') >
+      new Date(b.lastMessage?.createdAt || '')
+    ) {
       return -1;
     }
     return 0;
@@ -112,7 +110,7 @@ const ChatsListScreen = ({navigation}: any) => {
               key={i}
               onPress={() => navigation.navigate('ChatRoom', {chat})}
               user={
-                chat.users[0].pk == user.pk
+                chat.users[0].pk === user.pk
                   ? (chat.users[1] as User)
                   : (chat.users[0] as User)
               }
@@ -196,7 +194,8 @@ const ChatItem = ({
                   : lastMessage?.content}
               </Text>
             </View>
-            <Text style={{position: 'absolute', right: 0, bottom: 0, fontSize: 9}}>
+            <Text
+              style={{position: 'absolute', right: 0, bottom: 0, fontSize: 9}}>
               {moment(lastMessage.createdAt).format('DD/MM/YY h:mm')}
             </Text>
           </>

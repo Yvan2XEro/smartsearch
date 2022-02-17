@@ -2,18 +2,18 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { theme } from '../styles';
+import {theme} from '../styles';
 
 const AppHeader = ({
   navigation,
   title,
   type = 'app',
-  showsSearchIcon=true,
+  showsSearchIcon = true,
 }: {
   navigation: any;
   title?: string;
   type?: string;
-  showsSearchIcon?:boolean;
+  showsSearchIcon?: boolean;
 }) => {
   return (
     <View style={appHeaderStyles.header}>
@@ -43,14 +43,15 @@ const AppHeader = ({
           {title}
         </Text>
       </View>
-      {showsSearchIcon===true&&<TouchableOpacity>
-        <Ionicons
-          onPress={() => navigation.navigate('Search')}
-          name="ios-search"
-          color="white"
-          size={25}
-        />
-      </TouchableOpacity>}
+      {showsSearchIcon === true && <TouchableOpacity>
+          <Ionicons
+            onPress={() => navigation.navigate('Search')}
+            name="ios-search"
+            color="white"
+            size={25}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

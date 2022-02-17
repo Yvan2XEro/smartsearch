@@ -12,7 +12,7 @@ import {User} from '../types';
 import {Avatar, Text} from 'react-native-paper';
 import {useSelector} from 'react-redux';
 import {loggedUserSelector} from '../store/loggedUser/selectors';
-import { theme } from '../styles';
+import {theme} from '../styles';
 
 const SearchUserScreen = ({navigation}: any) => {
   const [users, setUsers] = React.useState<User[]>([]);

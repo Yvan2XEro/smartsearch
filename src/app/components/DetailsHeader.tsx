@@ -9,7 +9,7 @@ import {
 } from 'react-native-popup-menu';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { theme } from '../styles';
+import {theme} from '../styles';
 
 const DetailsHeader = ({
   navigation,
@@ -47,16 +47,20 @@ const DetailsHeader = ({
           {title}
         </Text>
       </View>
-      {!!displayOptions && <Menu style={{alignSelf: 'center', marginLeft: 'auto'}}>
-        <MenuTrigger>
-          <Entypo name="dots-three-vertical" color="white" size={25} />
-        </MenuTrigger>
-        <MenuOptions>
-          {!!onSelectFilterList&&<MenuOption onSelect={onSelectFilterList} text="Filters" />}
-          <MenuOption text="Saved documents" />
-          <MenuOption text="Details settings" />
-        </MenuOptions>
-      </Menu>}
+      {!!displayOptions && (
+        <Menu style={{alignSelf: 'center', marginLeft: 'auto'}}>
+          <MenuTrigger>
+            <Entypo name="dots-three-vertical" color="white" size={25} />
+          </MenuTrigger>
+          <MenuOptions>
+            {!!onSelectFilterList && (
+              <MenuOption onSelect={onSelectFilterList} text="Filters" />
+            )}
+            <MenuOption text="Saved documents" />
+            <MenuOption text="Details settings" />
+          </MenuOptions>
+        </Menu>
+      )}
     </View>
   );
 };

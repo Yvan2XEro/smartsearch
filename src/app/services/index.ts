@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PushNotification from 'react-native-push-notification';
 // TODO: Utiliser un bon package pour Clipboard
-import {Clipboard} from 'react-native'
+import {Clipboard} from 'react-native';
 // import Clipboard from '@react-native-clipboard/clipboard';
 
 export const emailRegex =
@@ -46,14 +46,13 @@ export const pushSearchResultsIfNotExists = (array: any[], item: any) => {
   return false;
 };
 
-
 export const AppClipBoard = {
   setString: (text: string) => Clipboard.setString(text),
-  getString:()=> Clipboard.getString()
-}
+  getString: () => Clipboard.getString(),
+};
 
 export const Notification = {
-  push: (message: string, title?: string)=>{
+  push: (message: string, title?: string) => {
     PushNotification.localNotification({
       /* Android Only Properties */
       showWhen: true, // (optional) default: true
@@ -66,5 +65,5 @@ export const Notification = {
       title: title, // (optional)
       message: message, // (required)
     });
-  }
-}
+  },
+};

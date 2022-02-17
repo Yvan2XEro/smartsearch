@@ -3,19 +3,19 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 import {Document} from '../models/Document';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {Paragraph, Text } from 'react-native-paper';
+import {Paragraph, Text} from 'react-native-paper';
 import DetailsHeader from '../components/DetailsHeader';
 import FiltersListModal from '../components/FiltersListModal';
-import { useSelector } from 'react-redux';
-import { settingSelector } from '../store/detailSetting/selectors';
-import { DetailSetting } from '../types';
-import { theme } from '../styles';
+import {useSelector} from 'react-redux';
+import {settingSelector} from '../store/detailSetting/selectors';
+import {DetailSetting} from '../types';
+import {theme} from '../styles';
 
 const DetailScreen = ({route, navigation}: {route: any; navigation: any}) => {
   /* 2. Get the param */
   const document: Document = route.params.document;
   const backScreen: string | undefined = route.params.backScreen;
-  const settings = useSelector(settingSelector) as DetailSetting
+  const settings = useSelector(settingSelector) as DetailSetting;
   const [visible, setVisible] = React.useState(false);
   return (
     <View>
@@ -29,15 +29,20 @@ const DetailScreen = ({route, navigation}: {route: any; navigation: any}) => {
         style={{
           marginHorizontal: 10,
           marginTop: 10,
-          paddingBottom: 5
+          paddingBottom: 5,
         }}>
         <ScrollView style={{marginBottom: 85}}>
           {settings.openaccess && (
             <View style={styles.row}>
               <Text style={styles.label}>Open access:</Text>
               <View>
-                {document.openaccess?<Entypo name="check" size={30} color={theme.colors.primary} />:
-                <FontAwesome5 name="times" size={30} color={theme.colors.error} />}
+                {document.openaccess ? <Entypo name="check" size={30} color={theme.colors.primary} /> :
+                  <FontAwesome5
+                    name="times"
+                    size={30}
+                    color={theme.colors.error}
+                  />
+                )}
               </View>
             </View>
           )}

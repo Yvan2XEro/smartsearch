@@ -1,15 +1,10 @@
-import { TouchableOpacity, View } from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import Entypo from 'react-native-vector-icons/Entypo';
+import {View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {RadioButton, Text} from 'react-native-paper'
-import React, { useState } from 'react';
-import { styles } from '../components/DetailsHeader';
-import { theme } from '../styles';
+import {RadioButton, Text} from 'react-native-paper';
+import React, {useState} from 'react';
+import {styles} from '../components/DetailsHeader';
 
-const ThemeSettingScreen = ({navigation}:any) => {
-    const [theme, setTheme] = useState("default")
+const ThemeSettingScreen = ({navigation}: any) => {
   return (
     <View>
       <View style={[styles.header, {paddingRight: 20}]}>
@@ -37,7 +32,7 @@ const ThemeSettingScreen = ({navigation}:any) => {
       <View>
         <Text>Choose theme</Text>
         <View>
-          <RadioButton value='Classic' />
+          <RadioButton value="Classic" />
           <RadioButton value="Default" />
         </View>
       </View>

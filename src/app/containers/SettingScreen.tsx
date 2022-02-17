@@ -1,13 +1,13 @@
-import { View, ScrollView, TouchableOpacity } from 'react-native';
-import {Text} from 'react-native-paper'
+import {View, ScrollView, TouchableOpacity} from 'react-native';
+import {Text} from 'react-native-paper';
 import React from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 
-import { theme } from '../styles';
+import {theme} from '../styles';
 
-const SettingScreen = ({navigation}:any) => {
+const SettingScreen = ({navigation}: any) => {
   return (
     <View>
       <ScrollView>
@@ -60,17 +60,35 @@ const SettingScreen = ({navigation}:any) => {
   );
 };
 
-const SettingItem = ({title, description, icon, onPress}:{title: string, description: string, icon: any, onPress:any}) => {
+const SettingItem = ({
+  title,
+  description,
+  icon,
+  onPress,
+}: {
+  title: string;
+  description: string;
+  icon: any;
+  onPress: any;
+}) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={{flexDirection: 'row', alignItems: 'center', padding: 5, borderBottomWidth: .3, borderBottomColor: theme.colors.primary}}>
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 5,
+        borderBottomWidth: 0.3,
+        borderBottomColor: theme.colors.primary,
+      }}>
       <View>{icon}</View>
-      <View style={{marginLeft: 10, flex: .95}}>
+      <View style={{marginLeft: 10, flex: 0.95}}>
         <Text style={{fontSize: 18, fontWeight: 'bold', letterSpacing: 0.4}}>
           {title}
         </Text>
-        <Text style={{letterSpacing: 0.3, fontSize: 13, flexWrap: 'wrap'}}>{description}</Text>
+        <Text style={{letterSpacing: 0.3, fontSize: 13, flexWrap: 'wrap'}}>
+          {description}
+        </Text>
       </View>
       <View style={{marginLeft: 'auto'}}>
         <MaterialIcons
@@ -81,6 +99,6 @@ const SettingItem = ({title, description, icon, onPress}:{title: string, descrip
       </View>
     </TouchableOpacity>
   );
-}
+};
 
 export default SettingScreen;

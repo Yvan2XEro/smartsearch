@@ -1,6 +1,6 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
 import thunk from 'redux-thunk';
-import { detailSettingReucer } from './detailSetting';
+import {detailSettingReucer} from './detailSetting';
 import docsReducer from './docs';
 import keywordsReducer from './keywords';
 import loggedUserReducer from './loggedUser';
@@ -12,7 +12,7 @@ const store = createStore(
     queriesResults: queriesResultsReducer,
     loggedUser: loggedUserReducer,
     keywords: keywordsReducer,
-    detailSettings: detailSettingReucer
+    detailSettings: detailSettingReucer,
   }),
   applyMiddleware(thunk),
 );

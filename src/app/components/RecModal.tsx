@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   Dimensions,
-  Keyboard,
   ScrollView,
   StyleSheet,
   TextInput,
@@ -26,7 +25,7 @@ import {User} from '../types';
 import firestore from '@react-native-firebase/firestore';
 import {useSelector} from 'react-redux';
 import AppSnackbar, {appSnackbarStyles} from './AppSnackbar';
-import { theme } from '../styles';
+import {theme} from '../styles';
 
 const RecModal = ({
   doc,
@@ -58,13 +57,21 @@ const RecModal = ({
         .get()
         .then(snapshot => {
           setFetchedUsers(
-            snapshot.docs.map<User>(item => ({
-              ...item.data(),
-              displayName: item.data().displayName,
-              email: item.data().email,
-            } as User)).filter(u=>{
-              return fetchedUsers.indexOf(u)===-1 && selectedUsers.indexOf(u)===-1
-            }),
+            snapshot.docs
+              .map<User>(
+                item =>
+                  ({
+                    ...item.data(),
+                    displayName: item.data().displayName,
+                    email: item.data().email,
+                  } as User),
+              )
+              .filter(u => {
+                return (
+                  fetchedUsers.indexOf(u) === -1 &&
+                  selectedUsers.indexOf(u) === -1
+                );
+              }),
           );
         });
     }
@@ -177,8 +184,9 @@ const RecModal = ({
                   key={i}
                   onDelete={() => {
                     setSelectedUsers(selectedUsers.filter(u => u != user));
-                    if (fetchedUsers.indexOf(user) === -1)
+                    if (fetchedUsers.indexOf(user) === -1) {
                       setFetchedUsers([...fetchedUsers, user]);
+                    }
                   }}
                 />
               ))}

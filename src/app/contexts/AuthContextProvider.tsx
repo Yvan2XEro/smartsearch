@@ -1,12 +1,12 @@
 import React, {createContext, useContext, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {updateUserAction} from '../store/loggedUser/actions';
 import firestore from '@react-native-firebase/firestore';
 import {User} from '../types';
-import { LoginTypeContext, LOGIN_TYPE_KEY } from './LoginTypeContextProvider';
-import { localStorage } from '../services';
+import {LoginTypeContext, LOGIN_TYPE_KEY} from './LoginTypeContextProvider';
+import {localStorage} from '../services';
 
 GoogleSignin.configure({
   webClientId:
@@ -29,7 +29,6 @@ export const GOOGLE = 'GOOGLE';
 const AuthContextProvider = ({children}: any) => {
   const [user, setUser] = useState(auth().currentUser);
   const dispatch = useDispatch();
-  const reduxUser = useSelector(({loggedUser}: any) => loggedUser);
 
   const writeUser = async (uid: string, user: User) => {
     return await firestore()
@@ -66,7 +65,7 @@ const AuthContextProvider = ({children}: any) => {
               });
           } else {
             setLoginType(GOOGLE);
-            localStorage.set(LOGIN_TYPE_KEY, GOOGLE)
+            localStorage.set(LOGIN_TYPE_KEY, GOOGLE);
             const {idToken} = await GoogleSignin.signIn();
             const googleCredential =
               auth.GoogleAuthProvider.credential(idToken);

@@ -15,7 +15,7 @@ import {
 } from '../contexts/AuthContextProvider';
 import {emailRegex} from '../services';
 import {Button, Text} from 'react-native-paper';
-import { theme } from '../styles';
+import {theme} from '../styles';
 
 const SignOutScreen = ({navigation}: any) => {
   const [isSecureEntry, setIsSecureEntry] = React.useState(true);
@@ -170,7 +170,7 @@ export const AuthInput = ({
       {icon}
       <TextInput
         placeholder={label + '...'}
-        style={{flex: 0.95, letterSpacing: .5}}
+        style={{flex: 0.95, letterSpacing: 0.5}}
         value={value}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
@@ -193,5 +193,5 @@ const styles = StyleSheet.create({
     padding: 20,
     overflow: 'hidden',
   },
-  title: {fontWeight: 'bold', fontSize: 25,color:theme.colors.primary},
+  title: {fontWeight: 'bold', fontSize: 25, color: theme.colors.primary},
 });

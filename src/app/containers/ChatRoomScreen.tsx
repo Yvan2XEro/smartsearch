@@ -1,10 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Text, Avatar, TextInput} from 'react-native-paper';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -14,8 +9,8 @@ import {Chat, Message} from '../types';
 import moment from 'moment';
 import {useSelector} from 'react-redux';
 import {loggedUserSelector} from '../store/loggedUser/selectors';
-import {theme} from '../styles'
-import { AppClipBoard, Notification } from '../services';
+import {theme} from '../styles';
+import {AppClipBoard, Notification} from '../services';
 
 const ChatRoomScreen = ({navigation, route}: any) => {
   const user = useSelector(loggedUserSelector);
@@ -48,7 +43,10 @@ const ChatRoomScreen = ({navigation, route}: any) => {
         .add(data)
         .then(() => {
           listRef.current?.scrollToEnd();
-          firestore().collection('chats').doc(chat.id).update({lastMessage:data})
+          firestore()
+            .collection('chats')
+            .doc(chat.id)
+            .update({lastMessage: data});
         });
     }
   };
@@ -68,20 +66,27 @@ const ChatRoomScreen = ({navigation, route}: any) => {
     return 0;
   };
 
-  useEffect(() =>{
-    return firestore().collection('chats').doc(chat.id).onSnapshot(snapshot=>{
-      setChat({...snapshot.data(), id: snapshot.id}as Chat);
-    })
-  }, [])
+  useEffect(() => {
+    return firestore()
+      .collection('chats')
+      .doc(chat.id)
+      .onSnapshot(snapshot => {
+        setChat({...snapshot.data(), id: snapshot.id} as Chat);
+      });
+  }, []);
 
-  const [refetchCount, setRefetchCount]= useState(0)
+  const [refetchCount, setRefetchCount] = useState(0);
   const messagesQuery = firestore()
     .collection('messages')
     .where('chatRef', '==', chat.id);
   useEffect(() => {
     return messagesQuery.onSnapshot(snapshot => {
-      if (refetchCount === 0) setRefetchCount(p => p + 1);
-      else if (snapshot.docs.length > messages.length && chat.lastMessage?.userRef!=user.pk) {
+      if (refetchCount === 0) {
+        setRefetchCount(p => p + 1);
+      } else if (
+        snapshot.docs.length > messages.length &&
+        chat.lastMessage?.userRef != user.pk
+      ) {
         Notification.push('You have a new message!', 'Messages');
       }
       setMessages(
@@ -93,7 +98,7 @@ const ChatRoomScreen = ({navigation, route}: any) => {
                 id: change.id,
               } as Message),
           )
-          .filter(m => m.chatRef == chat.id),
+          .filter(m => m.chatRef === chat.id),
       );
     });
   }, []);
@@ -275,10 +280,10 @@ const styles = StyleSheet.create({
   },
   rightItem: {
     marginLeft: 'auto',
-    borderTopLeftRadius: 10
+    borderTopLeftRadius: 10,
   },
   text: {
     marginHorizontal: 5,
     marginLeft: 15,
-  }
+  },
 });

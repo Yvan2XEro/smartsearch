@@ -1,7 +1,6 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import * as React from 'react';
 import {useDispatch} from 'react-redux';
-import { View } from 'react-native';
 import DrawerContent from '../components/DrawerContent';
 import {loadDocsAction} from '../store/docs/actions';
 import {loadResultsAction} from '../store/queriesResults/actions';
@@ -15,14 +14,13 @@ import SharedScreen from '../containers/SharedScreen';
 import {updateUserAction} from '../store/loggedUser/actions';
 import firestore from '@react-native-firebase/firestore';
 import {User} from '../types';
-import { theme } from '../styles';
+import {theme} from '../styles';
 import SettingStackNavigation from './SettingStackNavigation';
-import { loadKeywordsAction } from '../store/keywords/actions';
-import { loadSettingsAction } from '../store/detailSetting/actions';
+import {loadKeywordsAction} from '../store/keywords/actions';
+import {loadSettingsAction} from '../store/detailSetting/actions';
 
 const Drawer = createDrawerNavigator();
 export default function RootNavigation() {
-  
   // Initialiser les states redux
   const dispatch = useDispatch();
   const {setUser, user} = React.useContext(AuthenticationContext);

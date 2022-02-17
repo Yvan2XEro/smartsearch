@@ -11,7 +11,7 @@ import {
   GOOGLE,
 } from '../contexts/AuthContextProvider';
 import {Button, Text} from 'react-native-paper';
-import { theme } from '../styles';
+import {theme} from '../styles';
 
 const SignInScreen = ({navigation}: any) => {
   const [email, setEmail] = React.useState('');
@@ -26,9 +26,9 @@ const SignInScreen = ({navigation}: any) => {
     login({email, password}, EMAIL_PASSWORD)
       .catch(error => {
         if (
-          error.code == 'auth/user-not-found' ||
-          error.code == 'auth/wrong-password' ||
-          error.code == 'auth/invalid-email'
+          error.code === 'auth/user-not-found' ||
+          error.code === 'auth/wrong-password' ||
+          error.code === 'auth/invalid-email'
         ) {
           setPassword('');
           setError('Bad credentials!');

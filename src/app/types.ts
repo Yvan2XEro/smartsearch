@@ -16,7 +16,7 @@ export type Chat = {
   lastMessage?: Message;
   users: any[];
   usersRef: string[];
-}
+};
 
 export type Message = {
   id?: string;
@@ -48,4 +48,4 @@ export type DetailSetting = {
   abstract: boolean;
   doi: boolean;
   openaccess: boolean;
-}
+};

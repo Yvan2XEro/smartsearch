@@ -9,7 +9,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {AuthenticationContext} from '../contexts/AuthContextProvider';
 import {useSelector} from 'react-redux';
-import { theme } from '../styles';
+import {theme} from '../styles';
 
 const DrawerContent = ({navigation}: {navigation: any}) => {
   const {logout} = React.useContext(AuthenticationContext);
@@ -162,7 +162,11 @@ const CustomDrawerItem = ({
       <DrawerItem
         icon={({}) => icon}
         style={{flex: 0.9}}
-        labelStyle={{fontSize: 13, color: theme.colors.primary, fontWeight: 'bold'}}
+        labelStyle={{
+          fontSize: 13,
+          color: theme.colors.primary,
+          fontWeight: 'bold',
+        }}
         label={label}
         onPress={onPress}
       />
@@ -175,7 +179,6 @@ const CustomDrawerItem = ({
     </View>
   );
 };
-
 
 export default DrawerContent;
 
