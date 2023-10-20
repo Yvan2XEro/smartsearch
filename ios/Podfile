@@ -12,6 +12,8 @@ target 'SmartSearch' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-selectable-text', :path => '../node_modules/@astrocoders/react-native-selectable-text'
+
   target 'SmartSearchTests' do
     inherit! :complete
     # Pods for testing

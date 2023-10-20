@@ -4,6 +4,7 @@
 
 # Xcode
 #
+password.txt
 build/
 *.pbxuser
 !default.pbxuser

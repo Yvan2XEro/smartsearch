@@ -1,0 +1,41 @@
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React from 'react';
+import ChatRoomScreen from '../containers/ChatRoomScreen';
+import ChatsListScreen from '../containers/ChatsListScreen';
+import SearchUserScreen from '../containers/SearchUserScreen';
+
+const Stack = createNativeStackNavigator();
+
+const ChatStackNavigation = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="ChatsList"
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen
+        name="ChatsList"
+        component={ChatsListScreen}
+        options={{
+          title: 'Chats',
+        }}
+      />
+      <Stack.Screen
+        name="ChatRoom"
+        component={ChatRoomScreen}
+        options={{
+          title: 'Chat Room',
+        }}
+      />
+      <Stack.Screen
+        name="SearchUser"
+        component={SearchUserScreen}
+        options={{
+          title: 'Search for user',
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+export default ChatStackNavigation;
